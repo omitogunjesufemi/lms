@@ -51,20 +51,18 @@
                                     <span class="font-italic" style="padding-right: 50px">{{ assessment.pass_mark }}</span>
                                 </div>
 
-
-
                             </div>
                         </div>
 
                         <div class="card-footer">
 
-{#                            <div class="btn-group float-right">#}
-{#                                <a href="#" class="btn btn-outline-danger">Delete</a>#}
-{#                            </div>#}
-{##}
-{#                            <div class="btn-group float-right mr-2">#}
-{#                                <a href="#" class="btn btn-outline-warning">Edit</a>#}
-{#                            </div>#}
+                            <div class="btn-group float-right">
+                                <a href="{% url 'delete_assessment' assessment.id %}" class="btn btn-outline-danger delete_demo">Delete</a>
+                            </div>
+
+                            <div class="btn-group float-right mr-2">
+                                <a href="{% url 'update_assessment' assessment.id %}" class="btn btn-outline-warning">Edit</a>
+                            </div>
                         </div>
 
                     </div>

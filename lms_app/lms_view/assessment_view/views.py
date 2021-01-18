@@ -6,7 +6,7 @@ from django.http import HttpRequest
 from django.shortcuts import render, redirect
 from lms_app.lms_dto.AssessmentDto import *
 from lms_app.lms_dto.CourseDto import *
-from lms_app.service_controllers import service_controller, Tutor
+from lms_app.service_controllers import service_controller, Tutor, Assessment
 
 
 @login_required(login_url='login')
@@ -39,17 +39,25 @@ def create_assessment(request):
 
 
 @login_required(login_url='login')
-def update_assessment(request, course_id):
+def update_assessment(request, assessment_id):
     username = request.user.username
     l_as_list = []
     for g in request.user.groups.all():
         l_as_list.append(g.name)
+
+    assessment = service_controller.assessment_management_service().details(assessment_id)
     context = {
         'l_as_list': l_as_list,
         'username': username,
+        'assessment': assessment,
 
     }
-    return render(request, '', context)
+    edited_assessment = __edit_if_post_method(request, assessment_id, context)
+    if edited_assessment is not None:
+        context['assessment'] = edited_assessment
+        return redirect('tutor_details')
+
+    return render(request, 'assessment/edit_assessment.html', context)
 
 
 @login_required(login_url='login')
@@ -84,17 +92,26 @@ def assessment_details(request, assessment_id):
     }
     return render(request, 'assessment/assessment_details.html', context)
 
+@login_required(redirect_field_name='next')
+def delete_assessment(request, assessment_id):
+    try:
+        service_controller.assessment_management_service().delete(assessment_id)
+        return redirect('tutor_details')
+    except Assessment.DoesNotExist as e:
+        print('This assessment does not exist!')
+        raise e
+
 
 def __set_assessment_attribute_request(request: HttpRequest):
-    initiate_appointment_dto = CreateAssessmentDto()
-    initiate_appointment_dto.assessment_title = request.POST['assessment_title']
-    initiate_appointment_dto.assessment_content = request.POST['assessment_content']
-    initiate_appointment_dto.date_due = request.POST['assessment_due_date']
-    initiate_appointment_dto.time_due = request.POST['assessment_due_time']
-    initiate_appointment_dto.total_score = request.POST['total_score']
-    initiate_appointment_dto.pass_mark = request.POST['pass_mark']
-    initiate_appointment_dto.course_id = request.POST['course_id']
-    return initiate_appointment_dto
+    initiate_assessment_dto = CreateAssessmentDto()
+    initiate_assessment_dto.assessment_title = request.POST['assessment_title']
+    initiate_assessment_dto.assessment_content = request.POST['assessment_content']
+    initiate_assessment_dto.date_due = request.POST['assessment_due_date']
+    initiate_assessment_dto.time_due = request.POST['assessment_due_time']
+    initiate_assessment_dto.total_score = 0
+    initiate_assessment_dto.pass_mark = request.POST['pass_mark']
+    initiate_assessment_dto.course_id = request.POST['course_id']
+    return initiate_assessment_dto
 
 
 def __initiate_assessment_method(request, context):
@@ -105,4 +122,26 @@ def __initiate_assessment_method(request, context):
             context['saved'] = 'success'
         except Exception as e:
             print('This Assessment Creation could not be completed')
+            raise e
+
+# Editing
+def __edit_assessment_attribute_request(request):
+    update_assessment_dto = UpdateAssessmentDto()
+    update_assessment_dto.assessment_title = request.POST['assessment_title']
+    update_assessment_dto.assessment_content = request.POST['assessment_content']
+    update_assessment_dto.date_due = request.POST['assessment_due_date']
+    update_assessment_dto.time_due = request.POST['assessment_due_time']
+    update_assessment_dto.pass_mark = request.POST['pass_mark']
+    return update_assessment_dto
+
+
+def __edit_if_post_method(request, assessment_id, context):
+    if request.method == 'POST':
+        try:
+            assessment = __edit_assessment_attribute_request(request)
+            service_controller.assessment_management_service().edit(assessment_id, assessment)
+            context['saved'] = 'success'
+            return assessment
+        except Exception as e:
+            print('This assessment was not registered')
             raise e

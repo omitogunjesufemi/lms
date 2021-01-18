@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 mt-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Update Assessment</h3>
+                    </div>
+
+                    <div class="card-body">
+                        <form method="post" action="{% url 'update_assessment' assessment.id %}">
+                            {% csrf_token %}
+
+                            <div class="form-group">
+                                <label for="assessment_title" class="form-check-label">Assessment Title</label>
+                                <input name="assessment_title" class="form-control" id="assessment_title" value="{{ assessment.assessment_title }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="assessment_content" class="form-check-label">Assessment Description</label>
+                                <textarea name="assessment_content" class="form-control" id="assessment_content"  >{{ assessment.assessment_content }}</textarea>
+                            </div>
+
+                            <div class="form-row">
+
+                                <div class="form-group col-4">
+                                    <label for="pass_mark" class="form-check-label">Pass Mark</label>
+                                    <input name="pass_mark" class="form-control" id="pass_mark" value="{{ assessment.pass_mark }}">
+                                </div>
+
+                                <div class="form-group col-4">
+                                    <label for="assessment_due_date" class="form-check-label">Date Due</label>
+                                    <input name="assessment_due_date" class="form-control" id="assessment_due_date" type="date" value="{{ assessment.assessment_due_date }}">
+                                </div>
+
+                                <div class="form-group col-4">
+                                    <label for="assessment_due_time" class="form-check-label">Time Due</label>
+                                    <input name="assessment_due_time" class="form-control" id="assessment_due_time" type="time" value="{{ assessment.assessment_due_time }}">
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

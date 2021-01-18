@@ -3,7 +3,7 @@ from django.http import HttpRequest
 from django.shortcuts import render, redirect
 from lms_app.lms_dto.AssessmentDto import *
 from lms_app.lms_dto.QuestionDto import *
-from lms_app.service_controllers import service_controller, Question
+from lms_app.service_controllers import service_controller, Question, Assessment
 
 
 @login_required(redirect_field_name='next')
@@ -110,7 +110,13 @@ def question_details(request, question_id):
 @login_required(login_url='login')
 def delete_question(request, question_id):
     try:
+        question = service_controller.question_management_service().details(question_id)
+        qns_score = question.assigned_mark
+        assessment = Assessment.objects.get(id=question.assessment_id)
+        new_score = int(assessment.total_score) - int(qns_score)
+        assessment.total_score = new_score
         service_controller.question_management_service().delete(question_id)
+        assessment.save()
         return redirect('tutor_details')
     except Question.DoesNotExist as e:
         print('This question does not exist!')
