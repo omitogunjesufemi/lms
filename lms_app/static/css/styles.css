@@ -1,0 +1,26 @@
+
+.left {
+  float: left;
+  width: 40%;
+  padding: 10px;
+}
+
+
+
+.right {
+  float: right;
+  width: 40%;
+  padding: 10px;
+}
+
+#numbering {
+  list-style-type: none;
+  counter-reset: css-counter 0; /* initializes counter to 0; use -1 for zero-based numbering */
+  counter-increment: css-counter 1; /* Increase the counter by 1. */
+}
+
+
+#numbering:before {
+  content: counter(css-counter) ". "; /* Apply counter before children's content. */
+}
+

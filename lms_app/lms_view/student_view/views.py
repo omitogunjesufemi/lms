@@ -1,0 +1,180 @@
+import uuid
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.http import HttpRequest
+from django.shortcuts import render, redirect
+from lms_app.lms_dto.StudentDto import *
+from lms_app.service_controllers import service_controller, User, Student
+
+
+def register_student(request):
+    context = {
+
+    }
+    student = __create_if_post_method(request, context)
+    if request.method == 'POST' and context['saved'] == 'success':
+        username = student.username
+        password = student.password
+        user: User = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            if user.groups.filter(name__exact='students').exists():
+                return redirect('student_details')
+            return redirect('')
+    return render(request, 'student/register.html', context)
+
+
+@login_required(login_url='login')
+def edit_student(request, student_id):
+    l_as_list = []
+    for g in request.user.groups.all():
+        l_as_list.append(g.name)
+
+    try:
+        user_id = request.user.id
+        student = service_controller.student_management_service().details(user_id)
+    except Student.DoesNotExist as e:
+        print('You are not registered yet!')
+        raise e
+
+    context = {
+        'student': student,
+        'l_as_list': l_as_list,
+    }
+
+    edited_student = __edit_if_post_method(request, student_id, context)
+    if edited_student is not None:
+        context['student'] = edited_student
+        return redirect('student_details')
+    return render(request, 'student/edit_student.html', context)
+
+
+@login_required(login_url='login')
+def list_student(request):
+    l_as_list = []
+    for g in request.user.groups.all():
+        l_as_list.append(g.name)
+    username = request.user.username
+    students = service_controller.student_management_service().list()
+    context = {
+        'students': students,
+        'username': username,
+        'l_as_list': l_as_list,
+    }
+    return render(request, 'student/list_student.html', context)
+
+
+@login_required(login_url='login')
+def list_student_for_courses(request, course_id):
+    l_as_list = []
+    for g in request.user.groups.all():
+        l_as_list.append(g.name)
+    username = request.user.username
+    students = service_controller.student_management_service().list_student_for_course(course_id)
+    context = {
+        'students': students,
+        'username': username,
+        'l_as_list': l_as_list,
+    }
+    return render(request, 'student/list_student.html', context)
+
+
+@login_required(login_url='login')
+def student_details(request):
+    l_as_list = []
+    for g in request.user.groups.all():
+        l_as_list.append(g.name)
+
+    username = request.user.username
+    user_id = request.user.id
+    student = service_controller.student_management_service().details(user_id)
+    student_id = student.id
+    enrollments = service_controller.enrollment_management_service().list_enrollment_for_student(student_id)
+    enrollment_len = len(enrollments)
+
+    # Getting all Assessments for Student
+    assessments = service_controller.assessment_management_service().list_assessment_for_student(student_id)
+    assessment_len = len(assessments)
+
+    # Getting all sittings and attempted assessments by Student
+    sittings = service_controller.sitting_management_service().list_of_sitting_for_student_assessment(student_id)
+    sitting_len = len(sittings)
+
+    sitting_list = []
+    for sitting in sittings:
+        for assessment in assessments:
+            if sitting.assessment_id == assessment.id:
+                sitting_list.append(sitting.assessment_id)
+
+    context = {
+        'student': student,
+        'enrollments': enrollments,
+        'enrollment_len': enrollment_len,
+        'sitting_len': sitting_len,
+        'sitting_list': sitting_list,
+        'assessments': assessments,
+        'assessment_len': assessment_len,
+        'username': username,
+        'sittings': sittings,
+        'l_as_list': l_as_list,
+    }
+    return render(request, 'student/student_profile.html', context)
+
+
+def __set_student_attribute_request(request: HttpRequest):
+    register_student_dto = RegisterStudentDto()
+    register_student_dto.first_name = request.POST['first_name']
+    register_student_dto.username = request.POST['username']
+    __get_student_attribute_request(request, register_student_dto)
+    return register_student_dto
+
+
+def __get_student_attribute_request(request: HttpRequest, register_student_dto):
+    register_student_dto.first_name = request.POST['first_name']
+    register_student_dto.last_name = request.POST['last_name']
+    register_student_dto.phone = request.POST['phone']
+    register_student_dto.email = request.POST['email']
+    register_student_dto.password = request.POST['password']
+    register_student_dto.confirm_password = request.POST['confirm_password']
+
+
+def __create_if_post_method(request, context):
+    if request.method == 'POST':
+        try:
+            student = __set_student_attribute_request(request)
+            password = student.password
+            confirm_password = student.confirm_password
+            if password == confirm_password:
+                student.registration_number = str(uuid.uuid4()).replace('-', '')[0:10].upper()
+                service_controller.student_management_service().register(student)
+                context['saved'] = 'success'
+                return student
+            else:
+                context['saved'] = 'fail'
+        except Exception as e:
+            print('This Student was not registered')
+            raise e
+
+
+# Editing Student
+def __edit_student_attribute_request(request, student_id):
+    edit_student_dto = EditStudentDto()
+    edit_student_dto.first_name = request.POST['first_name']
+    edit_student_dto.last_name = request.POST['last_name']
+    edit_student_dto.phone = request.POST['phone']
+    edit_student_dto.email = request.POST['email']
+    edit_student_dto.username = request.POST['username']
+    edit_student_dto.id = student_id
+    return edit_student_dto
+
+
+def __edit_if_post_method(request, student_id, context):
+    if request.method == 'POST':
+        try:
+            student = __edit_student_attribute_request(request, student_id)
+            service_controller.student_management_service().edit(student_id, student)
+            context['saved'] = 'success'
+            return student
+        except Exception as e:
+            print('This Student was not registered')
+            raise e

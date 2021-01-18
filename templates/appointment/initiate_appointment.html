@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 mt-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Appoint Tutors for the Courses</h3>
+                    </div>
+
+                    <div class="card-body">
+                        {% for course in courses %}
+                            <h3>{{ course.course_title }}</h3>
+                            <p>{{ course.course_description }}</p>
+                            <div class="btn-group float-right">
+                                <a href="{% url 'initiate_appointment' course.id %}" class="btn btn-outline-success btn-sm">Appoint</a>
+                            </div>
+                            <div>
+                                <span>____________________________________________________________</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}
