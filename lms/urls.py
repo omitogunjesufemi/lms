@@ -31,6 +31,7 @@ urlpatterns = [
     path('question/', include('lms_app.lms_view.question_view.urls')),
     path('sitting/', include('lms_app.lms_view.sitting_view.urls')),
     path('grading/', include('lms_app.lms_view.grading_view.urls')),
+    path('comments/', include('lms_app.lms_view.comment.urls')),
     path('user/', include('lms_app.lms_view.login_out_view.urls')),
     path('user_edit/', include('lms_app.lms_view.password_change.urls')),
 ]

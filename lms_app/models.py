@@ -92,4 +92,14 @@ class Grading(models.Model):
 
 
 class Comment(models.Model):
-    assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE)
+    assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE, related_name='comments')
+    username = models.CharField(max_length=200)
+    body = models.TextField()
+    date_created = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['date_created']
+
+    def __str__(self):
+        return 'Comment {} by {}'.format(self.body, self.username)

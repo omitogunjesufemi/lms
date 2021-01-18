@@ -7,7 +7,7 @@ from lms_app.lms_dto.CourseDto import *
 from lms_app.service_controllers import service_controller, User, Course
 
 
-@login_required(login_url='login')
+@login_required(redirect_field_name='next')
 def register_course(request):
     l_as_list = []
     for g in request.user.groups.all():
@@ -38,7 +38,7 @@ def edit_course(request, course_id):
     return render(request, '', context)
 
 
-@login_required(login_url='login')
+@login_required(redirect_field_name='next')
 def list_courses(request):
     l_as_list = []
     for g in request.user.groups.all():
@@ -55,7 +55,7 @@ def list_courses(request):
     return render(request, 'course/list_courses.html', context)
 
 
-@login_required(login_url='login')
+@login_required(redirect_field_name='next')
 def course_details(request):
     l_as_list = []
     for g in request.user.groups.all():
@@ -70,7 +70,7 @@ def course_details(request):
     return render(request, '', context)
 
 
-@login_required(login_url='login')
+@login_required(redirect_field_name='next')
 def course_delete(request, course_id):
     try:
         service_controller.course_management_service().delete(course_id)

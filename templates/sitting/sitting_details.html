@@ -124,10 +124,48 @@
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}
+
                         </div>
                     </div>
                 </div>
             </div>
     </section>
+
+    <div>
+        <div class="">
+            <div class="container">
+                <div class="row justify-content-center">
+
+                    <div class="col-12 justify-content-center">
+                        <!-- comments -->
+                        <h5 class="ml-3 mt-2 text-secondary">{{ comment_len }} comments</h5>
+
+                        {% for comment in comments %}
+                            <div class="comments ml-5" style="padding: 10px;">
+                                <p class="font-weight-bold text-success">
+                                    {{ comment.username }}
+                                    <span class=" text-muted font-weight-normal">{{ comment.date_created }}</span>
+                                </p>
+                                {{ comment.body | linebreaks }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="col-12">
+                        <div class="text-secondary" style="font-size: 14pt">Leave a comment</div>
+                        <form method="post" style="margin-top: 1.3em;" action="{% url 'comment' assessment.id %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <textarea name="comment_body" class="form-control" id="comment_body" required></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-success float-right">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <hr>
+    </div>
 
 {% endblock %}

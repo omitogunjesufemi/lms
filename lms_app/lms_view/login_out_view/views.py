@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 
 
 def login_page_post(request):
-    resolve_url = request.POST['next_url']
+    resolve_url = request.GET.get('next_url', '/')
     context = {
 
     }

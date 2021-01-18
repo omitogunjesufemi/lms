@@ -10,4 +10,6 @@ admin.site.register(Sitting)
 admin.site.register(Question)
 admin.site.register(Enrollment)
 admin.site.register(Appointment)
+admin.site.register(Grading)
+admin.site.register(Comment)
 

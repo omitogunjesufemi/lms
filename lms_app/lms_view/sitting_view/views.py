@@ -95,6 +95,9 @@ def sitting_details(request, sitting_id):
     user_choice = dict(zip(question_list, user_answers))
     set_choice = dict(zip(question_list, answers))
 
+    comments = service_controller.comment_management_service().list(assessment_id)
+    comment_len = len(comments)
+
     context = {
         'username': username,
         'sitting': sitting,
@@ -104,6 +107,8 @@ def sitting_details(request, sitting_id):
         'user_choice': user_choice,
         'set_choice': set_choice,
         'l_as_list': l_as_list,
+        'comments': comments,
+        'comment_len': comment_len,
     }
     return render(request, 'sitting/sitting_details.html', context)
 

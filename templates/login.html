@@ -10,7 +10,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form action="{% url 'login_post' %}?next_url = {{ next_url }}" method="post">
+                        <form method="POST" action="{% url 'login_post' %}?next_url={{ next_url }}">
                             {% csrf_token %}
                             {% if message %}
                                 <div class="alert alert-danger">{{ message }}</div>
@@ -25,9 +25,9 @@
                                 <input class="form-control" name="password" id="password" type="password">
                             </div>
 
-                            <div class="form-group">
-                                <input class="form-control" name="next_url" id="next_url" value = {{ next_url }} type="hidden" >
-                            </div>
+{#                            <div class="form-group">#}
+{#                                <input class="form-control" name="next_url" id="next_url" value = {{ next_url }} type="hidden" >#}
+{#                            </div>#}
 
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-group btn-success">Sign in</button>
