@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('registration', views.registration, name='register'),
+    path('admin_c/', include('lms_app.lms_view.admin_view.urls')),
     path('student/', include('lms_app.lms_view.student_view.urls')),
     path('tutor/', include('lms_app.lms_view.tutor_view.urls')),
     path('course/', include('lms_app.lms_view.course_view.urls')),
@@ -32,6 +33,7 @@ urlpatterns = [
     path('sitting/', include('lms_app.lms_view.sitting_view.urls')),
     path('grading/', include('lms_app.lms_view.grading_view.urls')),
     path('comments/', include('lms_app.lms_view.comment.urls')),
+    path('application/', include('lms_app.lms_view.apply_view.urls')),
     path('user/', include('lms_app.lms_view.login_out_view.urls')),
     path('user_edit/', include('lms_app.lms_view.password_change.urls')),
 ]

@@ -142,20 +142,26 @@
 
                         {% for comment in comments %}
                             <div class="comments ml-5" style="padding: 10px;">
-                                <p class="font-weight-bold text-success">
-                                    {{ comment.username }}
-                                    <span class=" text-muted font-weight-normal">{{ comment.date_created }}</span>
-                                </p>
+                                {% if username == comment.username %}
+                                    <p class="font-weight-bold text-success">
+                                        {{ comment.username }}
+                                        <span class=" text-muted font-weight-normal">{{ comment.date_created }}</span>
+                                    </p>
+                                {% else %}
+                                    <p class="font-weight-bold text-danger">
+                                        {{ comment.username }}
+                                        <span class=" text-muted font-weight-normal">{{ comment.date_created }}</span>
+                                    </p>
+                                {% endif %}
                                 {{ comment.body | linebreaks }}
                             </div>
                         {% endfor %}
                     </div>
                     <div class="col-12">
-                        <div class="text-secondary" style="font-size: 14pt">Leave a comment</div>
                         <form method="post" style="margin-top: 1.3em;" action="{% url 'comment' assessment.id %}">
                             {% csrf_token %}
                             <div class="form-group">
-                                <textarea name="comment_body" class="form-control" id="comment_body" required></textarea>
+                                <textarea name="comment_body" class="form-control" id="comment_body" required placeholder="Leave a comment"></textarea>
                             </div>
 
                             <button type="submit" class="btn btn-success float-right">Submit</button>

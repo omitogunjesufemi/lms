@@ -24,7 +24,50 @@
                                 {% if 'students' in l_as_list %}
                                     <a href="{% url 'initiate_enrollment' course.id %}" class="btn btn-outline-success btn-sm">Enroll</a>
                                 {% elif 'tutors' in l_as_list %}
-                                    <a href="{% url 'initiate_appointment' course.id %}" class="btn btn-outline-success btn-sm">Appoint</a>
+                                    <a href="#" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Appoint</a>
+
+
+                                    <!--Modal for Tutor Application-->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Submit Application</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" action="{% url 'tutor_application' course.id %}" enctype="multipart/form-data">
+                                                        {% csrf_token %}
+                                                        <div class="form-group">
+                                                            <label for="message-text" class="col-form-label">Qualifications:</label>
+                                                            <textarea
+                                                                    class="form-control" id="qualifications"
+                                                                    placeholder="Write a summary of your qualification ans experience..."
+                                                                    name="qualifications"
+                                                            ></textarea>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="file_upload" class="col-form-label">Upload CV</label>
+                                                            <input type="file" class="form-row" id="file_upload" name="file_upload">
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Apply</button>
+                                                        </div>
+
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                 <!--End of Modal-->
+
                                 {% else %}
                                     <a href="{% url 'initiate_enrollment' course.id %}" class="btn btn-outline-success btn-sm">Enroll</a>
                                 {% endif %}
@@ -33,6 +76,7 @@
                                 <hr>
                             </div>
                         {% endfor %}
+
                     </div>
 
                 </div>
@@ -42,4 +86,7 @@
         </div>
 
     </div>
+
+
+
 {% endblock %}

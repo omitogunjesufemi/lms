@@ -3,6 +3,14 @@ from django.db import models
 
 
 # Create your models here.
+class AdminUser(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    phone = models.CharField(max_length=11)
+
+    def __str__(self):
+        return f'{self.user.first_name} {self.user.last_name}'
+
+
 class Tutor(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=11)
@@ -100,4 +108,14 @@ class Comment(models.Model):
 
     def __str__(self):
         return 'Comment {} by {}'.format(self.body, self.username)
+
+
+class Apply(models.Model):
+    tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    qualifications = models.TextField()
+    file_upload = models.FileField(upload_to='cv/')
+
+    def __str__(self):
+        return f'{self.course} {self.qualifications}'
 

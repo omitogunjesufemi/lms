@@ -1,7 +1,10 @@
 from typing import Callable
 from dependency_injector import providers, containers
 
+from lms_app.lms_service.AdminService import *
+from lms_app.lms_repository.ApplyRepository import DjangoORMApplyRepository
 from lms_app.lms_repository.CommentRepository import DjangoORMCommentRepository
+from lms_app.lms_service.ApplyService import *
 from lms_app.lms_service.TutorService import *
 from lms_app.lms_service.StudentService import *
 from lms_app.lms_service.CourseService import *
@@ -15,6 +18,16 @@ from lms_app.lms_service.CommentService import *
 
 
 class Container(containers.DeclarativeContainer):
+    # ADMIN SERVICE CONTROLLER
+    admin_repository: Callable[[], AdminRepository] = providers.Factory(
+        DjangoORMAdminRepository
+    )
+
+    admin_management_service: Callable[[], AdminManagementService] = providers.Factory(
+        DefaultAdminManagementService,
+        repository=admin_repository
+    )
+
     # STUDENT SERVICE CONTROLLER
     student_repository: Callable[[], StudentRepository] = providers.Factory(
         DjangoORMStudentRepository
@@ -104,6 +117,15 @@ class Container(containers.DeclarativeContainer):
     comment_management_service: Callable[[], CommentManagementService] = providers.Factory(
         DefaultCommentManagementService,
         repository=comment_repository
+    )
+
+    # APPLICATION SERVICE CONTROLLER
+    apply_repository: Callable[[], ApplyRepository] = providers.Factory(
+        DjangoORMApplyRepository
+    )
+    apply_management_service: Callable[[], ApplyManagementService] = providers.Factory(
+        DefaultApplyManagementService,
+        repository=apply_repository
     )
 
 
