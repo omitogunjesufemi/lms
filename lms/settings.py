@@ -24,12 +24,12 @@ dotenv_path = join(dirname(__file__), '.env')
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'd2)m__4mbhee)0e3#v=8srv_ad*q-f3$)$e&xo-cehjc^#!0%y'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [os.getenv('HOST')]
 
 # Application definition
 
@@ -78,13 +78,14 @@ WSGI_APPLICATION = 'lms.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'lmsdatabase',
-        'USER': 'jesufemi',
-        'PASSWORD': 'omix@2000',
-        'HOST': 'db4free.net',
+        'ENGINE': os.getenv('DB_ENGINE'),
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
