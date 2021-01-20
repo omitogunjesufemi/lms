@@ -19,34 +19,42 @@ def register_admin(request):
         if user is not None:
             login(request, user)
             if user.groups.filter(name__exact='admins').exists():
-                return redirect('')
-            return redirect('')
+                return redirect('admin_details')
+            return redirect('/')
     return render(request, 'admin/register_admin.html', context)
 
 
 @login_required(login_url='login')
 def edit_admin(request, admin_id):
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
+    if request.user.is_superuser:
+        username = request.user.username
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
 
-    try:
-        user_id = request.user.id
-        admin = service_controller.admin_management_service().details(user_id)
-    except AdminUser.DoesNotExist as e:
-        print('You are not registered yet!')
-        raise e
+        try:
+            user_id = request.user.id
+            admin = service_controller.admin_management_service().details(user_id)
+        except AdminUser.DoesNotExist as e:
+            print('You are not registered yet!')
+            raise e
 
-    context = {
-        'admin': admin,
-        'l_as_list': l_as_list,
-    }
+        context = {
+            'admin': admin,
+            'username': username,
+            'l_as_list': l_as_list,
+        }
 
-    edited_admin = __edit_if_post_method(request, admin_id, context)
-    if edited_admin is not None:
-        context['admin'] = edited_admin
-        return redirect('')
-    return render(request, '', context)
+        edited_admin = __edit_if_post_method(request, admin_id, context)
+        if edited_admin is not None:
+            context['admin'] = edited_admin
+            return redirect('admin_details')
+        return render(request, 'admin/edit_admin.html', context)
+    else:
+        context = {
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 
 @login_required(login_url='login')
@@ -65,57 +73,73 @@ def list_admins(request):
 
 @login_required(login_url='login')
 def admin_details(request):
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
-    user_id = request.user.id
-    username = request.user.username
+    if request.user.is_superuser:
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
+        user_id = request.user.id
+        username = request.user.username
 
-    admin = service_controller.admin_management_service().details(user_id)
+        admin = service_controller.admin_management_service().details(user_id)
 
-    tutors = service_controller.tutor_management_service().list()
-    tutor_len = len(tutors)
+        tutors = service_controller.tutor_management_service().list()
+        tutor_len = len(tutors)
 
-    students = service_controller.student_management_service().list()
-    student_len = len(students)
+        students = service_controller.student_management_service().list()
+        student_len = len(students)
 
-    courses = service_controller.course_management_service().list()
-    course_len = len(courses)
+        courses = service_controller.course_management_service().list()
+        course_len = len(courses)
 
-    appointments = service_controller.appointment_management_service().list()
-    appointment_len = len(appointments)
+        applications = service_controller.apply_management_service().list()
+        application_len = len(applications)
 
-    assessments = service_controller.assessment_management_service().list()
-    assessment_len = len(assessments)
+        appointments = service_controller.appointment_management_service().list()
+        appointment_len = len(appointments)
 
-    questions = service_controller.question_management_service().list()
-    question_len = len(questions)
+        assessments = service_controller.assessment_management_service().list()
+        assessment_len = len(assessments)
 
-    sittings = service_controller.sitting_management_service().list()
-    sitting_len = len(sittings)
+        enrollments = service_controller.enrollment_management_service().list()
+        enrollment_len = len(enrollments)
 
-    context = {
-        'admin': admin,
-        'tutors': tutors,
-        'students': students,
-        'courses': courses,
-        'appointments': appointments,
-        'assessments': assessments,
-        'questions': questions,
-        'sittings': sittings,
+        questions = service_controller.question_management_service().list()
+        question_len = len(questions)
 
-        'tutor_len': tutor_len,
-        'student_len': student_len,
-        'course_len': course_len,
-        'appointment_len': appointment_len,
-        'assessment_len': assessment_len,
-        'question_len': question_len,
-        'sitting_len': sitting_len,
+        sittings = service_controller.sitting_management_service().list()
+        sitting_len = len(sittings)
 
-        'username': username,
-        'l_as_list': l_as_list,
-    }
-    return render(request, '', context)
+        context = {
+            'admin': admin,
+            'tutors': tutors,
+            'students': students,
+            'courses': courses,
+            'applications': applications,
+            'appointments': appointments,
+            'assessments': assessments,
+            'enrollments': enrollments,
+            'questions': questions,
+            'sittings': sittings,
+
+            'tutor_len': tutor_len,
+            'student_len': student_len,
+            'course_len': course_len,
+            'appointment_len': appointment_len,
+            'application_len': application_len,
+            'assessment_len': assessment_len,
+            'enrollment_len': enrollment_len,
+            'question_len': question_len,
+            'sitting_len': sitting_len,
+
+            'username': username,
+            'l_as_list': l_as_list,
+        }
+        return render(request, 'admin/admin_profile.html', context)
+    else:
+        context = {
+            'message': 'You are not authorised!'
+        }
+        return render(request, 'error_message.html', context)
 
 
 def __set_admin_attribute_request(request: HttpRequest):

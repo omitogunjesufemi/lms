@@ -80,8 +80,8 @@ class Question(models.Model):
 
 
 class Sitting(models.Model):
-    participant = models.ForeignKey(Student, on_delete=models.RESTRICT)
-    assessment = models.ForeignKey(Assessment, on_delete=models.RESTRICT)
+    participant = models.ForeignKey(Student, on_delete=models.CASCADE)
+    assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE)
     question_list = models.TextField(default='')
     answer_list = models.TextField(default='')
     user_answer = models.TextField(default='')
@@ -114,8 +114,9 @@ class Apply(models.Model):
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     qualifications = models.TextField()
+    status = models.BooleanField(default=False)
     file_upload = models.FileField(upload_to='cv/')
 
     def __str__(self):
-        return f'{self.course} {self.qualifications}'
+        return f'{self.course} {self.status}'
 

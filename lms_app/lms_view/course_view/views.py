@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
 from lms_app.lms_dto.CourseDto import *
-from lms_app.service_controllers import service_controller, User, Course
+from lms_app.service_controllers import service_controller, User, Course, AdminUser
 
 
 @login_required(redirect_field_name='next')
@@ -26,16 +26,26 @@ def register_course(request):
     return render(request, 'course/register_course.html', context)
 
 
+@login_required(login_url='login')
 def edit_course(request, course_id):
     l_as_list = []
     for g in request.user.groups.all():
         l_as_list.append(g.name)
+    try:
+        course = service_controller.course_management_service().details(course_id)
+    except Course.DoesNotExist as e:
+        print('Course not registered yet!')
+        raise e
 
     context = {
+        'course': course,
         'l_as_list': l_as_list,
-
     }
-    return render(request, '', context)
+    edited_course = __edit_if_post_method(request, course_id, context)
+    if edited_course is not None:
+        context['course'] = edited_course
+        return redirect('admin_details')
+    return render(request, 'course/edit_course.html', context)
 
 
 @login_required(redirect_field_name='next')
@@ -99,4 +109,25 @@ def __create_if_post_method(request, context):
             context['saved'] = 'success'
         except Exception as e:
             print('This Course was not registered')
+            raise e
+
+
+# Editing Course
+def __edit_course_attribute_request(request, course_id):
+    edit_course_dto = EditCourseDto()
+    edit_course_dto.course_title = request.POST['course_title']
+    edit_course_dto.course_description = request.POST['course_description']
+    edit_course_dto.id = course_id
+    return edit_course_dto
+
+
+def __edit_if_post_method(request, course_id, context):
+    if request.method == 'POST':
+        try:
+            course = __edit_course_attribute_request(request, course_id)
+            service_controller.course_management_service().edit(course_id, course)
+            context['saved'] = 'success'
+            return course
+        except Exception as e:
+            print('This course was not registered')
             raise e

@@ -23,6 +23,4 @@ class ListCourseDto:
 class CourseDetailDto:
     course_title: str
     course_description: str
-    tutors_id: int
-    students_id: int
     id: int

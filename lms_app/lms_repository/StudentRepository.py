@@ -138,7 +138,10 @@ class DjangoORMStudentRepository(StudentRepository):
 
     def delete(self, student_id: int):
         try:
-            Student.objects.get(id=student_id).delete()
+            student = Student.objects.get(id=student_id)
+            user_id = student.user.id
+            student.delete()
+            User.objects.get(id=user_id).delete()
         except Student.DoesNotExist as e:
             print('This Student was not found!')
             raise e

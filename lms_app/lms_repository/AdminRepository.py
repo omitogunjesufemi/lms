@@ -97,7 +97,6 @@ class DjangoORMAdminRepository(AdminRepository):
             admin_details.username = admin.user.username
             admin_details.email = admin.user.email
             admin_details.phone = admin.phone
-            admin_details.registration_number = admin.registration_number
             return admin_details
         except AdminUser.DoesNotExist as e:
             print('This admin cannot be found!')

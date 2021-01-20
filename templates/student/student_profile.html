@@ -6,11 +6,15 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header bg-success">
+                            {% if 'students' in l_as_list %}
                             <h3 class="text-light">Welcome @{{ student.username }}
                                 <a href="{% url 'edit_student' student.id %}"
                                    style="font-size: 14pt"
                                    class="float-right text-light form-text " >
                                     {% load static %}<img class="d-block w-100" src="{% static "img/002-pencil.png" %}" alt="Edit"></a> </h3>
+                            {% else %}
+                                <h5 class="text-light text-uppercase"> Student -- {{ student.first_name }} {{ student.last_name }}</h5>
+                            {% endif %}
                         </div>
                         <div class="card-body">
                                 <div class="row">

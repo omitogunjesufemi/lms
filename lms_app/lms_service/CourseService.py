@@ -39,7 +39,7 @@ class DefaultCourseManagementService(CourseManagementService):
         return self.repository.register(model)
 
     def edit(self, course_id, model: EditCourseDto):
-        return self.repository.edit(model)
+        return self.repository.edit(course_id, model)
 
     def list(self) -> List[ListCourseDto]:
         return self.repository.list()

@@ -67,8 +67,6 @@ class DjangoORMCourseRepository(CourseRepository):
             subject.id = course.id
             subject.course_title = course.course_title
             subject.course_description = course.course_description
-            subject.tutors_id = course.tutors.id
-            subject.students_id = course.students.id
             return subject
         except Course.DoesNotExist as e:
             print('This Course is not yet Registered!')

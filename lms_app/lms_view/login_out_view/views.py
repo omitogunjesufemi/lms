@@ -18,6 +18,8 @@ def login_page_post(request):
             return redirect(resolve_url)
         elif user.groups.filter(name__exact='tutors').exists():
             return redirect(resolve_url)
+        elif user.groups.filter(name__exact='admin').exists():
+            return redirect(resolve_url)
     else:
         context['message'] = 'Incorrect Username or Password!'
         return render(request, 'login.html', context)

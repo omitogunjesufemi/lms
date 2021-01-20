@@ -20,7 +20,7 @@ def register_student(request):
             login(request, user)
             if user.groups.filter(name__exact='students').exists():
                 return redirect('student_details')
-            return redirect('')
+            return redirect('register')
     return render(request, 'student/register.html', context)
 
 
@@ -119,6 +119,65 @@ def student_details(request):
         'l_as_list': l_as_list,
     }
     return render(request, 'student/student_profile.html', context)
+
+
+@login_required(login_url='login')
+def student_details_for_admin(request, student_id):
+    l_as_list = []
+    for g in request.user.groups.all():
+        l_as_list.append(g.name)
+
+    username = request.user.username
+
+    student_ = Student.objects.get(id=student_id)
+    student_id = student_.id
+
+    user_id = student_.user.id
+    student = service_controller.student_management_service().details(user_id)
+    
+    enrollments = service_controller.enrollment_management_service().list_enrollment_for_student(student_id)
+    enrollment_len = len(enrollments)
+
+    # Getting all Assessments for Student
+    assessments = service_controller.assessment_management_service().list_assessment_for_student(student_id)
+    assessment_len = len(assessments)
+
+    # Getting all sittings and attempted assessments by Student
+    sittings = service_controller.sitting_management_service().list_of_sitting_for_student_assessment(student_id)
+    sitting_len = len(sittings)
+
+    sitting_list = []
+    for sitting in sittings:
+        for assessment in assessments:
+            if sitting.assessment_id == assessment.id:
+                sitting_list.append(sitting.assessment_id)
+
+    context = {
+        'student': student,
+        'enrollments': enrollments,
+        'enrollment_len': enrollment_len,
+        'sitting_len': sitting_len,
+        'sitting_list': sitting_list,
+        'assessments': assessments,
+        'assessment_len': assessment_len,
+        'username': username,
+        'sittings': sittings,
+        'l_as_list': l_as_list,
+    }
+    return render(request, 'student/student_profile.html', context)
+
+
+
+@login_required(redirect_field_name='next')
+def delete_student(request, student_id):
+    try:
+        service_controller.student_management_service().delete(student_id)
+        return redirect('admin_details')
+    except Student.DoesNotExist as e:
+        print('This student does not exist!')
+        raise e
+
+
 
 
 def __set_student_attribute_request(request: HttpRequest):

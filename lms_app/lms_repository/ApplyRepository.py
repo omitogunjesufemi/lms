@@ -38,6 +38,7 @@ class DjangoORMApplyRepository(ApplyRepository):
         apply.course_id = model.course_id
         apply.qualifications = model.qualifications
         apply.file_upload = model.file
+        apply.status = False
         apply.save()
 
     def edit(self, apply_id, model: ApplyDto):
@@ -56,6 +57,7 @@ class DjangoORMApplyRepository(ApplyRepository):
                                                  'tutor_id',
                                                  'course_id',
                                                  'qualifications',
+                                                 'status',
                                                  'file_upload'
                                                ))
         application_list: List[ApplyDto] = []
@@ -66,6 +68,7 @@ class DjangoORMApplyRepository(ApplyRepository):
             apply.course_id = application['course_id']
             apply.qualifications = application['qualifications']
             apply.file = application['file_upload']
+            apply.status = application['status']
             application_list.append(apply)
         return application_list
 
@@ -78,6 +81,7 @@ class DjangoORMApplyRepository(ApplyRepository):
             task.course_id = apply.course_id
             task.qualifications = apply.qualifications
             task.file = apply.file_upload
+            task.status = apply.status
             return task
         except Apply.DoesNotExist as e:
             print('No application found!')

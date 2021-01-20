@@ -2,7 +2,7 @@
 {% block content %}
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8 mt-4">
+            <div class="col-md-7 mt-4">
 
                 <div class="row justify-content-center text-secondary mt-4">
                     {% if 'students' in l_as_list %}
@@ -24,7 +24,7 @@
                                 {% if 'students' in l_as_list %}
                                     <a href="{% url 'initiate_enrollment' course.id %}" class="btn btn-outline-success btn-sm">Enroll</a>
                                 {% elif 'tutors' in l_as_list %}
-                                    <a href="#" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Appoint</a>
+                                    <a href="#" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Apply</a>
 
 
                                     <!--Modal for Tutor Application-->
@@ -67,6 +67,8 @@
                                     </div>
 
                                  <!--End of Modal-->
+
+                                {% elif 'admin' in l_as_list %}
 
                                 {% else %}
                                     <a href="{% url 'initiate_enrollment' course.id %}" class="btn btn-outline-success btn-sm">Enroll</a>

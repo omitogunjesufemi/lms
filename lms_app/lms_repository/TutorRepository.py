@@ -107,7 +107,10 @@ class DjangoORMTutorRepository(TutorRepository):
 
     def delete(self, tutor_id: int):
         try:
-            Tutor.objects.get(id=tutor_id).delete()
+            tutor = Tutor.objects.get(id=tutor_id)
+            user_id = tutor.user.id
+            tutor.delete()
+            User.objects.get(id=user_id).delete()
         except Tutor.DoesNotExist as e:
             print('This tutor does not exist!')
             raise e

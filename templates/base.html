@@ -47,15 +47,24 @@
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-light"
-                                   href="#" id="navbarDropdownMenuLink"
-                                   data-toggle="dropdown">
+                                    id="navbarDropdownMenuLink"
+                                     data-toggle="dropdown">
                                     {{ username }} {% load static %}<img class="" src="{% static "img/004-user.png" %}" alt="{{ username }}">
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     {% if 'students' in l_as_list %}
-                                        <a class="dropdown-item" href="{% url 'student_details' %}">Profile</a>
+                                        <span>You are logged in as a student @LMS</span>
+                                        <a class="dropdown-item" href="{% url 'student_details' %}"> <span style="font-size: small" class="text-secondary">{{ username }} is logged<br> in as a student.<br></span>
+                                            <hr>
+                                            Profile</a>
                                     {% elif 'tutors' in l_as_list %}
-                                        <a class="dropdown-item" href="{% url 'tutor_details' %}">Profile</a>
+                                        <a class="dropdown-item" href="{% url 'tutor_details' %}"> <span style="font-size: small" class="text-secondary">{{ username }} is logged<br> in as a tutor.<br></span>
+                                            <hr>
+                                            Profile</a>
+                                    {% elif 'admin' in l_as_list %}
+                                        <a class="dropdown-item" href="{% url 'admin_details' %}"> <span style="font-size: small" class="text-secondary">{{ username }} is logged<br> in as an admin.<br></span>
+                                            <hr>
+                                            Profile</a>
                                     {% endif %}
 
 

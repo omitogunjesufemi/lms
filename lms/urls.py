@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include
 from lms_app.lms_view.index_view import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,4 +38,5 @@ urlpatterns = [
     path('application/', include('lms_app.lms_view.apply_view.urls')),
     path('user/', include('lms_app.lms_view.login_out_view.urls')),
     path('user_edit/', include('lms_app.lms_view.password_change.urls')),
-]
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

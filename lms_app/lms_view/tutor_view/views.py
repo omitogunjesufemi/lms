@@ -20,7 +20,7 @@ def register_tutor(request):
         if user is not None:
             login(request, user)
             if user.groups.filter(name__exact='tutors').exists():
-                return redirect('list_tutor')
+                return redirect('tutor_details')
             return redirect('')
     return render(request, 'tutor/register_tutor.html', context)
 
@@ -104,6 +104,61 @@ def tutor_details(request):
         'l_as_list': l_as_list,
     }
     return render(request, 'tutor/tutor_profile.html', context)
+
+
+@login_required(login_url='login')
+def tutor_details_for_admin(request, tutor_id):
+    l_as_list = []
+    for g in request.user.groups.all():
+        l_as_list.append(g.name)
+
+    username = request.user.username
+    tutor_ = Tutor.objects.get(id=tutor_id)
+    tutor_id = tutor_.id
+
+    user_id = tutor_.user.id
+    tutor = service_controller.tutor_management_service().details(user_id)
+    appointments = service_controller.appointment_management_service().list_appoint_for_tutor(tutor_id)
+    appointment_len = len(appointments)
+    assessments = service_controller.assessment_management_service().list_assessment_for_tutor(tutor_id)
+    assessment_len = len(assessments)
+    questions = service_controller.question_management_service().list_question_for_tutor(tutor_id)
+    question_len = len(questions)
+
+    sittings = service_controller.sitting_management_service().list()
+    sitting_list = []
+
+    for sitting in sittings:
+        for assessment in assessments:
+            if assessment.id == sitting.assessment_id:
+                sitting_list.append(sitting)
+
+    sitting_len = len(sitting_list)
+
+    context = {
+        'tutor': tutor,
+        'appointments': appointments,
+        'assessments': assessments,
+        'questions': questions,
+        'sitting_list': sitting_list,
+        'appointment_len': appointment_len,
+        'assessment_len': assessment_len,
+        'question_len': question_len,
+        'sitting_len': sitting_len,
+        'username': username,
+        'l_as_list': l_as_list,
+    }
+    return render(request, 'tutor/tutor_profile.html', context)
+
+
+@login_required(redirect_field_name='next')
+def delete_tutor(request, tutor_id):
+    try:
+        service_controller.tutor_management_service().delete(tutor_id)
+        return redirect('admin_details')
+    except Tutor.DoesNotExist as e:
+        print('This tutor does not exist!')
+        raise e
 
 
 def __set_tutor_attribute_request(request: HttpRequest):
