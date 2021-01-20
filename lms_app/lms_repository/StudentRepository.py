@@ -42,22 +42,27 @@ class StudentRepository(metaclass=ABCMeta):
 
 class DjangoORMStudentRepository(StudentRepository):
     def register(self, model: RegisterStudentDto):
-        student = Student()
-        student.phone = model.phone
-        student.registration_number = model.registration_number
 
-        user = User.objects.create_user(username=model.username, email=model.email, password=model.password)
-        user.first_name = model.first_name
-        user.last_name = model.last_name
-        user.save()
+        check_user = User.objects.get(username=model.username)
+        if check_user is None:
+            student = Student()
+            student.phone = model.phone
+            student.registration_number = model.registration_number
 
-        student.user = user
-        students, create = Group.objects.get_or_create(name='students')
-        # students = Group.objects.get(name__exact='students')
-        user.groups.add(students)
+            user = User.objects.create_user(username=model.username, email=model.email, password=model.password)
+            user.first_name = model.first_name
+            user.last_name = model.last_name
+            user.save()
 
-        student.save()
-        return student.id
+            student.user = user
+            students, create = Group.objects.get_or_create(name='students')
+            user.groups.add(students)
+
+            student.save()
+            return student.id
+        else:
+            raise Exception
+
 
     def edit(self, student_id:int, model: EditStudentDto):
         try:

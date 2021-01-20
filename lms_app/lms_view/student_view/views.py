@@ -1,8 +1,10 @@
 import uuid
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
+
 from lms_app.lms_dto.StudentDto import *
 from lms_app.service_controllers import service_controller, User, Student
 
@@ -22,6 +24,16 @@ def register_student(request):
                 return redirect('student_details')
             return redirect('register')
     return render(request, 'student/register.html', context)
+
+
+@csrf_exempt
+def check_username_exist(request):
+    username = request.POST.get('username')
+    check_user = User.objects.filter(username=username).exists()
+    if check_user:
+        return HttpResponse(True)
+    else:
+        return HttpResponse(False)
 
 
 @login_required(login_url='login')
@@ -234,6 +246,9 @@ def __create_if_post_method(request, context):
             student = __set_student_attribute_request(request)
             password = student.password
             confirm_password = student.confirm_password
+
+
+
             if password == confirm_password:
                 student.registration_number = str(uuid.uuid4()).replace('-', '')[0:10].upper()
                 service_controller.student_management_service().register(student)
