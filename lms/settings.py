@@ -24,7 +24,7 @@ dotenv_path = join(dirname(__file__), '.env')
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'd2)m__4mbhee)0e3#v=8srv_ad*q-f3$)$e&xo-cehjc^#!0%y'
+SECRET_KEY = os.getenv('SECRET_LEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG')
@@ -135,4 +135,4 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'lms_app/static'),
 )
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
