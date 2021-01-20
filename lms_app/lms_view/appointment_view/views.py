@@ -10,41 +10,51 @@ from lms_app.service_controllers import service_controller
 
 @login_required(login_url='login')
 def initiate_appointment(request, course_id, tutor_id, apply_id):
+    if request.user.is_superuser:
+        context = {
 
-    context = {
-
-    }
-    appoint2 = __initiate_appointment_method(request, course_id, tutor_id, apply_id, context)
-    apply = Apply.objects.get(id=apply_id)
-    apply.status = True
-    apply.save()
-    if appoint2 == 1:
-        return redirect('admin_details')
+        }
+        appoint2 = __initiate_appointment_method(request, course_id, tutor_id, apply_id, context)
+        apply = Apply.objects.get(id=apply_id)
+        apply.status = True
+        apply.save()
+        if appoint2 == 1:
+            return redirect('admin_details')
+        else:
+            return render(request, 'enrollment/error_message.html', context)
     else:
-        return render(request, 'enrollment/error_message.html', context)
+        context = {
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 
 @login_required(redirect_field_name='next')
 def start_appointment(request):
-    username = request.user.username
+    if request.user.is_superuser:
+        username = request.user.username
 
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
 
-    applications = service_controller.apply_management_service().list()
-    courses = service_controller.course_management_service().list()
-    tutors = service_controller.tutor_management_service().list()
+        applications = service_controller.apply_management_service().list()
+        courses = service_controller.course_management_service().list()
+        tutors = service_controller.tutor_management_service().list()
 
-    context = {
-        'username': username,
-        'l_as_list': l_as_list,
-        'applications': applications,
-        'courses': courses,
-        'tutors': tutors,
-    }
-    return render(request, 'appointment/initiate_appointment.html', context)
-
+        context = {
+            'username': username,
+            'l_as_list': l_as_list,
+            'applications': applications,
+            'courses': courses,
+            'tutors': tutors,
+        }
+        return render(request, 'appointment/initiate_appointment.html', context)
+    else:
+        context = {
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 def update_appointment(request, course_id):
     context = {
@@ -55,14 +65,19 @@ def update_appointment(request, course_id):
 
 @login_required(login_url='login')
 def list_appointments(request):
-    username = request.user.username
-    appointments = service_controller.appointment_management_service().list()
-    context = {
-        'username': username,
-        'appointments': appointments,
-    }
-    return render(request, 'appointment/list_appointment.html', context)
-
+    if request.user.is_superuser:
+        username = request.user.username
+        appointments = service_controller.appointment_management_service().list()
+        context = {
+            'username': username,
+            'appointments': appointments,
+        }
+        return render(request, 'appointment/list_appointment.html', context)
+    else:
+        context = {
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 def appointment_details(request):
     username = request.user.username
@@ -71,12 +86,8 @@ def appointment_details(request):
     for g in request.user.groups.all():
         l_as_list.append(g.name)
 
-    if l_as_list == 'tutors':
-        user_id = request.user.id
-        tutor_id = service_controller.tutor_management_service().details(user_id)
-    elif l_as_list == 'admin':
-        pass
-
+    user_id = request.user.id
+    tutor_id = service_controller.tutor_management_service().details(user_id)
 
     appointment = service_controller.appointment_management_service().details(tutor_id)
     context = {

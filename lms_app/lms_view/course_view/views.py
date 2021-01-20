@@ -9,60 +9,78 @@ from lms_app.service_controllers import service_controller, User, Course, AdminU
 
 @login_required(redirect_field_name='next')
 def register_course(request):
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
+    if request.user.has_perm('lms_app.add_course'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
 
-    username = request.user.username
+        username = request.user.username
 
-    context = {
-        'username': username,
-        'l_as_list': l_as_list,
+        context = {
+            'username': username,
+            'l_as_list': l_as_list,
 
-    }
-    __create_if_post_method(request, context)
-    if request.method == 'POST' and context['saved']:
-        return redirect('list_courses')
-    return render(request, 'course/register_course.html', context)
+        }
+        __create_if_post_method(request, context)
+        if request.method == 'POST' and context['saved']:
+            return redirect('list_courses')
+        return render(request, 'course/register_course.html', context)
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 
 @login_required(login_url='login')
 def edit_course(request, course_id):
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
-    try:
-        course = service_controller.course_management_service().details(course_id)
-    except Course.DoesNotExist as e:
-        print('Course not registered yet!')
-        raise e
+    if request.user.has_perm('lms_app.change_course'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
+        try:
+            course = service_controller.course_management_service().details(course_id)
+        except Course.DoesNotExist as e:
+            print('Course not registered yet!')
+            raise e
 
-    context = {
-        'course': course,
-        'l_as_list': l_as_list,
-    }
-    edited_course = __edit_if_post_method(request, course_id, context)
-    if edited_course is not None:
-        context['course'] = edited_course
-        return redirect('admin_details')
-    return render(request, 'course/edit_course.html', context)
+        context = {
+            'course': course,
+            'l_as_list': l_as_list,
+        }
+        edited_course = __edit_if_post_method(request, course_id, context)
+        if edited_course is not None:
+            context['course'] = edited_course
+            return redirect('admin_details')
+        return render(request, 'course/edit_course.html', context)
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 
 @login_required(redirect_field_name='next')
 def list_courses(request):
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
+    if request.user.has_perm('lms_app.view_course'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
 
-    username = request.user.username
+        username = request.user.username
 
-    courses = service_controller.course_management_service().list()
-    context = {
-        'username': username,
-        'courses': courses,
-        'l_as_list': l_as_list,
-    }
-    return render(request, 'course/list_courses.html', context)
+        courses = service_controller.course_management_service().list()
+        context = {
+            'username': username,
+            'courses': courses,
+            'l_as_list': l_as_list,
+        }
+        return render(request, 'course/list_courses.html', context)
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 
 @login_required(redirect_field_name='next')
@@ -82,11 +100,17 @@ def course_details(request):
 
 @login_required(redirect_field_name='next')
 def course_delete(request, course_id):
-    try:
-        service_controller.course_management_service().delete(course_id)
-    except Course.DoesNotExist as e:
-        print('This course does not exist!')
-        raise e
+    if request.user.has_perm('lms_app.delete_course'):
+        try:
+            service_controller.course_management_service().delete(course_id)
+        except Course.DoesNotExist as e:
+            print('This course does not exist!')
+            raise e
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 
 def __set_course_attribute_request(request: HttpRequest):

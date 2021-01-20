@@ -11,95 +11,125 @@ from lms_app.service_controllers import service_controller, Tutor, Assessment
 
 @login_required(login_url='login')
 def create_assessment(request):
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
-    username = request.user.username
-    user_id = request.user.id
-    tutor = Tutor.objects.get(user_id=user_id)
-    tutors_id = tutor.id
-    appointments = service_controller.appointment_management_service().list()
-    course_list: List[ListCourseDto] = []
-    for appointment in appointments:
-        if tutors_id == appointment.tutors_id:
-            course = ListCourseDto()
-            course.course_id = appointment.course_id
-            course.course_title = appointment.course_title
-            course_list.append(course)
+    if request.user.has_perm('lms_app.add_assessment'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
+        username = request.user.username
+        user_id = request.user.id
+        tutor = Tutor.objects.get(user_id=user_id)
+        tutors_id = tutor.id
+        appointments = service_controller.appointment_management_service().list()
+        course_list: List[ListCourseDto] = []
+        for appointment in appointments:
+            if tutors_id == appointment.tutors_id:
+                course = ListCourseDto()
+                course.course_id = appointment.course_id
+                course.course_title = appointment.course_title
+                course_list.append(course)
 
-    context = {
-        'username': username,
-        'course_list': course_list,
-        'l_as_list': l_as_list,
-     }
-    __initiate_assessment_method(request, context)
-    if request.method == 'POST':
-        return redirect('list_assessment')
-    return render(request, 'assessment/create_assessment.html', context)
+        context = {
+            'username': username,
+            'course_list': course_list,
+            'l_as_list': l_as_list,
+         }
+        __initiate_assessment_method(request, context)
+        if request.method == 'POST':
+            return redirect('list_assessment')
+        return render(request, 'assessment/create_assessment.html', context)
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 
 @login_required(login_url='login')
 def update_assessment(request, assessment_id):
-    username = request.user.username
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
+    if request.user.has_perm('lms_app.change_assessment'):
+        username = request.user.username
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
 
-    assessment = service_controller.assessment_management_service().details(assessment_id)
-    context = {
-        'l_as_list': l_as_list,
-        'username': username,
-        'assessment': assessment,
+        assessment = service_controller.assessment_management_service().details(assessment_id)
+        context = {
+            'l_as_list': l_as_list,
+            'username': username,
+            'assessment': assessment,
 
-    }
-    edited_assessment = __edit_if_post_method(request, assessment_id, context)
-    if edited_assessment is not None:
-        context['assessment'] = edited_assessment
-        return redirect('tutor_details')
+        }
+        edited_assessment = __edit_if_post_method(request, assessment_id, context)
+        if edited_assessment is not None:
+            context['assessment'] = edited_assessment
+            return redirect('tutor_details')
 
-    return render(request, 'assessment/edit_assessment.html', context)
+        return render(request, 'assessment/edit_assessment.html', context)
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 
 @login_required(login_url='login')
 def list_assessments(request):
-    # Getting User Group
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
-    username = request.user.username
-    assessments = service_controller.assessment_management_service().list()
-    context = {
-        'username': username,
-        'assessments': assessments,
-        'l_as_list': l_as_list,
-    }
-    return render(request, 'assessment/list_assessment.html', context)
-
+    if request.user.has_perm('lms_app.view_assessment'):
+        # Getting User Group
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
+        username = request.user.username
+        assessments = service_controller.assessment_management_service().list()
+        context = {
+            'username': username,
+            'assessments': assessments,
+            'l_as_list': l_as_list,
+        }
+        return render(request, 'assessment/list_assessment.html', context)
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 @login_required(login_url='login')
 def assessment_details(request, assessment_id):
-    # Getting User Group
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
+    if request.user.has_perm('lms_app.view_assessment'):
+        # Getting User Group
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
 
-    username = request.user.username
-    assessment = service_controller.assessment_management_service().details(assessment_id)
-    context = {
-        'username': username,
-        'assessment': assessment,
-        'l_as_list': l_as_list,
-    }
-    return render(request, 'assessment/assessment_details.html', context)
+        username = request.user.username
+        assessment = service_controller.assessment_management_service().details(assessment_id)
+        context = {
+            'username': username,
+            'assessment': assessment,
+            'l_as_list': l_as_list,
+        }
+        return render(request, 'assessment/assessment_details.html', context)
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
+
 
 @login_required(redirect_field_name='next')
 def delete_assessment(request, assessment_id):
-    try:
-        service_controller.assessment_management_service().delete(assessment_id)
-        return redirect('tutor_details')
-    except Assessment.DoesNotExist as e:
-        print('This assessment does not exist!')
-        raise e
+    if request.user.has_perm('lms_app.delete_assessment'):
+        try:
+            service_controller.assessment_management_service().delete(assessment_id)
+            return redirect('tutor_details')
+        except Assessment.DoesNotExist as e:
+            print('This assessment does not exist!')
+            raise e
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 
 def __set_assessment_attribute_request(request: HttpRequest):
@@ -123,6 +153,7 @@ def __initiate_assessment_method(request, context):
         except Exception as e:
             print('This Assessment Creation could not be completed')
             raise e
+
 
 # Editing
 def __edit_assessment_attribute_request(request):

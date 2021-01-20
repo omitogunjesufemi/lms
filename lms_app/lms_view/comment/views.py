@@ -9,20 +9,27 @@ from lms_app.service_controllers import service_controller, CommentDto
 
 @login_required(redirect_field_name='next')
 def add_comment(request, assessment_id):
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
+    if request.user.has_perm('lms_app.add_comment'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
 
-    username = request.user.username
+        username = request.user.username
 
-    context = {
-        'username': username,
-        'l_as_list': l_as_list,
+        context = {
+            'username': username,
+            'l_as_list': l_as_list,
 
-    }
-    __create_if_post_method(request, assessment_id, context)
-    if request.method == 'POST' and context['saved']:
-        return redirect('tutor_details')
+        }
+        __create_if_post_method(request, assessment_id, context)
+        if request.method == 'POST' and context['saved']:
+            return redirect('tutor_details')
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
+
 
 @login_required(redirect_field_name='next')
 def comment_details(request, comment_id):
@@ -45,11 +52,17 @@ def comment_details(request, comment_id):
 
 @login_required(redirect_field_name='next')
 def comment_delete(request, comment_id):
-    try:
-        service_controller.comment_management_service().delete(comment_id)
-    except Comment.DoesNotExist as e:
-        print('This course does not exist!')
-        raise e
+    if request.user.has_perm('lms_app.delete_comment'):
+        try:
+            service_controller.comment_management_service().delete(comment_id)
+        except Comment.DoesNotExist as e:
+            print('This course does not exist!')
+            raise e
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 
 def __set_comment_attribute_request(request: HttpRequest, assessment_id):
