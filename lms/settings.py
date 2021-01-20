@@ -129,7 +129,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'Files')
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'lms_app/static'),
