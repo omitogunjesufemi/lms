@@ -36,4 +36,4 @@ def login_get(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('list_courses')
+    return redirect('register')

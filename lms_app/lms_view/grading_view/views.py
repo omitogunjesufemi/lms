@@ -10,41 +10,20 @@ from lms_app.service_controllers import service_controller, Question
 
 @login_required(login_url='login')
 def grade_assessment(request, sitting_id):
-    context = {
+    if request.user.has_perm('lms_app.add_grading'):
+        context = {
 
-    }
-    __initiate_grading_method(request, sitting_id=sitting_id, context=context)
+        }
+        __initiate_grading_method(request, sitting_id=sitting_id, context=context)
 
-    return redirect('student_details')
-
-
-@login_required(login_url='login')
-def update_grade(request, course_id):
-    context = {
-
-    }
-    return render(request, '', context)
+        return redirect('student_details')
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 
-@login_required(login_url='login')
-def list_grading(request):
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
-    grades = service_controller.grading_management_service().list()
-    context = {
-        'grades': grades,
-        'l_as_list': l_as_list,
-    }
-    return render(request, '', context)
-
-
-@login_required(login_url='login')
-def grade_details(request):
-    context = {
-
-    }
-    return render(request, '', context)
 
 
 def __set_grading_attribute_request(request: HttpRequest, sitting_id):

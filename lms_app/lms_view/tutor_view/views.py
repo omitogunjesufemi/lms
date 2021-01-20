@@ -27,138 +27,167 @@ def register_tutor(request):
 
 @login_required(login_url='login')
 def edit_tutor(request, tutor_id):
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
+    if request.user.has_perm('lms_app.change_tutor'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
 
-    try:
-        user_id = request.user.id
-        tutor = service_controller.tutor_management_service().details(user_id)
-    except Tutor.DoesNotExist as e:
-        print('You are not registered yet!')
-        raise e
+        try:
+            user_id = request.user.id
+            tutor = service_controller.tutor_management_service().details(user_id)
+        except Tutor.DoesNotExist as e:
+            print('You are not registered yet!')
+            raise e
 
-    context = {
-        'tutor': tutor,
-        'l_as_list': l_as_list,
-    }
+        context = {
+            'tutor': tutor,
+            'l_as_list': l_as_list,
+        }
 
-    edited_tutor = __edit_if_post_method(request, tutor_id, context)
-    if edited_tutor is not None:
-        context['tutor'] = edited_tutor
-        return redirect('tutor_details')
-    return render(request, 'tutor/edit_tutor.html', context)
+        edited_tutor = __edit_if_post_method(request, tutor_id, context)
+        if edited_tutor is not None:
+            context['tutor'] = edited_tutor
+            return redirect('tutor_details')
+        return render(request, 'tutor/edit_tutor.html', context)
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 
 @login_required(login_url='login')
 def list_tutors(request):
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
+    if request.user.has_perm('lms_app.view_tutor'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
 
-    tutors = service_controller.tutor_management_service().list()
-    context = {
-        'tutors': tutors,
-        'l_as_list': l_as_list,
-    }
-    return render(request, 'tutor/list_tutor.html', context)
+        tutors = service_controller.tutor_management_service().list()
+        context = {
+            'tutors': tutors,
+            'l_as_list': l_as_list,
+        }
+        return render(request, 'tutor/list_tutor.html', context)
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 
 @login_required(login_url='login')
 def tutor_details(request):
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
-    user_id = request.user.id
-    username = request.user.username
-    tutor = service_controller.tutor_management_service().details(user_id)
-    tutor_id = tutor.id
-    appointments = service_controller.appointment_management_service().list_appoint_for_tutor(tutor_id)
-    appointment_len = len(appointments)
-    assessments = service_controller.assessment_management_service().list_assessment_for_tutor(tutor_id)
-    assessment_len = len(assessments)
-    questions = service_controller.question_management_service().list_question_for_tutor(tutor_id)
-    question_len = len(questions)
+    if request.user.has_perm('lms_app.view_tutor'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
+        user_id = request.user.id
+        username = request.user.username
+        tutor = service_controller.tutor_management_service().details(user_id)
+        tutor_id = tutor.id
+        appointments = service_controller.appointment_management_service().list_appoint_for_tutor(tutor_id)
+        appointment_len = len(appointments)
+        assessments = service_controller.assessment_management_service().list_assessment_for_tutor(tutor_id)
+        assessment_len = len(assessments)
+        questions = service_controller.question_management_service().list_question_for_tutor(tutor_id)
+        question_len = len(questions)
 
-    sittings = service_controller.sitting_management_service().list()
-    sitting_list = []
+        sittings = service_controller.sitting_management_service().list()
+        sitting_list = []
 
-    for sitting in sittings:
-        for assessment in assessments:
-            if assessment.id == sitting.assessment_id:
-                sitting_list.append(sitting)
+        for sitting in sittings:
+            for assessment in assessments:
+                if assessment.id == sitting.assessment_id:
+                    sitting_list.append(sitting)
 
-    sitting_len = len(sitting_list)
+        sitting_len = len(sitting_list)
 
-    context = {
-        'tutor': tutor,
-        'appointments': appointments,
-        'assessments': assessments,
-        'questions': questions,
-        'sitting_list': sitting_list,
-        'appointment_len': appointment_len,
-        'assessment_len': assessment_len,
-        'question_len': question_len,
-        'sitting_len': sitting_len,
-        'username': username,
-        'l_as_list': l_as_list,
-    }
-    return render(request, 'tutor/tutor_profile.html', context)
-
+        context = {
+            'tutor': tutor,
+            'appointments': appointments,
+            'assessments': assessments,
+            'questions': questions,
+            'sitting_list': sitting_list,
+            'appointment_len': appointment_len,
+            'assessment_len': assessment_len,
+            'question_len': question_len,
+            'sitting_len': sitting_len,
+            'username': username,
+            'l_as_list': l_as_list,
+        }
+        return render(request, 'tutor/tutor_profile.html', context)
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 @login_required(login_url='login')
 def tutor_details_for_admin(request, tutor_id):
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
+    if request.user.has_perm('lms_app.view_tutor'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
 
-    username = request.user.username
-    tutor_ = Tutor.objects.get(id=tutor_id)
-    tutor_id = tutor_.id
+        username = request.user.username
+        tutor_ = Tutor.objects.get(id=tutor_id)
+        tutor_id = tutor_.id
 
-    user_id = tutor_.user.id
-    tutor = service_controller.tutor_management_service().details(user_id)
-    appointments = service_controller.appointment_management_service().list_appoint_for_tutor(tutor_id)
-    appointment_len = len(appointments)
-    assessments = service_controller.assessment_management_service().list_assessment_for_tutor(tutor_id)
-    assessment_len = len(assessments)
-    questions = service_controller.question_management_service().list_question_for_tutor(tutor_id)
-    question_len = len(questions)
+        user_id = tutor_.user.id
+        tutor = service_controller.tutor_management_service().details(user_id)
+        appointments = service_controller.appointment_management_service().list_appoint_for_tutor(tutor_id)
+        appointment_len = len(appointments)
+        assessments = service_controller.assessment_management_service().list_assessment_for_tutor(tutor_id)
+        assessment_len = len(assessments)
+        questions = service_controller.question_management_service().list_question_for_tutor(tutor_id)
+        question_len = len(questions)
 
-    sittings = service_controller.sitting_management_service().list()
-    sitting_list = []
+        sittings = service_controller.sitting_management_service().list()
+        sitting_list = []
 
-    for sitting in sittings:
-        for assessment in assessments:
-            if assessment.id == sitting.assessment_id:
-                sitting_list.append(sitting)
+        for sitting in sittings:
+            for assessment in assessments:
+                if assessment.id == sitting.assessment_id:
+                    sitting_list.append(sitting)
 
-    sitting_len = len(sitting_list)
+        sitting_len = len(sitting_list)
 
-    context = {
-        'tutor': tutor,
-        'appointments': appointments,
-        'assessments': assessments,
-        'questions': questions,
-        'sitting_list': sitting_list,
-        'appointment_len': appointment_len,
-        'assessment_len': assessment_len,
-        'question_len': question_len,
-        'sitting_len': sitting_len,
-        'username': username,
-        'l_as_list': l_as_list,
-    }
-    return render(request, 'tutor/tutor_profile.html', context)
+        context = {
+            'tutor': tutor,
+            'appointments': appointments,
+            'assessments': assessments,
+            'questions': questions,
+            'sitting_list': sitting_list,
+            'appointment_len': appointment_len,
+            'assessment_len': assessment_len,
+            'question_len': question_len,
+            'sitting_len': sitting_len,
+            'username': username,
+            'l_as_list': l_as_list,
+        }
+        return render(request, 'tutor/tutor_profile.html', context)
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 
 @login_required(redirect_field_name='next')
 def delete_tutor(request, tutor_id):
-    try:
-        service_controller.tutor_management_service().delete(tutor_id)
-        return redirect('admin_details')
-    except Tutor.DoesNotExist as e:
-        print('This tutor does not exist!')
-        raise e
+    if request.user.has_perm('lms_app.delete_tutor'):
+        try:
+            service_controller.tutor_management_service().delete(tutor_id)
+            return redirect('admin_details')
+        except Tutor.DoesNotExist as e:
+            print('This tutor does not exist!')
+            raise e
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 
 def __set_tutor_attribute_request(request: HttpRequest):

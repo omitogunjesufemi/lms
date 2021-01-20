@@ -10,46 +10,62 @@ from lms_app.service_controllers import service_controller
 
 @login_required(login_url='login')
 def initiate_enrollment(request, course_id):
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
+    if request.user.has_perm('lms_app.add_enrollment'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
 
-    username = request.user.username
+        username = request.user.username
 
-    context = {
-        'username': username,
-        'l_as_list': l_as_list,
-    }
-    enroll2 = __initiate_enrollment_method(request, course_id, context)
-    if enroll2 == 1:
-        return redirect('student_details')
+        context = {
+            'username': username,
+            'l_as_list': l_as_list,
+        }
+        enroll2 = __initiate_enrollment_method(request, course_id, context)
+        if enroll2 == 1:
+            return redirect('student_details')
+        else:
+            return render(request, 'enrollment/error_message.html', context)
     else:
-        return render(request, 'enrollment/error_message.html', context)
-
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 @login_required(login_url='login')
 def list_enrollments(request):
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
+    if request.user.has_perm('lms_app.view_enrollment'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
 
-    username = request.user.username
-    enrollments = service_controller.enrollment_management_service().list()
-    context = {
-        'enrollments': enrollments,
-        'username': username,
-        'l_as_list': l_as_list,
-    }
-    return render(request, 'enrollment/list_enrollment.html', context)
-
+        username = request.user.username
+        enrollments = service_controller.enrollment_management_service().list()
+        context = {
+            'enrollments': enrollments,
+            'username': username,
+            'l_as_list': l_as_list,
+        }
+        return render(request, 'enrollment/list_enrollment.html', context)
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 @login_required(login_url='login')
 def cancel_enrollment(enrollment_id):
-    try:
-        service_controller.enrollment_management_service().delete(enrollment_id)
-    except Enrollment.DoesNotExist as e:
-        print('You are not enrolled for this course!')
-        raise e
+    if request.user.has_perm('lms_app.delete_enrollment'):
+        try:
+            service_controller.enrollment_management_service().delete(enrollment_id)
+        except Enrollment.DoesNotExist as e:
+            print('You are not enrolled for this course!')
+            raise e
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 
 def __set_enrollment_attribute_request(request: HttpRequest):

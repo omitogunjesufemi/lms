@@ -26,157 +26,188 @@ def register_student(request):
 
 @login_required(login_url='login')
 def edit_student(request, student_id):
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
+    if request.user.has_perm('lms_app.change_student'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
 
-    try:
-        user_id = request.user.id
-        student = service_controller.student_management_service().details(user_id)
-    except Student.DoesNotExist as e:
-        print('You are not registered yet!')
-        raise e
+        try:
+            user_id = request.user.id
+            student = service_controller.student_management_service().details(user_id)
+        except Student.DoesNotExist as e:
+            print('You are not registered yet!')
+            raise e
 
-    context = {
-        'student': student,
-        'l_as_list': l_as_list,
-    }
+        context = {
+            'student': student,
+            'l_as_list': l_as_list,
+        }
 
-    edited_student = __edit_if_post_method(request, student_id, context)
-    if edited_student is not None:
-        context['student'] = edited_student
-        return redirect('student_details')
-    return render(request, 'student/edit_student.html', context)
-
+        edited_student = __edit_if_post_method(request, student_id, context)
+        if edited_student is not None:
+            context['student'] = edited_student
+            return redirect('student_details')
+        return render(request, 'student/edit_student.html', context)
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 @login_required(login_url='login')
 def list_student(request):
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
-    username = request.user.username
-    students = service_controller.student_management_service().list()
-    context = {
-        'students': students,
-        'username': username,
-        'l_as_list': l_as_list,
-    }
-    return render(request, 'student/list_student.html', context)
-
+    if request.user.has_perm('lms_app.view_student'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
+        username = request.user.username
+        students = service_controller.student_management_service().list()
+        context = {
+            'students': students,
+            'username': username,
+            'l_as_list': l_as_list,
+        }
+        return render(request, 'student/list_student.html', context)
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 @login_required(login_url='login')
 def list_student_for_courses(request, course_id):
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
-    username = request.user.username
-    students = service_controller.student_management_service().list_student_for_course(course_id)
-    context = {
-        'students': students,
-        'username': username,
-        'l_as_list': l_as_list,
-    }
-    return render(request, 'student/list_student.html', context)
+    if request.user.has_perm('lms_app.view_student'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
+        username = request.user.username
+        students = service_controller.student_management_service().list_student_for_course(course_id)
+        context = {
+            'students': students,
+            'username': username,
+            'l_as_list': l_as_list,
+        }
+        return render(request, 'student/list_student.html', context)
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 
 @login_required(login_url='login')
 def student_details(request):
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
+    if request.user.has_perm('lms_app.view_student'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
 
-    username = request.user.username
-    user_id = request.user.id
-    student = service_controller.student_management_service().details(user_id)
-    student_id = student.id
-    enrollments = service_controller.enrollment_management_service().list_enrollment_for_student(student_id)
-    enrollment_len = len(enrollments)
+        username = request.user.username
+        user_id = request.user.id
+        student = service_controller.student_management_service().details(user_id)
+        student_id = student.id
+        enrollments = service_controller.enrollment_management_service().list_enrollment_for_student(student_id)
+        enrollment_len = len(enrollments)
 
-    # Getting all Assessments for Student
-    assessments = service_controller.assessment_management_service().list_assessment_for_student(student_id)
-    assessment_len = len(assessments)
+        # Getting all Assessments for Student
+        assessments = service_controller.assessment_management_service().list_assessment_for_student(student_id)
+        assessment_len = len(assessments)
 
-    # Getting all sittings and attempted assessments by Student
-    sittings = service_controller.sitting_management_service().list_of_sitting_for_student_assessment(student_id)
-    sitting_len = len(sittings)
+        # Getting all sittings and attempted assessments by Student
+        sittings = service_controller.sitting_management_service().list_of_sitting_for_student_assessment(student_id)
+        sitting_len = len(sittings)
 
-    sitting_list = []
-    for sitting in sittings:
-        for assessment in assessments:
-            if sitting.assessment_id == assessment.id:
-                sitting_list.append(sitting.assessment_id)
+        sitting_list = []
+        for sitting in sittings:
+            for assessment in assessments:
+                if sitting.assessment_id == assessment.id:
+                    sitting_list.append(sitting.assessment_id)
 
-    context = {
-        'student': student,
-        'enrollments': enrollments,
-        'enrollment_len': enrollment_len,
-        'sitting_len': sitting_len,
-        'sitting_list': sitting_list,
-        'assessments': assessments,
-        'assessment_len': assessment_len,
-        'username': username,
-        'sittings': sittings,
-        'l_as_list': l_as_list,
-    }
-    return render(request, 'student/student_profile.html', context)
-
+        context = {
+            'student': student,
+            'enrollments': enrollments,
+            'enrollment_len': enrollment_len,
+            'sitting_len': sitting_len,
+            'sitting_list': sitting_list,
+            'assessments': assessments,
+            'assessment_len': assessment_len,
+            'username': username,
+            'sittings': sittings,
+            'l_as_list': l_as_list,
+        }
+        return render(request, 'student/student_profile.html', context)
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 @login_required(login_url='login')
 def student_details_for_admin(request, student_id):
-    l_as_list = []
-    for g in request.user.groups.all():
-        l_as_list.append(g.name)
+    if request.user.has_perm('lms_app.view_student'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
 
-    username = request.user.username
+        username = request.user.username
 
-    student_ = Student.objects.get(id=student_id)
-    student_id = student_.id
+        student_ = Student.objects.get(id=student_id)
+        student_id = student_.id
 
-    user_id = student_.user.id
-    student = service_controller.student_management_service().details(user_id)
-    
-    enrollments = service_controller.enrollment_management_service().list_enrollment_for_student(student_id)
-    enrollment_len = len(enrollments)
+        user_id = student_.user.id
+        student = service_controller.student_management_service().details(user_id)
 
-    # Getting all Assessments for Student
-    assessments = service_controller.assessment_management_service().list_assessment_for_student(student_id)
-    assessment_len = len(assessments)
+        enrollments = service_controller.enrollment_management_service().list_enrollment_for_student(student_id)
+        enrollment_len = len(enrollments)
 
-    # Getting all sittings and attempted assessments by Student
-    sittings = service_controller.sitting_management_service().list_of_sitting_for_student_assessment(student_id)
-    sitting_len = len(sittings)
+        # Getting all Assessments for Student
+        assessments = service_controller.assessment_management_service().list_assessment_for_student(student_id)
+        assessment_len = len(assessments)
 
-    sitting_list = []
-    for sitting in sittings:
-        for assessment in assessments:
-            if sitting.assessment_id == assessment.id:
-                sitting_list.append(sitting.assessment_id)
+        # Getting all sittings and attempted assessments by Student
+        sittings = service_controller.sitting_management_service().list_of_sitting_for_student_assessment(student_id)
+        sitting_len = len(sittings)
 
-    context = {
-        'student': student,
-        'enrollments': enrollments,
-        'enrollment_len': enrollment_len,
-        'sitting_len': sitting_len,
-        'sitting_list': sitting_list,
-        'assessments': assessments,
-        'assessment_len': assessment_len,
-        'username': username,
-        'sittings': sittings,
-        'l_as_list': l_as_list,
-    }
-    return render(request, 'student/student_profile.html', context)
+        sitting_list = []
+        for sitting in sittings:
+            for assessment in assessments:
+                if sitting.assessment_id == assessment.id:
+                    sitting_list.append(sitting.assessment_id)
 
+        context = {
+            'student': student,
+            'enrollments': enrollments,
+            'enrollment_len': enrollment_len,
+            'sitting_len': sitting_len,
+            'sitting_list': sitting_list,
+            'assessments': assessments,
+            'assessment_len': assessment_len,
+            'username': username,
+            'sittings': sittings,
+            'l_as_list': l_as_list,
+        }
+        return render(request, 'student/student_profile.html', context)
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 
 @login_required(redirect_field_name='next')
 def delete_student(request, student_id):
-    try:
-        service_controller.student_management_service().delete(student_id)
-        return redirect('admin_details')
-    except Student.DoesNotExist as e:
-        print('This student does not exist!')
-        raise e
-
+    if request.user.has_perm('lms_app.delete_student'):
+        try:
+            service_controller.student_management_service().delete(student_id)
+            return redirect('admin_details')
+        except Student.DoesNotExist as e:
+            print('This student does not exist!')
+            raise e
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 
 
