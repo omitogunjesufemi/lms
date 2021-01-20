@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 mt-4 mb-5">
+                <div class="card">
+                    <div class="card-header bg-success">
+                        <h3 class="text-light">Appoint Tutors for the Courses</h3>
+                    </div>
+
+                    <div class="card-body">
+                        {% for application in applications %}
+                            {% for tutor in tutors %}
+                                {% for course in courses %}
+                                    {% if course.id == application.course_id %}
+                                        {% if tutor.id == application.tutor_id %}
+                                            <span class="text-secondary">
+                                                <h6 class="text-uppercase text-dark font-weight-bolder text-center">{{ tutor.first_name }} {{ tutor.last_name }} {% if application.status == 1%}<span class="text-success" style="font-size: 10pt">Apt.</span>{% else %}{% endif %}</h6>
+                                                The above registered tutor has applied to teach <span class="text-success font-weight-bold">{{ course.course_title }}</span>.
+                                                The credentials of this candidate has been submitted below and needs your
+                                                attention.
+                                            </span><br><br>
+
+                                            <h6 class="text-uppercase">Summary</h6>
+                                            <span class="text-secondary">{{ application.qualifications }}</span><br>
+                                            <a href="../Files/{{ application.file }}">View Candidate Details</a>
+                                            <div class="btn-group float-right mr-2">
+                                                <a href="{% url 'initiate_appointment' course_id=application.course_id tutor_id=application.tutor_id apply_id=application.id %}" class="btn btn-outline-success btn-sm">Appoint</a>
+                                            </div>
+
+                                            <div class="btn-group float-right mr-2">
+                                                <a href="#" class="btn btn-outline-danger btn-sm">Reject</a>
+                                            </div>
+
+                                           <hr>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 mt-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3></h3>
+                    </div>
+
+                    <div class="card-body">
+                        <form method="post" action="{% url 'new_sitting' assessment_id %}">
+                            {% csrf_token %}
+                        {% for question in question_list %}
+                            <div class="form-group">
+                                <h5>{{ question.question_title }}</h5>
+                                <p>{{ question.question_content }}</p>
+                            </div>
+
+
+                            <div class="form-group">
+                                <input type="radio" name={{ question.id }} class="custom-radio" value="choice1"
+                                        > {{ question.choice1 }}
+                            </div>
+
+                            <div class="form-group">
+                                <input type="radio" name={{ question.id }} class="custom-radio" value="choice2"
+                                        > {{ question.choice2 }}
+                            </div>
+
+                            <div class="form-group">
+                                <input type="radio" name={{ question.id }} class="custom-radio" value="choice3"
+                                        > {{ question.choice3 }}
+                            </div>
+
+                            <div class="form-group">
+                                <input type="radio" name={{ question.id }} class="custom-radio" value="choice4"
+                                        > {{ question.choice4 }}
+                            </div>
+
+                            <br>
+                        {% endfor %}
+
+                        <div class="form-group float-xl-right">
+                            <button type="submit" class="btn btn-success" name="submit" value="Submit">Submit Assessment</button>
+                        </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

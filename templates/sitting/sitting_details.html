@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <section>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-dark">
+                        <h3 class="text-light">Submitted Assessment Details</h3>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="form-group col-4 " style="font-size: 16pt">
+                                <label for="first_name" style="font-size: 14pt"
+                                       class="form-check-label font-weight-bolder text-uppercase text-dark">Course Title: </label><br>
+                                <span class="font-italic ml-1">{{ assessment.course_title }}</span>
+                            </div>
+
+                            <div class="form-group col-4 " style="font-size: 16pt">
+                                <label for="first_name" style="font-size: 14pt"
+                                       class="form-check-label font-weight-bolder text-uppercase text-dark">Assessment Title: </label><br>
+                                <span class="font-italic ml-1">{{ assessment.assessment_title }}</span>
+                            </div>
+
+                            <div class="form-group col-4 " style="font-size: 16pt">
+                                {% if user_grade.late_submission == 1 %}
+                                    <label for="first_name" style="font-size: 14pt"
+                                           class="form-check-label font-weight-bolder text-uppercase text-dark">
+                                        Submitted: <span class="text-danger">Late Submission</span> </label><br>
+                                {% else %}
+                                    <label for="first_name" style="font-size: 14pt"
+                                           class="form-check-label font-weight-bolder text-uppercase text-dark">
+                                        Submitted: <span class="text-success">On Time</span> </label><br>
+                                {% endif %}
+                                <span class="font-italic ml-1">{{ sitting.date_submitted }} | {{ sitting.time_submitted }}</span>
+                            </div>
+                        </div>
+
+                    <hr>
+
+                        <div class="row">
+                            <div class="form-group col-4 " style="font-size: 16pt">
+                                <label for="first_name" style="font-size: 14pt"
+                                       class="form-check-label font-weight-bolder text-uppercase text-dark">Description: </label><br>
+                                <span class="font-italic" style="padding-right: 50px">{{ assessment.assessment_content }}</span>
+                            </div>
+
+                            <div class="form-group col-4 " style="font-size: 16pt">
+                                <label for="" style="font-size: 14pt"
+                                       class="form-check-label font-weight-bolder text-uppercase text-dark"> Score Obtainable: </label><br>
+                                <span class="font-italic ml-1">{{ assessment.total_score }} marks</span>
+                            </div>
+
+                            <div class="form-group col-4 " style="font-size: 16pt">
+                                <label for="" style="font-size: 14pt"
+                                       class="form-check-label font-weight-bolder text-uppercase text-dark">Score Obtained: </label><br>
+                                <span class="font-italic ml-1">{{ user_grade.user_grade }} marks ( {% if user_grade.failed == 1 %}<span class="text-danger font-weight-bold">FAILED</span>{% else %}<span class="text-success font-weight-bold">PASSED</span>{% endif %} )</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+{# Question Answered with Corrections #}
+
+    <section>
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header bg-success">
+                            <h3 class="text-light">Questions Answered</h3>
+                        </div>
+                        <div class="card-body mb-5">
+                        {% for question in questions %}
+                            {% for qns, ans in user_choice.items %}
+                                {% if question.id == qns|add:"0" %}
+
+                                        <div class="row">
+                                            <div class="form-group col-3 " style="font-size: 16pt">
+                                                <label for="first_name" style="font-size: 14pt"
+                                                       class="form-check-label font-weight-bolder text-uppercase text-dark">Title: </label><br>
+                                                <span class="font-italic ml-1">{{ question.question_title }}</span>
+                                            </div>
+
+                                            <div class="form-group col-3 " style="font-size: 16pt">
+                                                <label for="first_name" style="font-size: 14pt"
+                                                       class="form-check-label font-weight-bolder text-uppercase text-dark">Assigned Mark </label><br>
+                                                <span class="font-italic ml-1">{{ question.assigned_mark }} marks</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                                <div class="form-group col-9 " style="font-size: 16pt">
+                                                    <label for="first_name" style="font-size: 14pt"
+                                                           class="form-check-label font-weight-bolder text-uppercase text-dark">Content: </label><br>
+                                                    <span class="font-italic" style="padding-right: 50px">{{ question.question_content }}</span>
+                                                </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="form-group col-9 " style="font-size: 16pt">
+                                                <label for="first_name" style="font-size: 14pt"
+                                                       class="form-check-label font-weight-bolder text-uppercase text-dark">Options: </label><br>
+                                                <span class="font-italic" style="padding-right: 50px">  <input type="radio" {% if ans == "'choice1'" %}checked{% endif %}>    A. {{ question.choice1 }}</span>{% if question.answer == "choice1" %}<span class="text-success">Correct</span>{% else %}<span class="text-danger">Wrong</span>{% endif %}<br>
+                                                <span class="font-italic" style="padding-right: 50px">  <input type="radio" {% if ans == "'choice2'" %}checked{% endif %}>    B. {{ question.choice2 }}</span>{% if question.answer == "choice2" %}<span class="text-success">Correct</span>{% else %}<span class="text-danger">Wrong</span>{% endif %}<br>
+                                                <span class="font-italic" style="padding-right: 50px">  <input type="radio" {% if ans == "'choice3'" %}checked{% endif %}>    C. {{ question.choice3 }}</span>{% if question.answer == "choice3" %}<span class="text-success">Correct</span>{% else %}<span class="text-danger">Wrong</span>{% endif %}<br>
+                                                <span class="font-italic" style="padding-right: 50px">  <input type="radio" {% if question.answer == "choice4" %}checked{% endif %}>    D. {{ question.choice4 }}</span>{% if question.answer == "choice4" %}<span class="text-success">Correct{% else %}<span class="text-danger">Wrong</span>{% endif %}<br>
+                                            </div>
+                                        </div>
+                                    <hr>
+
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <div>
+        <div class="">
+            <div class="container">
+                <div class="row justify-content-center">
+
+                    <div class="col-12 justify-content-center">
+                        <!-- comments -->
+                        <h5 class="ml-3 mt-2 text-secondary">{{ comment_len }} comments</h5>
+
+                        {% for comment in comments %}
+                            <div class="comments ml-5" style="padding: 10px;">
+                                {% if username == comment.username %}
+                                    <p class="font-weight-bold text-success">
+                                        {{ comment.username }}
+                                        <span class=" text-muted font-weight-normal">{{ comment.date_created }}</span>
+                                    </p>
+                                {% else %}
+                                    <p class="font-weight-bold text-danger">
+                                        {{ comment.username }}
+                                        <span class=" text-muted font-weight-normal">{{ comment.date_created }}</span>
+                                    </p>
+                                {% endif %}
+                                {{ comment.body | linebreaks }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="col-12">
+                        <form method="post" style="margin-top: 1.3em;" action="{% url 'comment' assessment.id %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <textarea name="comment_body" class="form-control" id="comment_body" required placeholder="Leave a comment"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-success float-right">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <hr>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-form-label-sm mt-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-uppercase text-center">Assessments</h3>
+                    </div>
+
+                    <div class="card-body">
+                        <table class="table table-hover table-responsive text-center">
+                            <thead>
+                            <tr>
+                                <th>Assessment Title</th>
+                                <th>Course Title</th>
+                                <th>Date Due</th>
+                                <th>Time Due</th>
+                                <th></th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            {% for assessment in assessments %}
+                                <tbody>
+                                <tr>
+                                    <td>{{ assessment.assessment_title }}</td>
+                                    <td>{{ assessment.course_title }}</td>
+                                    <td>{{ assessment.date_due }}</td>
+                                    <td>{{ assessment.time_due }}</td>
+                                    <td></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="{% url 'set_question' assessment.id %}" class="btn btn-outline-secondary btn-sm">Set Questions</a>
+                                        </div>
+
+                                        <div class="btn-group">
+                                            <a href="{% url 'new_sitting' assessment.id %}" class="btn btn-outline-secondary btn-sm">Solve</a>
+                                        </div>
+
+                                        <div class="btn-group">
+                                            <a href="#" class="btn btn-outline-secondary btn-sm">Edit</a>
+                                        </div>
+
+                                        <div class="btn-group">
+                                            <a href="#" class="btn btn-outline-dark btn-sm">Details</a>
+                                        </div>
+
+                                        <div class="btn-group">
+                                            <a href="#" class="btn btn-outline-danger btn-sm">Delete</a>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            {% endfor %}
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

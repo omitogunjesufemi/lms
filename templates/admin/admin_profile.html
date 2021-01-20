@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <section>
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header bg-success">
+                            <h3 class="text-light">Welcome @{{ admin.username }}
+                                <a href="{% url 'edit_admin' admin.id %}"
+                                   style="font-size: 14pt"
+                                   class="float-right text-light form-text " >
+                                    {% load static %}<img class="d-block w-100" src="{% static "img/002-pencil.png" %}" alt="Edit"></a> </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="form-group col-4 " style="font-size: 16pt">
+                                    <label for="first_name" style="font-size: 14pt"
+                                           class="form-check-label font-weight-bolder text-uppercase text-success">First Name: </label><br>
+                                    <span class="font-italic ml-1">{{ admin.first_name }}</span>
+                                </div>
+
+                                <div class="form-group col-4 " style="font-size: 16pt">
+                                    <label for="first_name" style="font-size: 14pt"
+                                           class="form-check-label font-weight-bolder text-uppercase text-success">Last Name: </label><br>
+                                    <span class="font-italic ml-1">{{ admin.last_name }}</span>
+                                </div>
+
+                                <div class="form-group col-4 " style="font-size: 16pt">
+                                    <label for="first_name" style="font-size: 14pt"
+                                           class="form-check-label font-weight-bolder text-uppercase text-success">Username: </label><br>
+                                    <span class="font-italic ml-1">@{{ admin.username }}</span>
+                                </div>
+
+
+                            </div>
+
+                            <hr>
+
+                            <div class="row">
+
+                                <div class="form-group col-4 " style="font-size: 16pt">
+                                    <label for="" style="font-size: 14pt"
+                                           class="form-check-label font-weight-bolder text-uppercase text-success">Email: </label><br>
+                                    <span class="font-italic ml-1">{{ admin.email }}</span>
+                                </div>
+
+                                <div class="form-group col-4 " style="font-size: 16pt">
+                                    <label for="" style="font-size: 14pt"
+                                           class="form-check-label font-weight-bolder text-uppercase text-success">Phone: </label><br>
+                                    <span class="font-italic ml-1">+234{{ admin.phone }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!--Courses Created-->
+
+    <section>
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-12 ">
+                    <div class="card">
+                        <div class="card-header bg-dark">
+                            <h3 class="text-light">Courses Created ( {{ course_len }} ) <a href="{% url 'create_course' %}" class="float-right text-success">+</a> </h3>
+                        </div>
+
+                        <div class="card-body shadow">
+                            <div class="row">
+
+                                {% if course_len > 0 %}
+                                    {% for course in courses %}
+                                        <div class="form-group col-4 " style="font-size: 16pt">
+                                            <label for="first_name" style="font-size: 14pt"
+                                                   class="form-check-label font-weight-bolder text-uppercase text-dark">{{ course.course_title }}</label><br>
+                                            <span class="font-italic ">{{ course.course_description }}</span><br>
+                                            <span class="text-dark" style="font-size: 12pt"><a href="{% url 'edit_course' course.id %}">Edit</a> | <a href="{% url 'delete_course' course.id %}" class="text-danger">Delete</a> </span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="form-group col-6 " style="font-size: 16pt">
+                                        <span class="font-italic text-secondary">No Course created yet!</span><br>
+                                        <a href="{% url 'create_course' %}" ><span class="font-italic ml-1">Create Now</span></a>
+                                    </div>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!--Assessments-->
+
+    <section>
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header bg-success shadow">
+                            <h3 class="text-light">Assessments Created ( {{ assessment_len }} ) <a href="{% url 'create_assessment' %}" class="float-right text-light">+</a> </h3>
+                        </div>
+                        <div class="card-body shadow">
+                            <div class="row">
+
+                                {% if assessment_len > 0 %}
+                                    {% for assessment in assessments %}
+                                        <div class="form-group col-3 " style="font-size: 16pt">
+                                            <label for="first_name" style="font-size: 14pt"
+                                                   class="form-check-label font-weight-bolder text-uppercase text-sucess"><a href="{% url 'assessment_details' assessment.id %}" class="text-success">{{ assessment.course_title }}</a></label><br>
+                                            <span class="text-secondary">{{ assessment.assessment_title }}</span><br>
+                                            <span class="font-italic text-dark" style="font-size: 12pt">{{ assessment.date_due }} {{ assessment.time_due }}</span><br>
+                                            <span class="font-italic text-dark card-link" style="font-size: 12pt"><a href="{% url 'set_question' assessment.id %}" style="font-size: 12pt">Add Questions</a> | <a href="{% url 'list_assessment_question' assessment.id %}" style="font-size: 12pt">View Questions</a></span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="form-group col-6 " style="font-size: 16pt">
+                                        <span class="font-italic text-secondary">You have no assessment yet!</span><br>
+                                        <a href="{% url 'list_assessment' %}" ><span class="font-italic ml-1">Check Task</span></a>
+                                    </div>
+                                {% endif %}
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!--Tutor Application Created-->
+
+    <section>
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-12 ">
+                    <div class="card">
+                        <div class="card-header bg-dark">
+                            <h3 class="text-light">
+                                Tutors ( {{ tutor_len }} )
+                                <a href="{% url 'appoint' %}" class="float-right text-light" style="font-size: 12pt; padding-top: 9px">Pending</a> </h3>
+                        </div>
+
+                        <div class="card-body shadow">
+                            <div class="row">
+
+                                {% if tutor_len > 0 %}
+                                    {% for tutor in tutors %}
+                                        <div class="form-group col-4 " style="font-size: 16pt">
+                                            <label for="first_name" style="font-size: 14pt"
+                                                   class="form-check-label font-weight-bolder text-uppercase text-dark">{{ tutor.registration_number }}</label><br>
+                                            <span class="font-italic ">{{ tutor.first_name }} {{ tutor.last_name }}</span><br>
+                                            {% for appointment in appointments %}
+                                                {% if tutor.registration_number == appointment.tutors_reg %}
+                                                    <span class="text-secondary"> {% if appointment.course_title %}{{ appointment.course_title }}{% else %}No Course!{% endif %}</span>
+                                                {% endif %}
+                                            {% endfor %}
+                                            <br><span class="text-dark" style="font-size: 12pt"><a href="{% url 'admin_tutor_details' tutor.id %}">View</a> | <a href="{% url 'delete_tutor' tutor.id %}" class="text-danger">Terminate</a> </span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="form-group col-6 " style="font-size: 16pt">
+                                        <span class="font-italic text-secondary">No Tutor available yet!</span><br>
+                                    </div>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!--Students-->
+
+    <section>
+        <div class="container mt-3 mb-5">
+            <div class="row">
+                <div class="col-12 ">
+                    <div class="card">
+                        <div class="card-header bg-success">
+                            <h3 class="text-light">
+                                Students ( {{ student_len }} )
+                                <a href="#" class="float-right text-light" style="font-size: 12pt; padding-top: 9px"></a> </h3>
+                        </div>
+
+                        <div class="card-body shadow">
+                            <div class="row">
+
+                                {% if student_len > 0 %}
+                                    {% for student in students %}
+                                        <div class="form-group col-4 " style="font-size: 16pt">
+                                            <label for="first_name" style="font-size: 14pt"
+                                                   class="form-check-label font-weight-bolder text-uppercase text-dark">{{ student.registration_number }}</label><br>
+                                            <span class="font-italic ">{{ student.first_name }} {{ student.last_name }}</span><br>
+                                            {% for enrollment in enrollments %}
+                                                {% if student.id == enrollment.student_id %}
+                                                    <span class="text-secondary">{% if enrollment.course_title %}{{ enrollment.course_title }}{% else %}No Course!{% endif %}</span>
+                                                {% endif %}
+                                            {% endfor %}
+                                            <br><span class="text-dark" style="font-size: 12pt"><a href="{% url 'admin_student_details' student.id %}">View</a> | <a href="{% url  'delete_student' student.id %}" class="text-danger">Expel</a> </span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="form-group col-6 " style="font-size: 16pt">
+                                        <span class="font-italic text-secondary">No Student available yet!</span><br>
+                                    </div>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+{% endblock %}
