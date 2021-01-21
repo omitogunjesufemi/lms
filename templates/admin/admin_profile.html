@@ -78,9 +78,12 @@
                                         <div class="form-group col-6 " style="font-size: 16pt">
                                             <label for="first_name" style="font-size: 14pt"
                                                    class="form-check-label font-weight-bolder text-uppercase text-dark">{{ course.course_title }}</label><br>
-                                            <p><span class="text-secondary" style="font-size: 12pt">{{ course.course_description }}</span></p><a href="#" id="read">Read Less</a><br>
+                                            <p><span class="text-secondary" style="font-size: 12pt">{{ course.course_description }}</span></p><br>
                                             <span class="text-dark" style="font-size: 14pt"><a href="{% url 'edit_course' course.id %}">Edit</a> | <a href="{% url 'delete_course' course.id %}" class="text-danger">Delete</a> </span>
                                         </div>
+
+                                        <hr>
+
                                     {% endfor %}
                                 {% else %}
                                     <div class="form-group col-6 " style="font-size: 16pt">
