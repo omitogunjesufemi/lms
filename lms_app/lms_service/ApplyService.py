@@ -1,8 +1,8 @@
 from abc import ABCMeta, abstractmethod
 from typing import List
 
-from lms.lms_app.lms_dto.ApplyDto import ApplyDto
-from lms.lms_app.lms_repository.ApplyRepository import ApplyRepository
+from lms_app.lms_dto.ApplyDto import ApplyDto
+from lms_app.lms_repository.ApplyRepository import ApplyRepository
 
 
 class ApplyManagementService(metaclass=ABCMeta):

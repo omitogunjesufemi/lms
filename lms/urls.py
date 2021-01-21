@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
-from lms.lms_app.lms_view.index_view import views
+from lms_app.lms_view.index_view import views
 from django.conf import settings
 from django.conf.urls.static import static
 

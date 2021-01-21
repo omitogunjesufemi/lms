@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
-from lms.lms_app.lms_dto.CourseDto import *
-from lms.lms_app.service_controllers import service_controller, User, Course, AdminUser
+from lms_app.lms_dto.CourseDto import *
+from lms_app.service_controllers import service_controller, User, Course, AdminUser
 
 
 @login_required(redirect_field_name='next')

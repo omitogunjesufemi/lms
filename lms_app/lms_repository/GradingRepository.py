@@ -1,8 +1,8 @@
 from abc import ABCMeta, abstractmethod
 from typing import List
 
-from lms.lms_app.lms_dto.GradingDto import *
-from lms.lms_app.models import Grading
+from lms_app.lms_dto.GradingDto import *
+from lms_app.models import Grading
 
 
 class GradingRepository(metaclass=ABCMeta):

@@ -1,5 +1,5 @@
 from django.urls import path
-from lms.lms_app.lms_view.sitting_view import views
+from lms_app.lms_view.sitting_view import views
 
 
 urlpatterns = [

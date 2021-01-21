@@ -3,8 +3,8 @@ from typing import List
 
 from django.contrib.auth.models import User, Group
 
-from lms.lms_app.lms_dto.AdminDto import *
-from lms.lms_app.models import AdminUser
+from lms_app.lms_dto.AdminDto import *
+from lms_app.models import AdminUser
 
 
 class AdminRepository(metaclass=ABCMeta):

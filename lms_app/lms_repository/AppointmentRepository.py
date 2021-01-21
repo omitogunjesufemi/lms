@@ -1,8 +1,8 @@
 from abc import ABCMeta, abstractmethod
 from typing import List
 
-from lms.lms_app.lms_dto.AppointmentDto import *
-from lms.lms_app.models import Appointment
+from lms_app.lms_dto.AppointmentDto import *
+from lms_app.models import Appointment
 
 
 class AppointmentRepository(metaclass=ABCMeta):

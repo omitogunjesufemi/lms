@@ -2,10 +2,10 @@ from typing import List
 
 from django.contrib.auth.models import User, Group
 
-from lms.lms_app.lms_dto.StudentDto import *
+from lms_app.lms_dto.StudentDto import *
 from abc import ABCMeta, abstractmethod
 
-from lms.lms_app.models import Student
+from lms_app.models import Student
 
 
 class StudentRepository(metaclass=ABCMeta):

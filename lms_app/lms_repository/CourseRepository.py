@@ -1,7 +1,7 @@
 from abc import abstractmethod, ABCMeta
 from typing import List
-from lms.lms_app.lms_dto.CourseDto import *
-from lms.lms_app.models import Course
+from lms_app.lms_dto.CourseDto import *
+from lms_app.models import Course
 
 
 class CourseRepository(metaclass=ABCMeta):

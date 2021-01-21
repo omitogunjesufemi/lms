@@ -1,4 +1,6 @@
-from lms.lms_app.lms_repository.TutorRepository import *
+from abc import ABCMeta, abstractmethod
+
+from lms_app.lms_repository.TutorRepository import *
 
 
 class TutorManagementService(metaclass=ABCMeta):

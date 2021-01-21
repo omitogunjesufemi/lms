@@ -1,4 +1,6 @@
-from lms.lms_app.lms_repository.EnrollmentRepository import *
+from abc import abstractmethod, ABCMeta
+
+from lms_app.lms_repository.EnrollmentRepository import *
 
 
 class EnrollmentManagementService(metaclass=ABCMeta):

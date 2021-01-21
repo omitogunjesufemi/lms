@@ -1,5 +1,7 @@
-from lms.lms_app.lms_repository import AssessmentRepository
-from lms.lms_app.lms_repository.AssessmentRepository import *
+from abc import abstractmethod, ABCMeta
+
+from lms_app.lms_repository import AssessmentRepository
+from lms_app.lms_repository.AssessmentRepository import *
 
 
 class AssessmentManagementService(metaclass=ABCMeta):

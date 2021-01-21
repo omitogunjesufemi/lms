@@ -3,9 +3,9 @@ import datetime
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
-from lms.lms_app.lms_dto.EnrollmentDto import *
-from lms.lms_app.models import Enrollment
-from lms.lms_app.service_controllers import service_controller
+from lms_app.lms_dto.EnrollmentDto import *
+from lms_app.models import Enrollment
+from lms_app.service_controllers import service_controller
 
 
 @login_required(login_url='login')

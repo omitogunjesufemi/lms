@@ -1,8 +1,8 @@
 from abc import ABCMeta, abstractmethod
 from typing import List
 
-from lms.lms_app.lms_dto.SittingDto import *
-from lms.lms_app.models import Sitting
+from lms_app.lms_dto.SittingDto import *
+from lms_app.models import Sitting
 
 
 class SittingRepository(metaclass=ABCMeta):

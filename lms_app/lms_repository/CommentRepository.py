@@ -1,8 +1,8 @@
 from abc import ABCMeta, abstractmethod
 from typing import List
 
-from lms.lms_app.lms_dto.CommentDto import CommentDto
-from lms.lms_app.models import Comment
+from lms_app.lms_dto.CommentDto import CommentDto
+from lms_app.models import Comment
 
 
 class CommentRepository(metaclass=ABCMeta):

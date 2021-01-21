@@ -1,5 +1,7 @@
-from lms.lms_app.lms_repository import CourseRepository
-from lms.lms_app.lms_repository.CourseRepository import *
+from abc import abstractmethod, ABCMeta
+
+from lms_app.lms_repository import CourseRepository
+from lms_app.lms_repository.CourseRepository import *
 
 
 class CourseManagementService(metaclass=ABCMeta):
