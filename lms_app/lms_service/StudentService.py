@@ -1,4 +1,6 @@
-from lms_app.lms_repository.StudentRepository import *
+from abc import abstractmethod, ABCMeta
+
+from lms.lms_app.lms_repository.StudentRepository import *
 
 
 class StudentManagementService(metaclass=ABCMeta):

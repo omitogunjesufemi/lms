@@ -1,12 +1,10 @@
-import datetime
-
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
 
-from lms_app.lms_dto.ApplyDto import ApplyDto
-from lms_app.models import Apply
-from lms_app.service_controllers import service_controller, CommentDto
+from lms.lms_app.lms_dto.ApplyDto import ApplyDto
+from lms.lms_app.models import Apply
+from lms.lms_app.service_controllers import service_controller
 
 
 @login_required(redirect_field_name='next')

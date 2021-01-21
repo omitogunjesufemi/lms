@@ -1,5 +1,5 @@
 from django.contrib import admin
-from lms_app.models import *
+from lms.lms_app.models import *
 
 # Register your models here.
 admin.site.register(Student)

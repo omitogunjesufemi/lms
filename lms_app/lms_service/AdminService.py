@@ -1,4 +1,4 @@
-from lms_app.lms_repository.AdminRepository import *
+from lms.lms_app.lms_repository.AdminRepository import *
 
 
 class AdminManagementService(metaclass=ABCMeta):

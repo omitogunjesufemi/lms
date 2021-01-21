@@ -1,5 +1,5 @@
-from lms_app.lms_repository import AppointmentRepository
-from lms_app.lms_repository.AppointmentRepository import *
+from lms.lms_app.lms_repository import AppointmentRepository
+from lms.lms_app.lms_repository.AppointmentRepository import *
 
 
 class AppointmentManagementService(metaclass=ABCMeta):

@@ -1,5 +1,5 @@
-from lms_app.lms_repository import QuestionRepository
-from lms_app.lms_repository.QuestionRepository import *
+from lms.lms_app.lms_repository import QuestionRepository
+from lms.lms_app.lms_repository.QuestionRepository import *
 
 
 class QuestionManagementService(metaclass=ABCMeta):

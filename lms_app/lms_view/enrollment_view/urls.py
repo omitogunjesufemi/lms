@@ -1,5 +1,5 @@
 from django.urls import path
-from lms_app.lms_view.enrollment_view import views
+from lms.lms_app.lms_view.enrollment_view import views
 
 urlpatterns = [
     path('initiate/<int:course_id>', views.initiate_enrollment, name='initiate_enrollment'),

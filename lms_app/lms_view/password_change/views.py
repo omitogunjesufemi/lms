@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
-from lms_app.lms_dto.PasswordDto import ChangePasswordDto
+from lms.lms_app.lms_dto.PasswordDto import ChangePasswordDto
 
 
 @login_required(login_url='login')

@@ -1,5 +1,5 @@
 from django.urls import path
-from lms_app.lms_view.assessment_view import views
+from lms.lms_app.lms_view.assessment_view import views
 
 urlpatterns = [
     path('create', views.create_assessment, name='create_assessment'),

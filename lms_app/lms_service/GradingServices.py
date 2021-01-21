@@ -1,4 +1,4 @@
-from lms_app.lms_repository.GradingRepository import *
+from lms.lms_app.lms_repository.GradingRepository import *
 
 
 class GradingManagementService(metaclass=ABCMeta):

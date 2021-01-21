@@ -1,4 +1,4 @@
-from lms_app.lms_repository.EnrollmentRepository import *
+from lms.lms_app.lms_repository.EnrollmentRepository import *
 
 
 class EnrollmentManagementService(metaclass=ABCMeta):

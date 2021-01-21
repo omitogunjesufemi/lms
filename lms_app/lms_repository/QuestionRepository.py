@@ -1,5 +1,5 @@
-from lms_app.lms_dto.QuestionDto import *
-from lms_app.models import Question, Assessment
+from lms.lms_app.lms_dto.QuestionDto import *
+from lms.lms_app.models import Question, Assessment
 from typing import List
 from abc import ABCMeta, abstractmethod
 
