@@ -29,25 +29,32 @@
                                     <td>{{ assessment.time_due }}</td>
                                     <td></td>
                                     <td>
-                                        <div class="btn-group">
-                                            <a href="{% url 'set_question' assessment.id %}" class="btn btn-outline-secondary btn-sm">Set Questions</a>
-                                        </div>
+                                        {% if 'tutors' in l_as_list or 'admin' in l_as_list %}
+                                            <div class="btn-group">
+                                                <a href="{% url 'set_question' assessment.id %}" class="btn btn-outline-secondary btn-sm">Set Questions</a>
+                                            </div>
 
-                                        <div class="btn-group">
-                                            <a href="{% url 'new_sitting' assessment.id %}" class="btn btn-outline-secondary btn-sm">Solve</a>
-                                        </div>
+                                            <div class="btn-group">
+                                                <a href="{% url 'update_assessment' assessment.id %}" class="btn btn-outline-secondary btn-sm">Edit</a>
+                                            </div>
 
-                                        <div class="btn-group">
-                                            <a href="#" class="btn btn-outline-secondary btn-sm">Edit</a>
-                                        </div>
+                                            <div class="btn-group">
+                                                <a href="{% url 'assessment_details' assessment.id %}" class="btn btn-outline-dark btn-sm">Details</a>
+                                            </div>
 
-                                        <div class="btn-group">
-                                            <a href="#" class="btn btn-outline-dark btn-sm">Details</a>
-                                        </div>
+                                            <div class="btn-group">
+                                                <a href="{% url 'delete_assessment' assessment.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
+                                            </div>
+                                        {% else %}
+                                            <div class="btn-group">
+                                                <a href="{% url 'new_sitting' assessment.id %}" class="btn btn-outline-secondary btn-sm">Solve</a>
+                                            </div>
+                                        {% endif %}
 
-                                        <div class="btn-group">
-                                            <a href="#" class="btn btn-outline-danger btn-sm">Delete</a>
-                                        </div>
+
+
+
+
                                     </td>
 
                                 </tr>
