@@ -82,11 +82,40 @@
                                 {% if enrollment_len > 0 %}
                                     {% for enrollment in enrollments %}
                                         <div class="form-group col-md-6 " style="font-size: 16pt">
-                                            <h5 style="font-size: 18pt" class="form-group col-4 " style="font-size: 16pt">{{ enrollment.course_title }}</h5><br>
-                                            <p><span class="text-secondary" style="font-size: 12pt">{{ enrollment.course_description }}</span></p><br>
+                                            <h5 class="form-group col-4">{{ enrollment.course_title }}</h5><br>
+                                            <p><span class="text-secondary" style="font-size: 12pt;">{{ enrollment.course_description }}</span></p><br>
                                             <span class="text-secondary">Enrolled <b class="text-dark">{{ enrollment.date_enrolled }}</b></span><br>
-                                            <span class="text-dark unenroll_demo" style="font-size: 12pt"><a href="{% url 'unenroll' enrollment.id %}">Un-enroll</a></span>
+                                            <span class="text-danger" data-toggle="modal" data-target="#unenroll" style="font-size: 12pt"><a href="#">Un-enroll</a></span>
                                         </div>
+
+
+                                        <!--Confirmation Modal-->
+                                        <div class="modal fade" id="unenroll" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title text-danger" id="exampleModalLabel">Un-enroll from {{ enrollment.course_title }}?</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        When you un-enroll from this course you will lose all assessment taken by you.
+                                                        Do you still want to continue with the process?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <div class="btn">
+                                                            <a href="#" class="btn btn-success" data-dismiss="modal">Close</a>
+                                                        </div>
+                                                        <div class="btn">
+                                                            <a href="{% url 'unenroll' enrollment.id %}" class="btn btn-success">Un-enroll</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
                                     {% endfor %}
                                 {% else %}
                                         <div class="form-group col-6 " style="font-size: 16pt">

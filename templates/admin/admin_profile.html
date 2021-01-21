@@ -168,7 +168,7 @@
                                             <span class="font-italic ">{{ tutor.first_name }} {{ tutor.last_name }}</span><br>
                                             {% for appointment in appointments %}
                                                 {% if tutor.registration_number == appointment.tutors_reg %}
-                                                    <span class="text-secondary"> {% if appointment.course_title %}{{ appointment.course_title }}{% else %}No Course!{% endif %}</span>
+                                                    <span class="text-secondary"> {% if appointment.course_title %} | {{ appointment.course_title }} | {% else %}No Course!{% endif %}</span>
                                                 {% endif %}
                                             {% endfor %}
                                             <br><span class="text-dark" style="font-size: 12pt"><a href="{% url 'admin_tutor_details' tutor.id %}">View</a> | <a href="{% url 'delete_tutor' tutor.id %}" class="text-danger">Terminate</a> </span>
@@ -214,7 +214,7 @@
                                             <span class="font-italic ">{{ student.first_name }} {{ student.last_name }}</span><br>
                                             {% for enrollment in enrollments %}
                                                 {% if student.id == enrollment.student_id %}
-                                                    <span class="text-secondary">{% if enrollment.course_title %}{{ enrollment.course_title }}{% else %}No Course!{% endif %}</span>
+                                                    <span class="text-secondary">{% if enrollment.course_title %} | {{ enrollment.course_title }} | {% else %}No Course!{% endif %}</span>
                                                 {% endif %}
                                             {% endfor %}
                                             <br><span class="text-dark" style="font-size: 12pt"><a href="{% url 'admin_student_details' student.id %}">View</a> | <a href="{% url  'delete_student' student.id %}" class="text-danger">Expel</a> </span>
