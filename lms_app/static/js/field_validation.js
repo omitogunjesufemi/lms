@@ -2,7 +2,7 @@
 $(document).ready(function (){
     $("#assessment_title_validate").hide();
     let assessmentTitle=true
-    $("#assessment_title").onkeyup( function () {
+    $("#assessment_title").keyup( function () {
         validateAssessmentTitle();
     });
 
@@ -21,7 +21,7 @@ $(document).ready(function (){
 
     $("#assessment_content_validate").hide();
     let assessmentContentError=true;
-    $("#assessment_content").onkeyup(function () {
+    $("#assessment_content").keyup(function () {
         validateAssessmentContent();
     })
 
@@ -41,7 +41,7 @@ $(document).ready(function (){
 
     $("#course_id_validate").hide();
     let courseId=true
-    $("#course_id").onkeyup( function () {
+    $("#course_id").keyup( function () {
         validateCourseId();
     });
 
@@ -61,7 +61,7 @@ $(document).ready(function (){
 
     $("#pass_mark_validate").hide();
     let passMarkError=true
-    $("#pass_mark").onkeyup( function () {
+    $("#pass_mark").keyup( function () {
         passMarkFunc();
     });
 
@@ -80,7 +80,7 @@ $(document).ready(function (){
 
     $("#assessment_due_date_validate").hide();
     let assessmentDateError=true
-    $("#assessment_due_date").onkeyup( function () {
+    $("#assessment_due_date").keyup( function () {
         validateAssessmentDate();
     });
 
@@ -98,7 +98,7 @@ $(document).ready(function (){
 
     $("#assessment_due_time_validate").hide();
     let assessmentTimeError=true
-    $("#assessment_due_time").onkeyup( function () {
+    $("#assessment_due_time").keyup( function () {
         validateAssessmentTime();
     });
 
@@ -117,7 +117,7 @@ $(document).ready(function (){
 
     $("#course_title_validate").hide();
     let courseTitleError=true
-    $("#course_title").onkeyup( function () {
+    $("#course_title").keyup( function () {
         validateCourseTitle();
     });
 
@@ -136,7 +136,7 @@ $(document).ready(function (){
 
     $("#course_description_validate").hide();
     let courseDescriptionError=true
-    $("#course_description").onkeyup( function () {
+    $("#course_description").keyup( function () {
         validateCourseDescription();
     });
 
