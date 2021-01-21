@@ -81,9 +81,8 @@
 
                                 {% if enrollment_len > 0 %}
                                     {% for enrollment in enrollments %}
-                                        <p class="form-group col-4 " style="font-size: 16pt">
-                                            <label for="first_name" style="font-size: 14pt"
-                                                   class="form-check-label font-weight-bolder text-uppercase text-dark">{{ enrollment.course_title }}</label><br>
+                                        <h4 class="form-group col-4 " style="font-size: 16pt">
+                                                   class="form-check-label font-weight-bolder text-uppercase text-dark">{{ enrollment.course_title }}</h4><br>
                                             <p><span class="text-secondary" style="font-size: 12pt">{{ enrollment.course_description }}</span></p><br>
                                             <span class="text-secondary">Enrolled <b class="text-dark">{{ enrollment.date_enrolled }}</b></span><br>
                                             <span class="text-dark unenroll_demo" style="font-size: 12pt"><a href="{% url 'unenroll' enrollment.id %}">Un-enroll</a></span>
