@@ -75,11 +75,11 @@
 
                                 {% if course_len > 0 %}
                                     {% for course in courses %}
-                                        <div class="form-group col-4 " style="font-size: 16pt">
+                                        <div class="form-group col-6 " style="font-size: 16pt">
                                             <label for="first_name" style="font-size: 14pt"
                                                    class="form-check-label font-weight-bolder text-uppercase text-dark">{{ course.course_title }}</label><br>
-                                            <span class="font-italic ">{{ course.course_description }}</span><br>
-                                            <span class="text-dark" style="font-size: 12pt"><a href="{% url 'edit_course' course.id %}">Edit</a> | <a href="{% url 'delete_course' course.id %}" class="text-danger">Delete</a> </span>
+                                            <p><span class="text-secondary" style="font-size: 12pt">{{ course.course_description }}</span></p><a href="#" id="read">Read Less</a><br>
+                                            <span class="text-dark" style="font-size: 14pt"><a href="{% url 'edit_course' course.id %}">Edit</a> | <a href="{% url 'delete_course' course.id %}" class="text-danger">Delete</a> </span>
                                         </div>
                                     {% endfor %}
                                 {% else %}
