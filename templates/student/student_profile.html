@@ -83,8 +83,8 @@
                                     {% for enrollment in enrollments %}
                                         <div class="form-group col-6 " style="font-size: 16pt">
                                             <label for="" style="font-size: 14pt"
-                                                   class="form-check-label font-weight-bolder text-uppercase text-dark">{{ course.course_title }}</label><br>
-                                            <p><span class="text-secondary" style="font-size: 12pt">{{ course.course_description }}</span></p><br>
+                                                   class="form-check-label font-weight-bolder text-uppercase text-dark">{{ enrollment.course_title }}</label><br>
+                                            <p><span class="text-secondary" style="font-size: 12pt">{{ enrollment.course_description }}</span></p><br>
                                             <span class="text-secondary">Enrolled <b class="text-dark">{{ enrollment.date_enrolled }}</b></span><br>
                                             <span class="text-danger" data-toggle="modal" data-target="#unenroll" style="font-size: 12pt"><a href="#">Un-enroll</a></span>
                                         </div>
