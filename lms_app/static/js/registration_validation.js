@@ -178,17 +178,20 @@ $(document).ready(function () {
         }
     }
 
-// Submitt button 
-    $('#submitbtn').click(function () {
-        validateFirstName()
-        validateLastName();
-        validateUsername();
-        validatePassword();
-        validateConfirmPassword();
-
-        return (usernameError === true) &&
-            (passwordError === true) &&
-            (confirmPasswordError === true) &&
-            (emailError === true);
-    });
-}); 
+// Submitt button
+//     $('#submitbtn').click(function () {
+//         let allow;
+//         validateFirstName();
+//         validateLastName();
+//         validateUsername();
+//         validatePassword();
+//         validateConfirmPassword();
+//
+//         if ((usernameError === true) && (passwordError === true) && (confirmPasswordError === true) && (emailError === true)){
+//             allow = 1;
+//         }
+//         else {
+//              allow = 0;
+//         }
+//     });
+});
