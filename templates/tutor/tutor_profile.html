@@ -123,8 +123,8 @@
                                     {% endfor %}
                                 {% else %}
                                     <div class="form-group col-6 " style="font-size: 16pt">
-                                        <span class="font-italic text-secondary">You have no assessment yet!</span><br>
-                                        <a href="{% url 'list_assessment' %}" ><span class="font-italic ml-1">Check Task</span></a>
+                                        <span class="font-italic text-secondary">You have no assessment created yet!</span><br>
+                                        <a href="{% url 'create_assessment' %}" ><span class="font-italic ml-1">Create one</span></a>
                                     </div>
                                 {% endif %}
 
