@@ -1,20 +1,20 @@
 from typing import Callable
 from dependency_injector import providers, containers
 
-from lms_app.lms_service.AdminService import *
-from lms_app.lms_repository.ApplyRepository import DjangoORMApplyRepository
-from lms_app.lms_repository.CommentRepository import DjangoORMCommentRepository
-from lms_app.lms_service.ApplyService import *
-from lms_app.lms_service.TutorService import *
-from lms_app.lms_service.StudentService import *
-from lms_app.lms_service.CourseService import *
-from lms_app.lms_service.EnrollmentService import *
-from lms_app.lms_service.AppointmentService import *
-from lms_app.lms_service.AssessmentService import *
-from lms_app.lms_service.QuestionService import *
-from lms_app.lms_service.SittingService import *
-from lms_app.lms_service.GradingServices import *
-from lms_app.lms_service.CommentService import *
+from lms.lms_app.lms_service.AdminService import *
+from lms.lms_app.lms_repository.ApplyRepository import DjangoORMApplyRepository
+from lms.lms_app.lms_repository.CommentRepository import DjangoORMCommentRepository
+from lms.lms_app.lms_service.ApplyService import *
+from lms.lms_app.lms_service.TutorService import *
+from lms.lms_app.lms_service.StudentService import *
+from lms.lms_app.lms_service.CourseService import *
+from lms.lms_app.lms_service.EnrollmentService import *
+from lms.lms_app.lms_service.AppointmentService import *
+from lms.lms_app.lms_service.AssessmentService import *
+from lms.lms_app.lms_service.QuestionService import *
+from lms.lms_app.lms_service.SittingService import *
+from lms.lms_app.lms_service.GradingServices import *
+from lms.lms_app.lms_service.CommentService import *
 
 
 class Container(containers.DeclarativeContainer):

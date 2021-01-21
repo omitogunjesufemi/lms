@@ -5,8 +5,8 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 
-from lms_app.lms_dto.StudentDto import *
-from lms_app.service_controllers import service_controller, User, Student
+from lms.lms_app.lms_dto.StudentDto import *
+from lms.lms_app.service_controllers import service_controller, User, Student
 
 
 def register_student(request):
