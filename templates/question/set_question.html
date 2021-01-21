@@ -48,28 +48,41 @@
                                 <label for="choice2" class="form-check-label">Choice 2</label>
                                 <textarea name="choice2" class="form-control" id="choice2"></textarea>
                                 <p id="choice2_validate" style="color: red; font-size: 10pt;" >
-                                    **The above field is missing
+                                    **The second option is missing
                                 </p>
                             </div>
 
                             <div class="form-group">
                                 <label for="choice3" class="form-check-label">Choice 3</label>
-                                <input name="choice3" class="form-control" id="choice3">
+                                <textarea name="choice3" class="form-control" id="choice3" required></textarea>
+                                <p id="choice3_validate" style="color: red; font-size: 10pt;" >
+                                    **The third option is missing
+                                </p>
                             </div>
 
                             <div class="form-group">
                                 <label for="choice4" class="form-check-label">Choice 4</label>
-                                <input name="choice4" class="form-control" id="choice4">
+                                <input name="choice4" class="form-control" id="choice4" required>
+                                <p id="choice4_validate" style="color: red; font-size: 10pt;" >
+                                    **The fourth option is missing
+                                </p>
+
                             </div>
 
                             <div class="form-group">
                                 <label for="answer" class="form-check-label">Answer</label>
-                                <input name="answer" class="form-control" id="answer">
+                                <input name="answer" class="form-control" id="answer" required>
+                                <p id="answer_validate" style="color: red; font-size: 10pt;" >
+                                    **The above field is missing
+                                </p>
                             </div>
 
                             <div class="form-group">
                                 <label for="assigned_mark" class="form-check-label">Assigned Mark</label>
-                                <input name="assigned_mark" class="form-control" id="assigned_mark" type="number" >
+                                <input name="assigned_mark" class="form-control" id="assigned_mark" type="number" required>
+                                <p id="assigned_mark_validate" style="color: red; font-size: 10pt;" >
+                                    **You have not assigned a grade yet...
+                                </p>
                             </div>
 
 

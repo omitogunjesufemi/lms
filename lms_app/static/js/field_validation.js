@@ -8,7 +8,7 @@ $(document).ready(function (){
 
     function validateAssessmentTitle(){
         let assessment_title = $('#assessment_title').val()
-        if (assessment_title == " "){
+        if (assessment_title == ""){
             $("#assessment_title_validate").show()
             assessmentTitle=false;
             return false;
@@ -27,7 +27,7 @@ $(document).ready(function (){
 
     function validateAssessmentContent(){
         let assessmentContent=$("#assessment_content").val();
-        if (assessmentContent == " "){
+        if (assessmentContent == ""){
             $("#assessment_content_validate").show();
             assessmentContentError=false
             return false
@@ -47,7 +47,7 @@ $(document).ready(function (){
 
     function validateCourseId(){
         let course_id = $('#course_id').val()
-        if (course_id == " "){
+        if (course_id == ""){
             $("#course_id_validate").show()
             courseId=false;
             return false;
@@ -67,7 +67,7 @@ $(document).ready(function (){
 
     function passMarkFunc(){
         let pass_mark = $('#pass_mark').val()
-        if (pass_mark == " "){
+        if (pass_mark == ""){
             $("#pass_mark_validate").show()
             passMarkError=false;
             return false;
@@ -86,7 +86,7 @@ $(document).ready(function (){
 
     function validateAssessmentDate(){
         let value = $('#assessment_due_date').val();
-        if (value == " "){
+        if (value == ""){
             $("#assessment_due_date_validate").show();
             assessmentDateError=false;
             return false;
@@ -104,7 +104,7 @@ $(document).ready(function (){
 
     function validateAssessmentTime(){
         let value = $('#assessment_due_time').val()
-        if (value == " "){
+        if (value == ""){
             $("#assessment_due_time_validate").show()
             assessmentTimeError=false;
             return false;
@@ -123,7 +123,7 @@ $(document).ready(function (){
 
     function validateCourseTitle(){
         let value = $('#course_title').val()
-        if (value == " "){
+        if (value == ""){
             $("#course_title_validate").show()
             courseTitleError=false;
             return false;
@@ -142,7 +142,7 @@ $(document).ready(function (){
 
     function validateCourseDescription(){
         let value = $('#course_description').val()
-        if (value == " "){
+        if (value == ""){
             $("#course_description_validate").show()
             courseDescriptionError=false;
             return false;
