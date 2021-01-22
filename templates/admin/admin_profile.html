@@ -79,7 +79,7 @@
                                             <label for="first_name" style="font-size: 14pt"
                                                    class="form-check-label font-weight-bolder text-uppercase text-dark">{{ course.course_title }}</label><br>
                                             <p><span class="text-secondary" style="font-size: 12pt">{{ course.course_description }}</span></p><br>
-                                            <span class="text-dark" style="font-size: 14pt"><a href="{% url 'edit_course' course.id %}">Edit</a> | <a href="{% url 'delete_course' course.id %}" class="text-danger">Delete</a> </span>
+                                            <span class="text-dark" style="font-size: 14pt"><a href="{% url 'edit_course' course.id %}">Edit</a> | <a href="#" > Tutors </a>  | <a href="{% url 'delete_course' course.id %}" class="text-danger">Delete</a> </span>
                                         </div>
 
                                         <hr>
@@ -171,8 +171,35 @@
                                                     <span class="text-secondary"> {% if appointment.course_title %} | {{ appointment.course_title }} | {% else %}No Course!{% endif %}</span>
                                                 {% endif %}
                                             {% endfor %}
-                                            <br><span class="text-dark" style="font-size: 12pt"><a href="{% url 'admin_tutor_details' tutor.id %}">View</a> | <a href="{% url 'delete_tutor' tutor.id %}" class="text-danger">Terminate</a> </span>
+                                            <br><span class="text-dark" style="font-size: 12pt"><a href="{% url 'admin_tutor_details' tutor.id %}">View</a> | <a href="#" class="text-danger" data-toggle="modal" data-target="#delete_tutor">Delete Tutor</a></span>
                                         </div>
+
+                                        <!--Confirmation Modal-->
+                                        <div class="modal fade" id="delete_tutor" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title text-danger" id="exampleModalLabel">Terminate {{ tutor.first_name }} {{ tutor.last_name }} as a tutor?</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        When you terminate this tutor <br> you are delete all records about this tutor, even as a user.<br>
+                                                        Do you still want to continue with the process?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <div class="btn">
+                                                            <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
+                                                        </div>
+                                                        <div class="btn">
+                                                            <a href="{% url 'delete_tutor' tutor.id %}" class="btn btn-danger">Un-enroll</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     {% endfor %}
                                 {% else %}
                                     <div class="form-group col-6 " style="font-size: 16pt">

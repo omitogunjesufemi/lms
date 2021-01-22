@@ -96,6 +96,22 @@ def appointment_details(request):
     return render(request, '', context)
 
 
+@login_required(login_url='login')
+def delete_appointment(request, appointment_id):
+    if request.user.has_perm('lms_app.delete_appointment'):
+        try:
+            service_controller.appointment_management_service().delete(appointment_id)
+        except Appointment.DoesNotExist as e:
+            print('This appointment does not exist!')
+            return Http404
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
+
+
+
 def __set_appointment_attribute_request(request: HttpRequest):
     initiate_appointment_dto = InitiatedAppointmentDto()
     initiate_appointment_dto.date_appointed = datetime.date.today()
