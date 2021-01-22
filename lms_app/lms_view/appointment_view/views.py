@@ -79,6 +79,26 @@ def list_appointments(request):
         }
         return render(request, 'error_message.html', context)
 
+
+@login_required(login_url='login')
+def list_tutor_for_appointment(request, course_id):
+    if request.user.is_superuser:
+        username = request.user.username
+        appointments = service_controller.appointment_management_service().list_appoint_for_tutor(course_id)
+        context = {
+            'username': username,
+            'appointments': appointments,
+        }
+        return render(request, 'appointment/list_appointment.html', context)
+    else:
+        context = {
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
+
+
+
+
 def appointment_details(request):
     username = request.user.username
 
