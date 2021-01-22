@@ -61,9 +61,14 @@
                                             <hr>
                                             Profile</a>
                                     {% elif 'admin' in l_as_list %}
-                                        <a class="dropdown-item" href="{% url 'admin_details' %}"> <span style="font-size: small" class="text-secondary">{{ username }} is logged<br> in as an admin.<br></span>
-                                            <hr>
-                                            Profile</a>
+                                        <div>
+                                            <span style="font-size: small" class="text-secondary">{{ username }} is logged<br> in as an admin.<br></span>
+                                        </div>
+                                        <div>
+                                            <a class="dropdown-item" href="{% url 'admin_details' %}">
+                                                <hr>
+                                                Profile</a>
+                                        </div>
                                     {% endif %}
 
 
