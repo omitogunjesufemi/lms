@@ -244,7 +244,7 @@
                                                     <span class="text-secondary">{% if enrollment.course_title %} | {{ enrollment.course_title }} | {% else %}No Course!{% endif %}</span>
                                                 {% endif %}
                                             {% endfor %}
-                                            <br><span class="text-dark" style="font-size: 12pt"><a href="{% url 'admin_student_details' student.id %}">View</a> | <a href="#" class="text-danger">Expel</a> </span>
+                                            <br><span class="text-dark" style="font-size: 12pt"><a href="{% url 'admin_student_details' student.id %}">View</a> | <a href="#" class="text-danger" data-toggle="modal" data-target="#expel">Expel</a> </span>
 
 
                                             <!--Confirmation Modal-->
