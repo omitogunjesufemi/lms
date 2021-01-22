@@ -1,5 +1,10 @@
 $(document).ready(function () {
 
+    $('.modal').on('hidden.bs.modal', function () {
+        $('#modal_content').modal('dispose');
+    });
+
+
     $('#first_name_check').hide();
     let firstnameError = true;
     $('#first_name').keyup(function () {

@@ -24,11 +24,11 @@
                                 {% if 'students' in l_as_list %}
                                     <a href="{% url 'initiate_enrollment' course.id %}" class="btn btn-outline-success btn-sm">Enroll</a>
                                 {% elif 'tutors' in l_as_list %}
-                                    <a href="#" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Apply</a>
+                                    <a href="#" type="button" class="btn btn-primary" data-toggle="modal" data-target="#apply{{ course.id }}">Apply</a>
 
 
                                     <!--Modal for Tutor Application-->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="apply{{ course.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">

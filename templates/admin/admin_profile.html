@@ -79,7 +79,33 @@
                                             <label for="first_name" style="font-size: 14pt"
                                                    class="form-check-label font-weight-bolder text-uppercase text-dark">{{ course.course_title }}</label><br>
                                             <p><span class="text-secondary" style="font-size: 12pt">{{ course.course_description }}</span></p><br>
-                                            <span class="text-dark" style="font-size: 14pt"><a href="{% url 'edit_course' course.id %}">Edit</a> | <a href="{% url 'course_tutor_list' course.id %}" > Tutors </a>  | <a href="{% url 'delete_course' course.id %}" class="text-danger">Delete</a> </span>
+                                            <span class="text-dark" style="font-size: 14pt"><a href="{% url 'edit_course' course.id %}">Edit</a> | <a href="{% url 'course_tutor_list' course.id %}" > Tutors </a>  | <a href="#" class="text-danger" data-toggle="modal" data-target="#delete_course{{ course.id }}">Delete</a> </span>
+                                        </div>
+
+                                        <!--Confirmation Modal-->
+                                        <div class="modal fade" id="deletecourse{{ course.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title text-danger" >Un-enroll from {{ enrollment.course_title }}?</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        When this course is delete, all assessment, questions and sittings related to it will be gone.<br>
+                                                        Do you still want to continue with the process?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <div class="btn">
+                                                            <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
+                                                        </div>
+                                                        <div class="btn">
+                                                            <a href="{% url 'delete_course' course.id %}" class="btn btn-danger">Delete {{ course.course_title }}</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <hr>
@@ -171,15 +197,15 @@
                                                     <span class="text-secondary"> {% if appointment.course_title %} | {{ appointment.course_title }} | {% else %}No Course!{% endif %}</span>
                                                 {% endif %}
                                             {% endfor %}
-                                            <br><span class="text-dark" style="font-size: 12pt"><a href="{% url 'admin_tutor_details' tutor.id %}">View</a> | <a href="#" class="text-danger" data-toggle="modal" data-target="#delete_tutor">Delete Tutor</a></span>
+                                            <br><span class="text-dark" style="font-size: 12pt"><a href="{% url 'admin_tutor_details' tutor.id %}">View</a> | <a href="#" class="text-danger" data-toggle="modal" data-target="#delete_tutor{{ tutor.id }}">Delete Tutor</a></span>
                                         </div>
 
                                         <!--Confirmation Modal-->
-                                        <div class="modal fade" id="delete_tutor" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal fade" id="delete_tutor{{ tutor.id }}" tabindex="-1" role="dialog" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title text-danger" id="exampleModalLabel">Terminate {{ tutor.first_name }} {{ tutor.last_name }} as a tutor?</h5>
+                                                        <h5 class="modal-title text-danger" id="exampleModalLabel">Terminate {{ tutor.first_name }} {{ tutor.last_name }} {{ tutor.registration_number }} as a tutor?</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
@@ -193,7 +219,7 @@
                                                             <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
                                                         </div>
                                                         <div class="btn">
-                                                            <a href="{% url 'delete_tutor' tutor.id %}" class="btn btn-danger modal-footer modal-header">Delete Tutor</a>
+                                                            <a href="{% url 'delete_tutor' tutor.id %}" class="btn btn-danger modal-footer modal-header">Delete {{ tutor.last_name }}</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -244,16 +270,16 @@
                                                     <span class="text-secondary">{% if enrollment.course_title %} | {{ enrollment.course_title }} | {% else %}No Course!{% endif %}</span>
                                                 {% endif %}
                                             {% endfor %}
-                                            <br><span class="text-dark" style="font-size: 12pt"><a href="{% url 'admin_student_details' student.id %}">View</a> | <a href="#" class="text-danger" data-toggle="modal" data-target="#expel">Expel</a> </span>
+                                            <br><span class="text-dark" style="font-size: 12pt"><a href="{% url 'admin_student_details' student.id %}">View</a> | <a href="#" class="text-danger" data-toggle="modal" data-target="#expel{{ student.id }}">Expel</a> </span>
 
 
                                             <!--Confirmation Modal-->
-                                            <div class="modal fade" id="expel" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal fade" id="expel{{ student.id }}" tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title text-danger" id="exampleModalLabel">Expel {{ student.first_name }} {{ student.last_name }} ?</h5>
-                                                            <button type="button" class="close" data-dismiss="" aria-label="Close">
+                                                            <h5 class="modal-title text-danger" id="exampleModalLabel">Expel {{ student.first_name }} {{ student.last_name }} {{ student.registration_number }} ?</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
@@ -266,7 +292,7 @@
                                                                 <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
                                                             </div>
                                                             <div class="btn">
-                                                                <a href="{% url  'delete_student' student.id %}" class="btn btn-danger modal-footer">Expel {{ student.last_name }}</a>
+                                                                <a href="{% url  'delete_student' student.id %}" class="btn btn-danger" id="modalAction">Expel {{ student.last_name }}</a>
                                                             </div>
                                                         </div>
                                                     </div>
