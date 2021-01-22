@@ -193,7 +193,7 @@
                                                             <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
                                                         </div>
                                                         <div class="btn">
-                                                            <a href="{% url 'delete_tutor' tutor.id %}" class="btn btn-danger">Delete Tutor</a>
+                                                            <a href="{% url 'delete_tutor' tutor.id %}" class="btn btn-danger modal-footer modal-header">Delete Tutor</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -266,7 +266,7 @@
                                                                 <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
                                                             </div>
                                                             <div class="btn">
-                                                                <a href="{% url  'delete_student' student.id %}" class="btn btn-danger">Expel {{ student.last_name }}</a>
+                                                                <a href="{% url  'delete_student' student.id %}" class="btn btn-danger modal-footer">Expel {{ student.last_name }}</a>
                                                             </div>
                                                         </div>
                                                     </div>

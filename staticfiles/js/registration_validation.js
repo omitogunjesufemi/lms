@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     $('.modal').on('hidden.bs.modal', function(e)
     {
-        $(this).removeData();
+        $('.modal-footer .modal-header').removeData();
     }) ;
 
     $('#first_name_check').hide();
