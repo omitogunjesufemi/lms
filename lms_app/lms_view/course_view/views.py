@@ -58,14 +58,12 @@ def edit_course(request, course_id):
         return render(request, 'error_message.html', context)
 
 
-@login_required(redirect_field_name='next')
 def list_courses(request):
     l_as_list = []
     for g in request.user.groups.all():
         l_as_list.append(g.name)
 
     username = request.user.username
-
     courses = service_controller.course_management_service().list()
     context = {
         'username': username,
