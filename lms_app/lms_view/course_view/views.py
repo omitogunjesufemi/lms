@@ -60,25 +60,19 @@ def edit_course(request, course_id):
 
 @login_required(redirect_field_name='next')
 def list_courses(request):
-    if request.user.has_perm('lms_app.view_course'):
-        l_as_list = []
-        for g in request.user.groups.all():
-            l_as_list.append(g.name)
+    l_as_list = []
+    for g in request.user.groups.all():
+        l_as_list.append(g.name)
 
-        username = request.user.username
+    username = request.user.username
 
-        courses = service_controller.course_management_service().list()
-        context = {
-            'username': username,
-            'courses': courses,
-            'l_as_list': l_as_list,
-        }
-        return render(request, 'course/list_courses.html', context)
-    else:
-        context={
-            'message': 'You are not authorised'
-        }
-        return render(request, 'error_message.html', context)
+    courses = service_controller.course_management_service().list()
+    context = {
+        'username': username,
+        'courses': courses,
+        'l_as_list': l_as_list,
+    }
+    return render(request, 'course/list_courses.html', context)
 
 
 @login_required(redirect_field_name='next')
