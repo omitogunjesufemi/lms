@@ -1,94 +1,46 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-7 mt-4">
+            <div class="col-12 mt-1">
 
                 <div class="row justify-content-center text-secondary mt-4">
-                    {% if 'students' in l_as_list %}
-                        <span class="font-italic"> Choose any of the courses listed below to enroll for a course.</span>
-                    {% elif 'tutors' in l_as_list %}
-                        <span class="font-italic"> Choose any of the courses listed below to apply for appointment as a tutor for a course.</span>
-                    {% else %}
-                        <span class="font-italic"> Choose any of the courses listed below to enroll for a course.</span>
-                    {% endif %}
+                    <span>Welcome to LMS App. Below are the available courses.</span>
                 </div>
-
-
-                <div class="card mt-3">
-                    <div class="card-body">
-                        {% for course in courses %}
-                            <h3>{{ course.course_title }}</h3>
-                            <p>{{ course.course_description }}</p>
-                            <div class="btn-group float-right">
-                                {% if 'students' in l_as_list %}
-                                    <a href="{% url 'initiate_enrollment' course.id %}" class="btn btn-outline-success btn-sm">Enroll</a>
-                                {% elif 'tutors' in l_as_list %}
-                                    <a href="#" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Apply</a>
-
-
-                                    <!--Modal for Tutor Application-->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Submit Application</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form method="post" action="{% url 'tutor_application' course.id %}" enctype="multipart/form-data">
-                                                        {% csrf_token %}
-                                                        <div class="form-group">
-                                                            <label for="message-text" class="col-form-label">Qualifications:</label>
-                                                            <textarea
-                                                                    class="form-control" id="qualifications"
-                                                                    placeholder="Write a summary of your qualification ans experience..."
-                                                                    name="qualifications"
-                                                            ></textarea>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="file_upload" class="col-form-label">Upload CV</label>
-                                                            <input type="file" class="form-row" id="file_upload" name="file_upload">
-                                                        </div>
-
-                                                        <div class="modal-footer">
-                                                            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-primary">Apply</button>
-                                                        </div>
-
-                                                    </form>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                 <!--End of Modal-->
-
-                                {% elif 'admin' in l_as_list %}
-
-                                {% else %}
-                                    <a href="{% url 'initiate_enrollment' course.id %}" class="btn btn-outline-success btn-sm">Enroll</a>
-                                {% endif %}
-                            </div><br>
-                            <div>
-                                <hr>
-                            </div>
-                        {% endfor %}
-
-                    </div>
-
-                </div>
-
             </div>
-
         </div>
-
     </div>
 
+    <section class="ml-5 mr-5">
+        <div class="">
+            <div class="card-deck mt-2">
+                <!--Courses-->
+                {% for course in courses %}
+                    <div class="mt-4">
+                        <div class="card shadow border-0" style="width: 377px;">
+                            <div class="card-img-top">
+                                {% if course.file != "" %}
+                                    <img src="../../Files/{{ course.file }}" alt="{{ course.course_title }}" class="course_img justify-content-center" style="width: 375px; height: 247px;">
+                                {% else %}
+                                    {% load static %}<img src="{% static 'img/Screenshot 2021-02-01 094946.png' %}" alt="{{ course.course_title }}" class="course_img float-right">
+                                {% endif %}
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title text-uppercase">{{ course.course_title }}</h3>
+                                <p class="card-text" style="text-align: justify">
+                                    Learning Python is easy.
+                                    Whether you're new to programming or an experienced developer,
+                                    it's easy to learn and use Python.
+                                </p>
+                                <a href="{% url 'course_details' course.id %}" class="float-right">View Course</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 
 
 {% endblock %}

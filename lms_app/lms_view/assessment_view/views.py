@@ -141,6 +141,8 @@ def __set_assessment_attribute_request(request: HttpRequest):
     initiate_assessment_dto.total_score = 0
     initiate_assessment_dto.pass_mark = request.POST['pass_mark']
     initiate_assessment_dto.course_id = request.POST['course_id']
+    if request.POST['status'] == "":
+        initiate_assessment_dto.status = 0
     return initiate_assessment_dto
 
 
@@ -163,6 +165,9 @@ def __edit_assessment_attribute_request(request):
     update_assessment_dto.date_due = request.POST['assessment_due_date']
     update_assessment_dto.time_due = request.POST['assessment_due_time']
     update_assessment_dto.pass_mark = request.POST['pass_mark']
+    update_assessment_dto.total_score = request.POST['total_score']
+    if request.POST['status'] == "":
+        update_assessment_dto.status = 0
     return update_assessment_dto
 
 

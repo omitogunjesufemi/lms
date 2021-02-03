@@ -77,17 +77,17 @@
 
                                 {% if appointment_len > 0 %}
                                     {% for appointment in appointments %}
-                                        <div class="form-group col-4 " style="font-size: 16pt">
-                                            <label for="first_name" style="font-size: 14pt"
+                                        <div class="form-group col-6 " style="font-size: 16pt">
+                                            <label for="" style="font-size: 14pt"
                                                    class="form-check-label font-weight-bolder text-uppercase text-dark">{{ appointment.course_title }}</label><br>
-                                            <span class="font-italic ">{{ appointment.course_description }}</span><br>
+                                            <p><span class="text-secondary" style="font-size: 12pt">{{ appointment.course_description }}</span></p>
                                             <span class="font-italic text-dark card-link" style="font-size: 12pt"><a href="{% url 'list_student_for_course' appointment.course_id %}" style="font-size: 12pt">View Students</a> </span>
                                         </div>
                                     {% endfor %}
                                 {% else %}
                                     <div class="form-group col-6 " style="font-size: 16pt">
-                                        <span class="font-italic text-secondary">You are not enrolled for a course yet!</span><br>
-                                        <a href="{% url 'list_courses' %}" ><span class="font-italic ml-1">Enroll Now</span></a>
+                                        <span class="font-italic text-secondary">You are not assigned for a course yet!</span><br>
+                                        <a href="{% url 'list_courses' %}" ><span class="font-italic ml-1">Apply for one</span></a>
                                     </div>
                                 {% endif %}
 
@@ -106,7 +106,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header bg-success shadow">
-                            <h3 class="text-light">Assessments Created ( {{ assessment_len }} ) <a href="{% url 'create_assessment' %}" class="float-right text-light">+</a> </h3>
+                            <h3 class="text-light">Assessments Created ( {{ assessment_len }} ) {% if 'tutors' in l_as_list and appointment_len > 0 %}<a href="{% url 'create_assessment' %}" class="float-right text-light">+</a>{% else %}{% endif %} </h3>
                         </div>
                         <div class="card-body shadow">
                             <div class="row">
@@ -123,8 +123,8 @@
                                     {% endfor %}
                                 {% else %}
                                     <div class="form-group col-6 " style="font-size: 16pt">
-                                        <span class="font-italic text-secondary">You have no assessment yet!</span><br>
-                                        <a href="{% url 'list_assessment' %}" ><span class="font-italic ml-1">Check Task</span></a>
+                                        <span class="font-italic text-secondary">No assessment created yet!</span><br>
+                                        {% if 'tutors' in l_as_list and appointment_len > 0 %}<a href="{% url 'create_assessment' %}" ><span class="font-italic ml-1">Create one</span></a>{% else %}{% endif %}
                                     </div>
                                 {% endif %}
 
@@ -162,8 +162,7 @@
                                     {% endfor %}
                                 {% else %}
                                     <div class="form-group col-6 " style="font-size: 16pt">
-                                        <span class="font-italic text-secondary">You have no question yet!</span><br>
-                                        <a href="{% url 'list_assessment' %}" ><span class="font-italic ml-1">Check Task</span></a>
+                                        <span class="font-italic text-secondary">You have no question set!</span><br>
                                     </div>
                                 {% endif %}
 

@@ -33,13 +33,15 @@ class DjangoORMCourseRepository(CourseRepository):
     def register(self, model: CreateCourseDto):
         course = Course()
         course.course_title = model.course_title
-        course.course_description = model.course_description
+        course.course_slug = model.course_slug
         course.save()
 
     def edit(self, course_id, model: EditCourseDto):
         try:
             course = Course.objects.get(id=course_id)
             course.course_title = model.course_title
+            course.course_slug = model.course_slug
+            course.file_upload = model.file
             course.course_description = model.course_description
             course.save()
         except Course.DoesNotExist as e:
@@ -49,14 +51,16 @@ class DjangoORMCourseRepository(CourseRepository):
     def list(self) -> List[ListCourseDto]:
         courses = list(Course.objects.values('id',
                                              'course_title',
-                                             'course_description',
+                                             'course_slug',
+                                             'file_upload',
                                              ))
         course_list: List[ListCourseDto] = []
         for course in courses:
             subject = ListCourseDto()
             subject.id = course['id']
             subject.course_title = course['course_title']
-            subject.course_description = course['course_description']
+            subject.course_slug = course['course_slug']
+            subject.file = course['file_upload']
             course_list.append(subject)
         return course_list
 
@@ -66,7 +70,9 @@ class DjangoORMCourseRepository(CourseRepository):
             subject = CourseDetailDto()
             subject.id = course.id
             subject.course_title = course.course_title
+            subject.course_slug = course.course_description
             subject.course_description = course.course_description
+            subject.file = course.file_upload
             return subject
         except Course.DoesNotExist as e:
             print('This Course is not yet Registered!')

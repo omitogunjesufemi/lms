@@ -1,5 +1,43 @@
 $(document).ready(function () {
 
+    $('#login-form').trigger("reset");
+
+    $("input").change(function(e) {
+
+        for (var i = 0; i < e.originalEvent.srcElement.files.length; i++) {
+
+            var file = e.originalEvent.srcElement.files[i];
+
+            var img = document.createElement("img");
+            var reader = new FileReader();
+            reader.onloadend = function() {
+                img.src = reader.result;
+                img.alt = 'Course Pictures';
+                img.width = 300;
+                img.className = 'course_display'
+            }
+            reader.readAsDataURL(file);
+            $("input").after(img);
+        }
+    });
+
+    $('.modal').on('hidden.bs.modal', function () {
+        $('#modal_content').modal('dispose');
+    });
+
+    $('#course_extra_details').hide();
+    $('#see_more_details').click( function (){
+        $('#course_extra_details').show()
+        $('#see_more_details').html
+        ("  + See Less Details ");
+    })
+    $('#see_more_details').dblclick( function (){
+        $('#course_extra_details').hide()
+        $('#see_more_details').html
+        ("+ See More Details");
+    })
+
+
     $('#first_name_check').hide();
     let firstnameError = true;
     $('#first_name').keyup(function () {
@@ -39,11 +77,7 @@ $(document).ready(function () {
 
     $('#phone_check').hide();
     let telephoneError = true;
-    let hasTenDigits = true;
     let hasElevenDigits = true;
-    let startsWithOne = true;
-    let hasPermittedCharsOnly = true;
-    let hasCorrectParentheses = true;
     $('#phone').keyup(function () {
         validatePhone();
     });
@@ -84,6 +118,10 @@ $(document).ready(function () {
 
     function validateUsername() {
         let usernameValue = $('#username').val();
+        let user_list_value = $('#user_list').text();
+        console.log(user_list_value)
+        console.log(usernameValue)
+
         if (usernameValue.length == '') {
             $('#user_check').show();
             usernameError = false;
@@ -96,6 +134,14 @@ $(document).ready(function () {
             usernameError = false;
             return false;
         }
+        else if((user_list_value.includes(usernameValue))) {
+            $('#user_check').show();
+            $('#user_check').html
+            ("**Username already taken");
+            usernameError = false;
+            return false;
+        }
+
         else {
             $('#user_check').hide();
         }
@@ -170,21 +216,20 @@ $(document).ready(function () {
         }
     }
 
-// Submitt button 
-    $('#submitbtn').click(function () {
-        validateFirstName()
-        validateLastName();
-        validateUsername();
-        validatePassword();
-        validateConfirmPassword();
-        validateEmail();
-        if ((usernameError === true) &&
-            (passwordError === true) &&
-            (confirmPasswordError === true) &&
-            (emailError === true)) {
-            return true;
-        } else {
-            return false;
-        }
-    });
-}); 
+// Submitt button
+//     $('#submitbtn').click(function () {
+//         let allow;
+//         validateFirstName();
+//         validateLastName();
+//         validateUsername();
+//         validatePassword();
+//         validateConfirmPassword();
+//
+//         if ((usernameError === true) && (passwordError === true) && (confirmPasswordError === true) && (emailError === true)){
+//             allow = 1;
+//         }
+//         else {
+//              allow = 0;
+//         }
+//     });
+});

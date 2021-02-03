@@ -1,18 +1,22 @@
 class CreateCourseDto:
     course_title: str
-    course_description: str
+    course_slug: str
+    file: zip
     id: int
 
 
 class EditCourseDto:
     course_title: str
+    course_slug: str
     course_description: str
+    file: zip
     id: int
 
 
 class ListCourseDto:
     course_title: str
-    course_description: str
+    course_slug: str
+    file: zip
     id: int
 
 # class SelectCourseDto:
@@ -22,5 +26,7 @@ class ListCourseDto:
 
 class CourseDetailDto:
     course_title: str
+    course_slug: str
     course_description: str
+    file: zip
     id: int

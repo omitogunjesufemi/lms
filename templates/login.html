@@ -1,42 +1,85 @@
-{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LMS</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-grid.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-reboot.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+</head>
+<body class="">
 {% block content %}
     <div class="container mt-5">
         <div class="row mx-auto my-auto justify-content-center">
             <div class="col-md-6">
-                <div class="card shadow-lg">
-                    <div class="card-header">
-                        <div class="card_title">
-                            <h4> Login </h4>
+                <div class="card shadow-md border-0">
+{#                    <div class="card-header bg-success">#}
+{#                    </div>#}
+                    <div class="card-body ">
+                        <div class="login_tab">
+
+                            <div class="row justify-content-center mt-5 mb-4">
+                                <a href="{% url 'index' %}" class="btn btn-outline-success btn-lg float-right">
+                                    L.M.S</a>
+                            </div>
+
+                            <div class="row justify-content-center mb-3">
+                                <h2 class="font-weight-light text-center">Sign in to your account</h2>
+                            </div>
+
+                            <div class="row font-weight-light mb-3">
+                                <p class="font-weight-light text-center">Build qualified students for today, tomorrow, and beyond with
+                                    the Education to future-proof their career. </p>
+                            </div>
+
+                            <div class="row justify-content-around">
+                                <form method="POST" action="{% url 'login_post' %}?next_url={{ next_url }}" id="login_form">
+                                    {% csrf_token %}
+                                    {% if message %}
+                                        <div class="alert alert-danger">{{ message }}</div>
+                                    {% endif %}
+                                    <div class="form-group">
+                                        <input class="form-control" name="username" id="username" placeholder="Username">
+                                    </div>
+
+                                    <div class="form-group mb-3 justify-content-center">
+                                        <input class="form-control" name="password" id="password" type="password" placeholder="Password">
+                                    </div>
+
+                                    <div class="form-group mt-3 justify-content-around">
+                                        <small>By clicking Sign In, you agree to our <a href="#" class="text-success font-weight-bold">
+                                            Terms of Use</a> and our <a href="#" class="text-success font-weight-bold">Privacy Policy</a>.</small>
+
+                                    </div>
+
+                                    <div class="form-group mt-3 sign_in_btn">
+                                        <button type="submit" class="btn btn-group btn-success">Sign In</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="form-group register_in_btn mt-4">
+                                <span class="ml-3">Don't have an account? </span><a href="{% url 'register' %}" class="text-success font-weight-bold">Register</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <form method="POST" action="{% url 'login_post' %}?next_url={{ next_url }}">
-                            {% csrf_token %}
-                            {% if message %}
-                                <div class="alert alert-danger">{{ message }}</div>
-                            {% endif %}
-                            <div class="form-group">
-                                <label for="username" class="form-check-label">Username:</label>
-                                <input class="form-control" name="username" id="username">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="password" class="form-check-label">Password:</label>
-                                <input class="form-control" name="password" id="password" type="password">
-                            </div>
-
-{#                            <div class="form-group">#}
-{#                                <input class="form-control" name="next_url" id="next_url" value = {{ next_url }} type="hidden" >#}
-{#                            </div>#}
-
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-group btn-success">Sign in</button>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+
 {% endblock %}
+<script src="{% static 'jQuery/jquery.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-confirm-delete.js' %}"></script>
+<script src="{% static 'js/registration_validation.js' %}"></script>
+<script src="{% static 'js/field_validation.js' %}"></script>
+<script src="{% static 'jQuery/jquery.validate.min.js' %}"></script>
+<script src="{% static 'jQuery/delete.js' %}"></script>
+
+</body>
+</html>

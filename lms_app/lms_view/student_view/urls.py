@@ -3,7 +3,6 @@ from lms_app.lms_view.student_view import views
 
 urlpatterns = [
     path('register', views.register_student, name='register_student'),
-    path('check_user', views.check_username_exist, name='check_user'),
     path('list', views.list_student, name='list_student'),
     path('list_student/<int:course_id>', views.list_student_for_courses, name='list_student_for_course'),
     path('profile', views.student_details, name='student_details'),

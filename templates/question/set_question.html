@@ -14,51 +14,50 @@
 
                             <div class="form-group">
                                 <label for="assessment_id" class="form-check-label">Assessment Title</label>
-                                <select name="assessment_id" class="form-control" id="assessment_id">
+                                <select name="assessment_id" class="form-control" id="assessment_id" required>
                                         <option value="{{ assessment.id }}">{{ assessment.assessment_title }} ({{ assessment.course_title }})</option>
-
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="question_title" class="form-check-label">Question Title</label>
-                                <input name="question_title" class="form-control" id="question_title" >
+                                <input name="question_title" class="form-control" id="question_title" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="question_content" class="form-check-label">Question Content</label>
-                                <textarea name="question_content" class="form-control" id="question_content" ></textarea>
+                                <textarea name="question_content" class="form-control" id="question_content" required></textarea>
                             </div>
 
 
                             <div class="form-group">
                                 <label for="choice1" class="form-check-label">Choice 1</label>
-                                <input name="choice1" class="form-control" id="choice1">
+                                <textarea name="choice1" class="form-control" id="choice1" required></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="choice2" class="form-check-label">Choice 2</label>
-                                <input name="choice2" class="form-control" id="choice2">
+                                <textarea name="choice2" class="form-control" id="choice2"></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="choice3" class="form-check-label">Choice 3</label>
-                                <input name="choice3" class="form-control" id="choice3">
+                                <textarea name="choice3" class="form-control" id="choice3" required></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="choice4" class="form-check-label">Choice 4</label>
-                                <input name="choice4" class="form-control" id="choice4">
+                                <textarea name="choice4" class="form-control" id="choice4" required></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="answer" class="form-check-label">Answer</label>
-                                <input name="answer" class="form-control" id="answer">
+                                <input name="answer" class="form-control" id="answer" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="assigned_mark" class="form-check-label">Assigned Mark</label>
-                                <input name="assigned_mark" class="form-control" id="assigned_mark" type="number" >
+                                <input name="assigned_mark" class="form-control" id="assigned_mark" type="number" required>
                             </div>
 
 

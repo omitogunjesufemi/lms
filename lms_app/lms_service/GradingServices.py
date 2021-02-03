@@ -1,3 +1,5 @@
+from abc import abstractmethod, ABCMeta
+
 from lms_app.lms_repository.GradingRepository import *
 
 

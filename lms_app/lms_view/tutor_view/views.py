@@ -8,8 +8,14 @@ from lms_app.service_controllers import service_controller, User, Tutor
 
 
 def register_tutor(request):
+    user_list = []
+    users = User.objects.all()
+    for user in users:
+        user_list.append(user.username)
 
     context = {
+        'user_list': user_list,
+        'message': 'username already taken'
 
     }
     tutor = __create_if_post_method(request, context)

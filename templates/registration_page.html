@@ -3,9 +3,8 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-8">
-                <div class="form-group mt-5">
-                    <div class="left mt-4">
+                <div class="form-group mt-5 col-6 col-sm-6">
+                    <div class="">
                         {% load static %} <img src="{% static "img/59983.jpg" %}" alt="student" style="width: 300px; height: 300px; border-radius: 500px"/>
                         <h4 class="">Are you a Student?</h4>
                         <span class="font-italic text-secondary">This link is only for Students. Tutors should use the registration link assigned to them.</span>
@@ -13,16 +12,24 @@
                             <a href="{% url 'register_student' %}" class="btn btn-success">Register as a Student</a>
                         </div>
                     </div>
+                </div>
 
-                    <div class="right mt-4">
+                <div class="form-group mt-5">
+                    <div class="">
                         {% load static %} <img src="{% static "img/team/team-3.jpg" %}" alt="tutor" style="width: 300px; height: 300px; border-radius: 500px"/>
                         <h4 class="">Are you a tutor?</h4>
-                        <span class="font-italic text-secondary">This link is only for Tutors. Students should use the registration link assigned to them.</span>
+                        <div>
+                            <span class="font-italic text-secondary">
+                                This link is only for Tutors.
+                                Students should use the registration link assigned to them.</span>
+                        </div>
+
                         <div class="btn">
                             <a href="{% url 'register_tutor' %}" class="btn btn-success">Register as a Tutor</a>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
         <div class="row justify-content-center">

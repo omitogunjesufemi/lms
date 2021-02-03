@@ -1,3 +1,5 @@
+from abc import abstractmethod, ABCMeta
+
 from lms_app.lms_repository import AppointmentRepository
 from lms_app.lms_repository.AppointmentRepository import *
 
@@ -20,6 +22,11 @@ class AppointmentManagementService(metaclass=ABCMeta):
 
     @abstractmethod
     def list_appoint_for_tutor(self, tutor_id) -> List[ListAppointmentDto]:
+        """List the teachers and courses appointed"""
+        raise NotImplementedError
+
+    @abstractmethod
+    def list_tutor_for_course_appointed(self, course_id) -> List[ListAppointmentDto]:
         """List the teachers and courses appointed"""
         raise NotImplementedError
 
@@ -51,6 +58,9 @@ class DefaultAppointmentManagementService(AppointmentManagementService):
 
     def list_appoint_for_tutor(self, tutor_id) -> List[ListAppointmentDto]:
         return self.repository.list_appoint_for_tutor(tutor_id)
+
+    def list_tutor_for_course_appointed(self, course_id) -> List[ListAppointmentDto]:
+        return self.repository.list_appoint_for_tutor(course_id)
 
     def details(self, tutors_id) -> AppointmentDetailsDto:
         return self.repository.details(tutors_id)

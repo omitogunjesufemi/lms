@@ -27,6 +27,11 @@ class AppointmentRepository(metaclass=ABCMeta):
         raise NotImplementedError
 
     @abstractmethod
+    def list_tutor_for_course_appointed(self, course_id) -> List[ListAppointmentDto]:
+        """List the teachers and courses appointed"""
+        raise NotImplementedError
+
+    @abstractmethod
     def details(self, tutors_id) -> AppointmentDetailsDto:
         """Details of a particular appointment"""
         raise NotImplementedError
@@ -84,7 +89,7 @@ class DjangoORMAppointmentRepository(AppointmentRepository):
     def list_appoint_for_tutor(self, tutor_id) -> List[ListAppointmentDto]:
         appointments = list(Appointment.objects.values('id', 'tutors__user__first_name', 'tutors__user__last_name',
                                                        'course__course_title',
-                                                       'course__course_description',
+                                                       'course__course_slug',
                                                        'tutors__registration_number',
                                                        'tutors_id',
                                                        'course_id'))
@@ -95,7 +100,28 @@ class DjangoORMAppointmentRepository(AppointmentRepository):
                 contract = ListAppointmentDto()
                 contract.id = appointment['id']
                 contract.course_title = appointment['course__course_title']
-                contract.course_description = appointment['course__course_description']
+                contract.course_description = appointment['course__course_slug']
+                contract.course_id = appointment['course_id']
+                contract.tutors_first_name = appointment['tutors__user__first_name']
+                contract.tutors_last_name = appointment['tutors__user__last_name']
+                contract.tutors_reg = appointment['tutors__registration_number']
+                contract.tutors_id = appointment['tutors_id']
+                appointment_list.append(contract)
+        return appointment_list
+
+    def list_tutor_for_course_appointed(self, course_id) -> List[ListAppointmentDto]:
+        appointments = list(Appointment.objects.values('id', 'tutors__user__first_name', 'tutors__user__last_name',
+                                                       'course__course_title',
+                                                       'tutors__registration_number',
+                                                       'tutors_id',
+                                                       'course_id'))
+
+        appointment_list: List[ListAppointmentDto] = []
+        for appointment in appointments:
+            if course_id == appointment['course_id']:
+                contract = ListAppointmentDto()
+                contract.id = appointment['id']
+                contract.course_title = appointment['course__course_title']
                 contract.course_id = appointment['course_id']
                 contract.tutors_first_name = appointment['tutors__user__first_name']
                 contract.tutors_last_name = appointment['tutors__user__last_name']

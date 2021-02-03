@@ -1,26 +1,91 @@
+.course_img {
+  width: 100%;
+}
 
-.left {
-  float: left;
-  width: 40%;
+.course_display {
+  justify-content: start;
+  padding-top: 20px;
+}
+
+.tabbed_contain{
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  border: #1d2124 1px solid;
+}
+
+.login_tab {
+  width: 100%;
+  padding: 10px 20px;
+  /*border: #1d2124 1px solid;*/
+}
+
+.sign_in_btn {
+  width: 25%;
   padding: 10px;
+  margin: 0;
+  position: absolute;
+  top: 93%;
+  right: 32%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.register_in_btn {
+  width: 100%;
+  padding: 10px;
+  margin: 0;
+  position: absolute;
+  top: 99%;
+  left: 25%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 
-
-.right {
+.rside{
+  width: 100%;
+  padding: 50px;
+  margin-left: 100px;
   float: right;
-  width: 40%;
-  padding: 10px;
+  border-radius: 10px;
+  background-color: #f4f7f8;
+  color: #137c8d;
 }
 
-#numbering {
-  list-style-type: none;
-  counter-reset: css-counter 0; /* initializes counter to 0; use -1 for zero-based numbering */
-  counter-increment: css-counter 1; /* Increase the counter by 1. */
+.deside{
+  width: 100%;
+  padding: 20px;
+  margin-left: 100px;
+  float: right;
+  border-radius: 10px;
+  background-color: #ffffff;
+  color: #137c8d;
 }
 
-
-#numbering:before {
-  content: counter(css-counter) ". "; /* Apply counter before children's content. */
+.column_section {
+  font-size: 10pt;
+  background-color: #CDD9D0;
+  color: #1d2124;
+  padding: 2px;
+  margin: 2px 0px;
 }
 
+.column_header_section {
+  font-size: 18pt;
+  background-color: #1c7430;
+  color: #ffffff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding:15px 5px ;
+}
+
+.column_fields {
+  font-size: 14pt;
+  background-color: #f4faf8;
+  padding:15px 5px ;
+  margin-bottom: 5px;
+
+}

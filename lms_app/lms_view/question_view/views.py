@@ -1,7 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
-from lms_app.lms_dto.AssessmentDto import *
 from lms_app.lms_dto.QuestionDto import *
 from lms_app.service_controllers import service_controller, Question, Assessment
 

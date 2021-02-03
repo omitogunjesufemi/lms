@@ -1,5 +1,3 @@
-import uuid
-from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
@@ -60,42 +58,42 @@ def edit_course(request, course_id):
         return render(request, 'error_message.html', context)
 
 
-@login_required(redirect_field_name='next')
 def list_courses(request):
-    if request.user.has_perm('lms_app.view_course'):
-        l_as_list = []
-        for g in request.user.groups.all():
-            l_as_list.append(g.name)
-
-        username = request.user.username
-
-        courses = service_controller.course_management_service().list()
-        context = {
-            'username': username,
-            'courses': courses,
-            'l_as_list': l_as_list,
-        }
-        return render(request, 'course/list_courses.html', context)
-    else:
-        context={
-            'message': 'You are not authorised'
-        }
-        return render(request, 'error_message.html', context)
-
-
-@login_required(redirect_field_name='next')
-def course_details(request):
     l_as_list = []
     for g in request.user.groups.all():
         l_as_list.append(g.name)
 
     username = request.user.username
+    courses = service_controller.course_management_service().list()
+    context = {
+        'username': username,
+        'courses': courses,
+        'l_as_list': l_as_list,
+    }
+    return render(request, 'course/list_courses.html', context)
+
+
+def course_details(request, course_id):
+    l_as_list = []
+    for g in request.user.groups.all():
+        l_as_list.append(g.name)
+
+    username = request.user.username
+    user_id = request.user.id
+    student_id = service_controller.student_management_service().details(user_id).id
+    
+    course = service_controller.course_management_service().details(course_id=course_id)
+    students_for_course = service_controller.student_management_service().list_student_for_course(course_id)
+    for student in students_for_course:
+        if student_id == student.id:
+
 
     context = {
         'username': username,
         'l_as_list': l_as_list,
+        'course': course,
     }
-    return render(request, '', context)
+    return render(request, 'course/course_details.html', context)
 
 
 @login_required(redirect_field_name='next')
@@ -122,7 +120,7 @@ def __set_course_attribute_request(request: HttpRequest):
 
 def __get_course_attribute_request(request: HttpRequest, create_course_dto):
     create_course_dto.course_title = request.POST['course_title']
-    create_course_dto.course_description = request.POST['course_description']
+    create_course_dto.course_slug = request.POST['course_slug']
 
 
 def __create_if_post_method(request, context):
@@ -140,6 +138,8 @@ def __create_if_post_method(request, context):
 def __edit_course_attribute_request(request, course_id):
     edit_course_dto = EditCourseDto()
     edit_course_dto.course_title = request.POST['course_title']
+    edit_course_dto.course_slug = request.POST['course_slug']
+    edit_course_dto.file = request.FILES['file_upload']
     edit_course_dto.course_description = request.POST['course_description']
     edit_course_dto.id = course_id
     return edit_course_dto

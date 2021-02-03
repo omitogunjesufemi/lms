@@ -1,10 +1,7 @@
-import datetime
-
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
 from lms_app.lms_dto.GradingDto import *
-from lms_app.models import Grading
 from lms_app.service_controllers import service_controller, Question
 
 

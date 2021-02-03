@@ -31,7 +31,9 @@
                               <div class="form-group">
                                   <label for="username" class="form-check-label">Username </label>
                                   <input name="username" class="form-control" id="username" required>
-
+                                  <small id="user_list" class="form-text" hidden>
+                                      {{ user_list }}
+                                  </small>
                                   <p id="user_check" style="color: red; font-size: 10pt;" >
                                       **Username is missing
                                   </p>

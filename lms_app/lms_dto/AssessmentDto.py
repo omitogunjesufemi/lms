@@ -9,6 +9,7 @@ class CreateAssessmentDto:
     course_id: int
     date_due: date
     time_due: time
+    status: bool
     id: int
 
 
@@ -21,6 +22,7 @@ class UpdateAssessmentDto:
     questions_id: int
     date_due: date
     time_due: time
+    status: bool
     id: int
 
 
@@ -32,6 +34,7 @@ class ListAssessmentDto:
     course_title: str
     date_due: date
     time_due: time
+    status: bool
     id: int
 
 
@@ -45,4 +48,5 @@ class AssessmentDetailsDto:
     questions_id: int
     date_due: date
     time_due: time
+    status: bool
     id: int

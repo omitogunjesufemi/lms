@@ -11,8 +11,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
 </head>
 <body class="">
-            <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-                <a class="navbar-brand text-light" href="{% url 'index' %}">
+            <nav class="navbar sticky-top shadow-sm navbar-expand-md navbar-light bg-light">
+                <a class="navbar-brand text-dark" href="{% url 'index' %}">
                     <button class="btn btn-outline-success" >L.M.S</button>
                 </a>
 
@@ -28,15 +28,15 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-light" href="{% url 'index' %}"> Welcome </a>
+                            <a class="nav-link text-dark" href="{% url 'index' %}"> Welcome </a>
                         </li>
 
                         <li class="nav-item ">
-                            <a class="nav-link text-light" href="{% url 'list_courses' %}"> Courses </a>
+                            <a class="nav-link text-dark" href="{% url 'list_courses' %}"> Courses </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-light" href="#">About</a>
+                            <a class="nav-link text-dark" href="#about_us">About</a>
                         </li>
 
 
@@ -61,9 +61,14 @@
                                             <hr>
                                             Profile</a>
                                     {% elif 'admin' in l_as_list %}
-                                        <a class="dropdown-item" href="{% url 'admin_details' %}"> <span style="font-size: small" class="text-secondary">{{ username }} is logged<br> in as an admin.<br></span>
-                                            <hr>
-                                            Profile</a>
+                                        <div class="ml-5">
+                                            <span style="font-size: small" class="text-secondary">{{ username }} is logged<br> in as an admin.<br></span>
+                                        </div>
+                                        <div>
+                                            <a class="dropdown-item" href="{% url 'admin_details' %}">
+                                                <hr>
+                                                Profile</a>
+                                        </div>
                                     {% endif %}
 
 
@@ -89,6 +94,7 @@
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/bootstrap-confirm-delete.js' %}"></script>
 <script src="{% static 'js/registration_validation.js' %}"></script>
+<script src="{% static 'js/field_validation.js' %}"></script>
 <script src="{% static 'jQuery/jquery.validate.min.js' %}"></script>
 <script src="{% static 'jQuery/delete.js' %}"></script>
 
