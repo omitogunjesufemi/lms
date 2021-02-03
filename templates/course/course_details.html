@@ -7,9 +7,13 @@
             </div>
             <div class="col">
                 {% if 'students' in l_as_list  %}
-
-                    <a href="{% url 'initiate_enrollment' course.id %}" class="btn btn-outline-success float-right">
+                    {% if student_id in student_list %}
+                        <a href="{% url 'unenroll' enrollment.id %}" class="btn btn-outline-success float-right">
+                            Un-Enroll For {{ course.course_title }}</a>
+                    {% else %}
+                        <a href="{% url 'initiate_enrollment' course.id %}" class="btn btn-outline-success float-right">
                         Enroll For {{ course.course_title }}</a>
+                    {% endif %}
                 {% elif 'tutors' in l_as_list  %}
                     <a href="#" class="btn btn-outline-success float-right" data-target="#apply{{ course.id }}" data-toggle="modal">
                         Apply as Tutor For {{ course.course_title }}</a>
