@@ -84,14 +84,25 @@ def course_details(request, course_id):
     
     course = service_controller.course_management_service().details(course_id=course_id)
     students_for_course = service_controller.student_management_service().list_student_for_course(course_id)
+    student_list = []
     for student in students_for_course:
         if student_id == student.id:
+            student_list.append(student_id)
 
+    enrollments = service_controller.enrollment_management_service().list_enrollment_for_student(student_id)
+    for enroll in enrollments:
+        if course_id == enroll.course_id:
+            enrollment = enroll
+        else:
+            enrollment = 0
 
     context = {
         'username': username,
         'l_as_list': l_as_list,
         'course': course,
+        'student_list': student_list,
+        'student_id': student_id,
+        'enrollment': enrollment,
     }
     return render(request, 'course/course_details.html', context)
 
