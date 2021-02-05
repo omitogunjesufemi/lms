@@ -89,6 +89,7 @@ def tutor_details(request):
         for g in request.user.groups.all():
             l_as_list.append(g.name)
         user_id = request.user.id
+
         username = request.user.username
         tutor = service_controller.tutor_management_service().details(user_id)
         tutor_id = tutor.id

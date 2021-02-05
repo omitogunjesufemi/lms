@@ -11,6 +11,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
 </head>
 <body class="">
+
+
             <nav class="navbar sticky-top shadow-sm navbar-expand-md navbar-light bg-light">
                 <a class="navbar-brand text-dark" href="{% url 'index' %}">
                     <button class="btn btn-outline-success" >L.M.S</button>
@@ -42,27 +44,36 @@
 
                     </ul>
 
+                    <ul class="nav navbar-nav justify-content-end">
+                        <div class="container-fluid">
+                            <form action="#" class="d-flex">
+                                <input type="search" placeholder="Search Courses" class="form-control">
+                                <button class="btn btn-outline-success">Search</button>
+                            </form>
+                        </div>
+                    </ul>
+
                     <ul class="nav navbar-nav navbar-right">
                         {% if request.user.is_authenticated %}
 
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-light"
+                                <a class="nav-link dropdown-toggle text-success"
                                     id="navbarDropdownMenuLink"
                                      data-toggle="dropdown">
                                     {{ username }} {% load static %}<img class="" src="{% static "img/004-user.png" %}" alt="{{ username }}">
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     {% if 'students' in l_as_list %}
-                                        <a class="dropdown-item" href="{% url 'student_details' %}"> <span style="font-size: small" class="text-secondary">{{ username }} is logged<br> in as a student.<br></span>
+                                        <a class="dropdown-item" href="{% url 'student_details' %}"> <span style="font-size: small" class="text-success">{{ username }} is logged<br> in as a student.<br></span>
                                             <hr>
                                             Profile</a>
                                     {% elif 'tutors' in l_as_list %}
-                                        <a class="dropdown-item" href="{% url 'tutor_details' %}"> <span style="font-size: small" class="text-secondary">{{ username }} is logged<br> in as a tutor.<br></span>
+                                        <a class="dropdown-item" href="{% url 'tutor_details' %}"> <span style="font-size: small" class="text-success">{{ username }} is logged<br> in as a tutor.<br></span>
                                             <hr>
                                             Profile</a>
                                     {% elif 'admin' in l_as_list %}
                                         <div class="ml-5">
-                                            <span style="font-size: small" class="text-secondary">{{ username }} is logged<br> in as an admin.<br></span>
+                                            <span style="font-size: small" class="text-success">{{ username }} is logged<br> in as an admin.<br></span>
                                         </div>
                                         <div>
                                             <a class="dropdown-item" href="{% url 'admin_details' %}">
@@ -77,16 +88,22 @@
                                 </div>
                             </li>
                         {% else %}
-                            <li class="navbar-item na">
-                                <a class="nav-link text-secondary" href="{% url 'login' %}">Log-In</a>
+                            <li class="navbar-item nav mr-4">
+                                <a class="nav-link text-secondary" href="{% url 'login' %}">Sign In</a>
                             </li>
+                            <li class="nav-item nav mr-3">
+                                <a class="nav-link btn btn-success btn-sm shadow-sm text-light" href="{% url 'register' %}">Get Started</a>
+                            </li>
+
                         {% endif %}
                     </ul>
 
                 </div>
             </nav>
 
+
 {% block content %}
+
 
 {% endblock %}
 <script src="{% static 'jQuery/jquery.js' %}"></script>

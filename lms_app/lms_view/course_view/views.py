@@ -79,22 +79,28 @@ def course_details(request, course_id):
         l_as_list.append(g.name)
 
     username = request.user.username
-    user_id = request.user.id
-    student_id = service_controller.student_management_service().details(user_id).id
-    
-    course = service_controller.course_management_service().details(course_id=course_id)
-    students_for_course = service_controller.student_management_service().list_student_for_course(course_id)
-    student_list = []
-    for student in students_for_course:
-        if student_id == student.id:
-            student_list.append(student_id)
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        student_id = service_controller.student_management_service().details(user_id).id
 
-    enrollments = service_controller.enrollment_management_service().list_enrollment_for_student(student_id)
-    for enroll in enrollments:
-        if course_id == enroll.course_id:
-            enrollment = enroll
-        else:
-            enrollment = 0
+        course = service_controller.course_management_service().details(course_id=course_id)
+        students_for_course = service_controller.student_management_service().list_student_for_course(course_id)
+        student_list = []
+        for student in students_for_course:
+            if student_id == student.id:
+                student_list.append(student_id)
+
+        enrollments = service_controller.enrollment_management_service().list_enrollment_for_student(student_id)
+        for enroll in enrollments:
+            if course_id == enroll.course_id:
+                enrollment = enroll.id
+            else:
+                enrollment = 0
+    elif request.user.is_anonymous:
+        course = service_controller.course_management_service().details(course_id=course_id)
+        student_list = []
+        student_id = 0
+        enrollment = 0
 
     context = {
         'username': username,

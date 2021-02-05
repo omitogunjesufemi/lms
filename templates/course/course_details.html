@@ -8,7 +8,7 @@
             <div class="col">
                 {% if 'students' in l_as_list  %}
                     {% if student_id in student_list %}
-                        <a href="{% url 'unenroll' enrollment.id %}" class="btn btn-outline-success float-right">
+                        <a href="{% url 'unenroll' enrollment %}" class="btn btn-outline-success float-right">
                             Un-Enroll For {{ course.course_title }}</a>
                     {% else %}
                         <a href="{% url 'initiate_enrollment' course.id %}" class="btn btn-outline-success float-right">

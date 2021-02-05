@@ -73,7 +73,9 @@
                 <div class="col-12 ">
                     <div class="card">
                         <div class="card-header bg-dark">
-                            <h3 class="text-light">Student Courses ( {{ enrollment_len }} ) <a href="{% url 'list_courses' %}" class="float-right text-success">+</a> </h3>
+                            <h3 class="text-light">Student Courses <span
+                                    class="badge badge-light text-dark font-weight-bolder float-right"
+                                    style="font-size: 18pt">{{ enrollment_len }}</span> <a href="{% url 'list_courses' %}" class=" text-success">+</a> </h3>
                         </div>
 
                         <div class="card-body shadow">
@@ -81,10 +83,9 @@
 
                                 {% if enrollment_len > 0 %}
                                     {% for enrollment in enrollments %}
-                                        <div class="form-group col-6 " style="font-size: 16pt">
+                                        <div class="form-group col-3 " style="font-size: 16pt">
                                             <label for="" style="font-size: 14pt"
                                                    class="form-check-label font-weight-bolder text-uppercase text-dark">{{ enrollment.course_title }}</label><br>
-                                            <p><span class="text-secondary" style="font-size: 12pt">{{ enrollment.course_description }}</span></p>
                                             <span class="text-secondary " style="font-size: 14pt">Enrolled <b class="text-dark">{{ enrollment.date_enrolled }}</b></span><br>
                                             <span class="text-danger" data-toggle="modal" data-target="#unenroll{{ enrollment.id }}" style="font-size: 12pt"><a href="#">Un-enroll</a></span>
                                         </div>
@@ -140,7 +141,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header bg-success">
-                            <h3 class="text-light">Student Assessments</h3>
+                            <h3 class="text-light">Student Assessments
+                                <span class="badge badge-light text-success font-weight-bolder float-right"
+                                      style="font-size: 18pt">{{ assessment_len }}</span></h3>
                         </div>
                         <div class="card-body shadow">
                             <div class="row">
@@ -151,7 +154,7 @@
                                                 <label for="first_name" style="font-size: 14pt"
                                                        class="form-check-label font-weight-bolder text-uppercase text-dark">{{ assessment.course_title }}</label><br>
                                                 <span class="text-secondary">{{ assessment.assessment_title }}</span><br>
-                                                <span class="font-italic text-dark" style="font-size: 12pt">{{ assessment.date_due }} {{ assessment.time_due }}</span><br>
+                                                <span class="font-italic text-dark" style="font-size: 12pt">Due: {{ assessment.date_due }} {{ assessment.time_due }}</span><br>
                                                 {% if assessment.id in sitting_list %}
                                                     <span class="text-dark" style="font-size: 12pt"><span class="text-secondary">Test Taken</span> | <a href="{% url 'assessment_details' assessment.id %}">Details</a></span>
                                                 {% else %}
@@ -183,7 +186,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header bg-dark">
-                            <h3 class="text-light">Asessments Taken</h3>
+                            <h3 class="text-light">Assessments Taken
+                                {% if sitting_len == assessment_len %}
+                                {% else %}
+                                    <span class="font-weight-bold ml-5 text-dark badge-light badge-pill p-2" style="font-size: 14pt" > ** You have a pending assessment to attend to!</span>
+                                {% endif %}
+                                <span class="badge badge-light text-dark font-weight-bolder float-right"
+                                      style="font-size: 18pt">{{ sitting_len }}</span></h3>
                         </div>
                         <div class="card-body shadow">
                             <div class="row">

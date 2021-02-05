@@ -1,16 +1,4 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>LMS</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-grid.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-reboot.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
-</head>
-<body class="">
+{% extends 'base_2.html' %}
 {% block content %}
     <div class="container mt-5">
         <div class="row mx-auto my-auto justify-content-center">
@@ -35,7 +23,7 @@
                                     the Education to future-proof their career. </p>
                             </div>
 
-                            <div class="row justify-content-around">
+                            <div class="row justify-content-center">
                                 <form method="POST" action="{% url 'login_post' %}?next_url={{ next_url }}" id="login_form">
                                     {% csrf_token %}
                                     {% if message %}
@@ -60,9 +48,13 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="form-group register_in_btn mt-4">
-                                <span class="ml-3">Don't have an account? </span><a href="{% url 'register' %}" class="text-success font-weight-bold">Register</a>
+
+                            <div class="row dont_have_account">
+                                <div class="form-group register_in_btn">
+                                    <span class="">Don't have an account? </span><a href="{% url 'register' %}" class="text-success font-weight-bold">Register</a>
+                                </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -72,14 +64,3 @@
 
 
 {% endblock %}
-<script src="{% static 'jQuery/jquery.js' %}"></script>
-<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-<script src="{% static 'js/bootstrap-confirm-delete.js' %}"></script>
-<script src="{% static 'js/registration_validation.js' %}"></script>
-<script src="{% static 'js/field_validation.js' %}"></script>
-<script src="{% static 'jQuery/jquery.validate.min.js' %}"></script>
-<script src="{% static 'jQuery/delete.js' %}"></script>
-
-</body>
-</html>

@@ -1,27 +1,33 @@
-{% extends 'base.html' %}
+{% extends 'base_2.html' %}
 {% block content %}
+    <div class="container">
+    <div class="row mx-auto my-auto justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-md border-0">
+                <div class="card-body ">
+                    <div class="login_tab">
 
-    <div class="container-fluid">
-            <div class="row">
-                <div class="col-6">
-                    <div>
-                        {% load static %}<img src="{% static 'img/team/team-3.jpg' %}">
-                    </div>
-                </div>
-
-                <div class="col-6 mt-4">
-                    <div class="card border-0 ">
-                        <div class="card-header bg-white">
-                            <h3 class="text-center">Tutor Registration</h3>
+                        <div class="row justify-content-center mt-3 mb-4">
+                            <a href="{% url 'index' %}" class="btn btn-outline-success btn-lg float-right">
+                                L.M.S</a>
                         </div>
 
-                        <div class="card-body">
-                            <form method="post" action="{% url 'register_tutor' %}" name="tutor_reg">
-                                {% csrf_token %}
+                        <div class="row justify-content-center mb-3">
+                            <h2 class="font-weight-light text-center">Register as a Tutor</h2>
+                        </div>
 
+                        <div class="row font-weight-light mb-1">
+                            <p class="font-weight-light text-center">Build qualified students for today, tomorrow, and beyond with
+                                the Education to future-proof their career. </p>
+                        </div>
+
+                        <div class="row justify-content-center">
+                            <form method="post" action="{% url 'register_tutor' %}">
+                                {% csrf_token %}
                                 <div class="form-group">
+                                    <label for="username" class="form-check-label">Username </label>
                                     <input name="username" class="form-control" id="username" required>
-                                    <small id="user_list" class="form-text" aria-placeholder="Username" hidden>
+                                    <small id="user_list" class="form-text" hidden>
                                         {{ user_list }}
                                     </small>
                                     <p id="user_check" style="color: red; font-size: 10pt;" >
@@ -53,20 +59,38 @@
                                     </p>
                                 </div>
 
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-success" id="submitbtn">Submit</button>
+                                <div class="form-group justify-content-around">
+                                    <small>By clicking Sign In, you agree to our <a href="#" class="text-success font-weight-bold">
+                                        Terms of Use</a> and our <a href="#" class="text-success font-weight-bold">Privacy Policy</a>.</small>
+
                                 </div>
 
+                                {#                                    <div class="form-group justify-content-center">#}
+                                {#                                        <div class="student_tutor_sign_up_contain">#}
+                                {#                                            <div class="student_tutor_sign_up_wrapper">#}
+                                {#                                                <input type="radio" name="group" id="student" value="student" checked hidden>#}
+                                {#                                                <input type="radio" name="group" id="tutor" value="tutor" hidden>#}
+                                {#                                                <label for="student" class="pick student">#}
+                                {#                                                    <div class="dot"></div><span>Student</span>#}
+                                {#                                                </label>#}
+                                {##}
+                                {#                                                <label for="tutor" class="pick tutor">#}
+                                {#                                                    <div class="dot"></div><span>Tutor</span>#}
+                                {#                                                </label>#}
+                                {##}
+                                {#                                            </div>#}
+                                {#                                        </div>#}
+                                {#                                    </div>#}
+
+                                <div class="form-group sign_in_btn mt-4">
+                                    <button type="submit" class="btn btn-group btn-success">Sign Up</button>
+                                </div>
                             </form>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
-
-
+        </div>
     </div>
+
 {% endblock %}
