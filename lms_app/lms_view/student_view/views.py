@@ -224,16 +224,16 @@ def delete_student(request, student_id):
 
 def __set_student_attribute_request(request: HttpRequest):
     register_student_dto = RegisterStudentDto()
-    register_student_dto.first_name = request.POST['first_name']
+    register_student_dto.first_name = ""
     register_student_dto.username = request.POST['username']
     __get_student_attribute_request(request, register_student_dto)
     return register_student_dto
 
 
 def __get_student_attribute_request(request: HttpRequest, register_student_dto):
-    register_student_dto.first_name = request.POST['first_name']
-    register_student_dto.last_name = request.POST['last_name']
-    register_student_dto.phone = request.POST['phone']
+    register_student_dto.first_name = ""
+    register_student_dto.last_name = ""
+    register_student_dto.phone = ""
     register_student_dto.email = request.POST['email']
     register_student_dto.password = request.POST['password']
     register_student_dto.confirm_password = request.POST['confirm_password']
