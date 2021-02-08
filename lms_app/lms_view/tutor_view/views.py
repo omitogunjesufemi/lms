@@ -89,6 +89,7 @@ def tutor_details(request):
         for g in request.user.groups.all():
             l_as_list.append(g.name)
         user_id = request.user.id
+
         username = request.user.username
         tutor = service_controller.tutor_management_service().details(user_id)
         tutor_id = tutor.id
@@ -198,16 +199,16 @@ def delete_tutor(request, tutor_id):
 
 def __set_tutor_attribute_request(request: HttpRequest):
     register_tutor_dto = RegisterTutorDto()
-    register_tutor_dto.first_name = request.POST['first_name']
+    register_tutor_dto.first_name = ""
     register_tutor_dto.username = request.POST['username']
     __get_tutor_attribute_request(request, register_tutor_dto)
     return register_tutor_dto
 
 
 def __get_tutor_attribute_request(request: HttpRequest, register_tutor_dto):
-    register_tutor_dto.first_name = request.POST['first_name']
-    register_tutor_dto.last_name = request.POST['last_name']
-    register_tutor_dto.phone = request.POST['phone']
+    register_tutor_dto.first_name = ""
+    register_tutor_dto.last_name = ""
+    register_tutor_dto.phone = ""
     register_tutor_dto.email = request.POST['email']
     register_tutor_dto.password = request.POST['password']
     register_tutor_dto.confirm_password = request.POST['confirm_password']

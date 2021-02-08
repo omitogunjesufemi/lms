@@ -33,16 +33,6 @@ def register_student(request):
     return render(request, 'student/register.html', context)
 
 
-@csrf_exempt
-def check_username_exist(request):
-    username = request.POST.get('username')
-    check_user = User.objects.filter(username=username).exists()
-    if check_user:
-        return HttpResponse(True)
-    else:
-        return HttpResponse(False)
-
-
 @login_required(login_url='login')
 def edit_student(request, student_id):
     if request.user.has_perm('lms_app.change_student'):
@@ -73,6 +63,7 @@ def edit_student(request, student_id):
         }
         return render(request, 'error_message.html', context)
 
+
 @login_required(login_url='login')
 def list_student(request):
     if request.user.has_perm('lms_app.view_student'):
@@ -92,6 +83,7 @@ def list_student(request):
             'message': 'You are not authorised'
         }
         return render(request, 'error_message.html', context)
+
 
 @login_required(login_url='login')
 def list_student_for_courses(request, course_id):
@@ -232,16 +224,16 @@ def delete_student(request, student_id):
 
 def __set_student_attribute_request(request: HttpRequest):
     register_student_dto = RegisterStudentDto()
-    register_student_dto.first_name = request.POST['first_name']
+    register_student_dto.first_name = ""
     register_student_dto.username = request.POST['username']
     __get_student_attribute_request(request, register_student_dto)
     return register_student_dto
 
 
 def __get_student_attribute_request(request: HttpRequest, register_student_dto):
-    register_student_dto.first_name = request.POST['first_name']
-    register_student_dto.last_name = request.POST['last_name']
-    register_student_dto.phone = request.POST['phone']
+    register_student_dto.first_name = ""
+    register_student_dto.last_name = ""
+    register_student_dto.phone = ""
     register_student_dto.email = request.POST['email']
     register_student_dto.password = request.POST['password']
     register_student_dto.confirm_password = request.POST['confirm_password']

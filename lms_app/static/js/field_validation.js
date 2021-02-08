@@ -134,6 +134,25 @@ $(document).ready(function (){
     }
 
 
+    $("#course_slug_validate").hide();
+    let courseSlugError=true
+    $("#course_slug").keyup( function () {
+        validateCourseSlug();
+    });
+
+    function validateCourseSlug(){
+        let value = $('#course_slug').val()
+        if (value == ""){
+            $("#course_slug_validate").show()
+            courseDescriptionError=false;
+            return false;
+        }
+        else{
+            $("#course_slug_validate").hide();
+        }
+    }
+
+
     $("#course_description_validate").hide();
     let courseDescriptionError=true
     $("#course_description").keyup( function () {

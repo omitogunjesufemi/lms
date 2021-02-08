@@ -1,36 +1,59 @@
-{% extends 'base.html' %}
+{% extends 'base_2.html' %}
 {% block content %}
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-8">
-                <div class="form-group mt-5">
-                    <div class="left mt-4">
-                        {% load static %} <img src="{% static "img/59983.jpg" %}" alt="student" style="width: 300px; height: 300px; border-radius: 500px"/>
-                        <h4 class="">Are you a Student?</h4>
-                        <span class="font-italic text-secondary">This link is only for Students. Tutors should use the registration link assigned to them.</span>
-                        <div class="btn">
-                            <a href="{% url 'register_student' %}" class="btn btn-success">Register as a Student</a>
-                        </div>
-                    </div>
+    <div class="container mt-5">
 
-                    <div class="right mt-4">
-                        {% load static %} <img src="{% static "img/team/team-3.jpg" %}" alt="tutor" style="width: 300px; height: 300px; border-radius: 500px"/>
-                        <h4 class="">Are you a tutor?</h4>
-                        <span class="font-italic text-secondary">This link is only for Tutors. Students should use the registration link assigned to them.</span>
-                        <div class="btn">
-                            <a href="{% url 'register_tutor' %}" class="btn btn-success">Register as a Tutor</a>
-                        </div>
-                    </div>
+        <div class="row justify-content-center mt-5 mb-4">
+            <a href="{% url 'index' %}" class="btn btn-outline-success btn-lg float-right">
+                L.M.S</a>
+        </div>
+
+        <div class="row justify-content-center mb-3">
+            <h2 class="font-weight-light text-center">Register an account</h2>
+        </div>
+
+        <div class="row no-gutters">
+            <div class="col-6 no-gutters">
+                <div class="row justify-content-center">
+                    {% load static %}<img src="{% static 'img/team/team-2.jpg' %}"
+                                          alt="lms student" style="width: 22em; height: 22rem; border-radius: 50%">
+                </div>
+
+                <div class="row justify-content-center">
+                    <p class="mt-2 font-weight-light" style="font-size: 18pt">For Students Only!</p>
+                </div>
+
+                <div class="row justify-content-center">
+                    <a href="{% url 'register_student' %}" class="btn btn-outline-success btn-lg"> Student</a>
                 </div>
             </div>
-        </div>
-        <div class="row justify-content-center">
-            <div>
-                <span>Already registered? <a href="{% url 'login_post' %}"> Login </a></span>
+
+
+            <div class="col-6 no-gutters">
+                <div class="row justify-content-center">
+                    {% load static %}<img src="{% static 'img/team/team-1.jpg' %}"
+                                          alt="lms student" style="width: 350px; height: 350px; border-radius: 50%">
+                </div>
+
+                <div class="row justify-content-center">
+                    <p class="mt-2 font-weight-light" style="font-size: 18pt">For Tutors Only!</p>
+                </div>
+
+                <div class="row justify-content-center">
+                    <a href="{% url 'register_tutor' %}" class="btn btn-outline-success btn-lg"> Tutor</a>
+                </div>
             </div>
 
         </div>
     </div>
+
+
+    <div class="container mt-2 mb-2">
+        <div class="row justify-content-center">
+            <span>Already registered? <a href="{% url 'login_post' %}"> Login </a></span>
+        </div>
+    </div>
+
+    <br><br>
 
 {% endblock %}

@@ -1,8 +1,42 @@
 $(document).ready(function () {
 
+    $('#login-form').trigger("reset");
+
+    $("input").change(function(e) {
+
+        for (var i = 0; i < e.originalEvent.srcElement.files.length; i++) {
+
+            var file = e.originalEvent.srcElement.files[i];
+
+            var img = document.createElement("img");
+            var reader = new FileReader();
+            reader.onloadend = function() {
+                img.src = reader.result;
+                img.alt = 'Course Pictures';
+                img.width = 300;
+                img.className = 'course_display'
+            }
+            reader.readAsDataURL(file);
+            $("input").after(img);
+        }
+    });
+
     $('.modal').on('hidden.bs.modal', function () {
         $('#modal_content').modal('dispose');
     });
+
+    $('#course_extra_details').hide();
+    $('#see_more_details').click( function (){
+        $('#course_extra_details').show()
+        $('#see_more_details').html
+        ("  + See Less Details ");
+    })
+    $('#see_more_details').dblclick( function (){
+        $('#course_extra_details').hide()
+        $('#see_more_details').html
+        ("+ See More Details");
+    })
+
 
     $('#first_name_check').hide();
     let firstnameError = true;
@@ -182,17 +216,20 @@ $(document).ready(function () {
         }
     }
 
-// Submitt button 
-    $('#submitbtn').click(function () {
-        validateFirstName()
-        validateLastName();
-        validateUsername();
-        validatePassword();
-        validateConfirmPassword();
-
-        return (usernameError === true) &&
-            (passwordError === true) &&
-            (confirmPasswordError === true) &&
-            (emailError === true);
-    });
-}); 
+// Submitt button
+//     $('#submitbtn').click(function () {
+//         let allow;
+//         validateFirstName();
+//         validateLastName();
+//         validateUsername();
+//         validatePassword();
+//         validateConfirmPassword();
+//
+//         if ((usernameError === true) && (passwordError === true) && (confirmPasswordError === true) && (emailError === true)){
+//             allow = 1;
+//         }
+//         else {
+//              allow = 0;
+//         }
+//     });
+});

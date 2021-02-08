@@ -12,24 +12,76 @@
                 {% load static %}<img class="d-block w-100" src="{% static "img/slide/slide-1.jpg" %}" alt="First slide">
                 <div class="carousel-caption d-none d-md-block ">
                     <h1>Welcome to LMS.<br> A learning management system!</h1>
-                    <p class="text-light">Get started with us now. <a href="{% url 'register' %}">Get Started</a> </p>
+                    <p class="text-light">Get started with us now. <a href="#" data-toggle="modal" data-target="#registration">Get Started</a> </p>
+
                 </div>
             </div>
             <div class="carousel-item">
                 {% load static %}<img class="d-block w-100" src="{% static "img/slide/slide-2.jpg" %}" alt="Second slide">
                 <div class="carousel-caption d-none d-md-block text-dark">
                     <h1>Welcome to LMS.<br> A learning management system!</h1>
-                    <p class="text-light">Get started with us now. <a href="{% url 'register' %}">Get Started</a> </p>
+                    <p class="text-light">Get started with us now. <a href="#" data-toggle="modal" data-target="#registration">Get Started</a> </p>
                 </div>
             </div>
             <div class="carousel-item">
                 {% load static %}<img class="d-block w-100"  src="{% static "img/slide/slide-3.jpg" %}" alt="Third slide">
                 <div class="carousel-caption d-none d-md-block">
                     <h1>Welcome to LMS.<br> A learning management system!</h1>
-                    <p>Get started with us now. <a href="{% url 'register' %}">Get Started</a> </p>
+                    <p class="text-light">Get started with us now. <a href="" data-toggle="modal" data-target="#registration">Get Started</a> </p>
                 </div>
             </div>
-        </div>
+
+            <div class="modal fade" id="registration" tabindex="1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-white">
+                            <h3 class="modal-title text-success font-weight-light" >Register as:</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="container-fluid mt-3 mb-3">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="row justify-content-center">
+                                            {% load static %}<img src="{% static 'img/team/team-2.jpg' %}"
+                                                                  alt="lms student" style="width: 150px; height: 150px; border-radius: 50%">
+                                            <p class="mt-2">For Students Only!</p>
+                                        </div>
+
+                                        <div class="row justify-content-center">
+                                            <a href="{% url 'register_student' %}" class="btn btn-outline-success"> Student</a>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="row justify-content-center">
+                                            {% load static %}<img src="{% static 'img/team/team-1.jpg' %}"
+                                                                  alt="lms student" style="width: 150px; height: 150px; border-radius: 50%">
+                                            <p class="mt-2">For Tutors Only!</p>
+                                        </div>
+
+                                        <div class="row justify-content-center">
+                                            <a href="{% url 'register_tutor' %}" class="btn btn-outline-success"> Tutor</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container mt-2 mb-2">
+                                <div class="row justify-content-center">
+                                    <span>Already registered? <a href="{% url 'login_post' %}"> Login </a></span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>

@@ -31,18 +31,28 @@ class Student(models.Model):
 
 class Course(models.Model):
     course_title = models.CharField(max_length=200)
+    course_slug = models.TextField(max_length=500, default='')
+    course_prerequisite = models.TextField(max_length=1000, default='')
     course_description = models.TextField(max_length=2048, default='')
     tutors = models.ManyToManyField(Tutor, through='Appointment')
     students = models.ManyToManyField(Student, through='Enrollment')
+    file_upload = models.FileField(upload_to=f'courses/display/', default='')
 
     def __str__(self):
         return f'{self.course_title}'
+
+
+class Syllabus(models.Model):
+    syllabus_header = models.CharField(max_length=500)
+    syllabus_body = models.TextField(max_length=2048)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
 
 class Appointment(models.Model):
     tutors = models.ForeignKey(Tutor, related_name='appointment', on_delete=models.CASCADE)
     course = models.ForeignKey(Course, related_name='appointment', on_delete=models.CASCADE)
     date_appointed = models.DateField(null=True)
+    status = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.tutors.registration_number} {self.course.course_title}'
@@ -65,6 +75,7 @@ class Assessment(models.Model):
     pass_mark = models.PositiveBigIntegerField(default=0)
     date_due = models.DateField()
     time_due = models.TimeField()
+    status = models.BooleanField(default=False)
 
 
 class Question(models.Model):
@@ -107,7 +118,7 @@ class Comment(models.Model):
     active = models.BooleanField(default=False)
 
     def __str__(self):
-        return 'Comment {} by {}'.format(self.body, self.username)
+        return f'Comment {self.body} by {self.username}'
 
 
 class Apply(models.Model):

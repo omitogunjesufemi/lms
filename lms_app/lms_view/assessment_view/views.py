@@ -73,6 +73,22 @@ def update_assessment(request, assessment_id):
 
 
 @login_required(login_url='login')
+def activate(request, assessment_id):
+    assessment = service_controller.assessment_management_service().details(assessment_id)
+    assessment.status = 1
+    service_controller.assessment_management_service().edit(assessment_id, assessment)
+    return redirect('assessment_details', assessment_id)
+
+
+@login_required(login_url='login')
+def deactivate(request, assessment_id):
+    assessment = service_controller.assessment_management_service().details(assessment_id)
+    assessment.status = 0
+    service_controller.assessment_management_service().edit(assessment_id, assessment)
+    return redirect('assessment_details', assessment_id)
+
+
+@login_required(login_url='login')
 def list_assessments(request):
     if request.user.has_perm('lms_app.view_assessment'):
         # Getting User Group
@@ -110,7 +126,7 @@ def assessment_details(request, assessment_id):
         }
         return render(request, 'assessment/assessment_details.html', context)
     else:
-        context={
+        context = {
             'message': 'You are not authorised'
         }
         return render(request, 'error_message.html', context)
@@ -163,6 +179,16 @@ def __edit_assessment_attribute_request(request):
     update_assessment_dto.date_due = request.POST['assessment_due_date']
     update_assessment_dto.time_due = request.POST['assessment_due_time']
     update_assessment_dto.pass_mark = request.POST['pass_mark']
+    update_assessment_dto.total_score = request.POST['total_score']
+
+    try:
+        if request.POST['status'] == 'on':
+            update_assessment_dto.status = True
+        else:
+            update_assessment_dto.status = False
+    except KeyError:
+        update_assessment_dto.status = False
+
     return update_assessment_dto
 
 

@@ -89,7 +89,7 @@ class DjangoORMAppointmentRepository(AppointmentRepository):
     def list_appoint_for_tutor(self, tutor_id) -> List[ListAppointmentDto]:
         appointments = list(Appointment.objects.values('id', 'tutors__user__first_name', 'tutors__user__last_name',
                                                        'course__course_title',
-                                                       'course__course_description',
+                                                       'course__course_slug',
                                                        'tutors__registration_number',
                                                        'tutors_id',
                                                        'course_id'))
@@ -100,7 +100,7 @@ class DjangoORMAppointmentRepository(AppointmentRepository):
                 contract = ListAppointmentDto()
                 contract.id = appointment['id']
                 contract.course_title = appointment['course__course_title']
-                contract.course_description = appointment['course__course_description']
+                contract.course_description = appointment['course__course_slug']
                 contract.course_id = appointment['course_id']
                 contract.tutors_first_name = appointment['tutors__user__first_name']
                 contract.tutors_last_name = appointment['tutors__user__last_name']

@@ -9,7 +9,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form method="post" action="{% url 'edit_course' course.id %}">
+                        <form method="post" action="{% url 'edit_course' course.id %}" enctype="multipart/form-data">
                             {% csrf_token %}
 
                             <div class="form-group">
@@ -21,12 +21,28 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="course_slug" class="form-check-label">Brief Intro </label>
+                                <input name="course_slug" class="form-control" id="course_slug" value="{{ course.course_slug }}" required>
+
+                                <p id="course_slug_validate" style="color: red; font-size: 10pt;" >
+                                    **The above field is missing
+                                </p>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="course_description" class="form-check-label">Course Description</label>
                                 <textarea name="course_description" class="form-control" id="course_description" >{{ course.course_description }}</textarea>
                                 <p id="course_description_validate" style="color: red; font-size: 10pt;" >
                                     **The above field is missing
                                 </p>
                             </div>
+
+                            <div class="form-group">
+                                <label for="file_upload" class="col-form-label">Upload Display Picture</label>
+                                <input type="file" class="form-row" id="file_upload" name="file_upload">
+                            </div>
+
+
 
 
                             <div class="form-group">

@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 
 from lms_app.lms_dto.ApplyDto import ApplyDto
 from lms_app.models import Apply
-from lms_app.service_controllers import service_controller
+from lms_app.service_controllers import service_controller, Appointment
 
 
 @login_required(redirect_field_name='next')
@@ -23,15 +23,21 @@ def apply_for_a_course(request, course_id):
             'username': username,
             'l_as_list': l_as_list,
         }
-        __create_if_post_method(request, course_id, tutor_id, context)
-        if request.method == 'POST':
-            return redirect('tutor_details')
+
+        appoint = __create_if_post_method(request, course_id, tutor_id, context)
+        if appoint == 1:
+            __create_if_post_method(request, course_id, tutor_id, context)
+            if request.method == 'POST':
+                return redirect('tutor_details')
+        else:
+            return render(request, 'enrollment/error_message.html', context)
 
     else:
         context={
             'message': 'You are not authorised'
         }
         return render(request, 'error_message.html', context)
+
 
 def edit_application(request, apply_id):
     pass
@@ -66,8 +72,14 @@ def __create_if_post_method(request, course_id, tutor_id, context):
     if request.method == 'POST':
         try:
             application = __application_attribute_request(request, course_id, tutor_id)
-            service_controller.apply_management_service().register(application)
-            context['saved'] = 'success'
+            if Appointment.objects.filter(course_id=course_id, tutor_id=tutor_id).exists():
+                context['saved'] = 'failed'
+                context['message'] = 'You are already appointed for the choosen course. Please select another course!'
+                return 0
+            else:
+                service_controller.apply_management_service().register(application)
+                context['saved'] = 'success'
+                return 1
         except Exception as e:
             print('This comment was not registered')
             raise e

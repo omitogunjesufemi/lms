@@ -69,7 +69,9 @@
                 <div class="col-12 ">
                     <div class="card">
                         <div class="card-header bg-dark shadow">
-                            <h3 class="text-light">Tutor Courses ( {{ appointment_len }} ) {% if 'tutors' in l_as_list %}<a href="{% url 'list_courses' %}" class="float-right text-success">+</a>{% else %}{% endif %} </h3>
+                            <h3 class="text-light">Tutor Courses
+                                <span class="badge badge-light text-success font-weight-bolder float-right"
+                                      style="font-size: 18pt">{{ appointment_len }}</span> {% if 'tutors' in l_as_list %}<a href="{% url 'list_courses' %}" class=" text-success">+</a>{% else %}{% endif %} </h3>
                         </div>
 
                         <div class="card-body shadow">
@@ -106,7 +108,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header bg-success shadow">
-                            <h3 class="text-light">Assessments Created ( {{ assessment_len }} ) {% if 'tutors' in l_as_list and appointment_len > 0 %}<a href="{% url 'create_assessment' %}" class="float-right text-light">+</a>{% else %}{% endif %} </h3>
+                            <h3 class="text-light">Assessments Created
+                                <span class="badge badge-light text-success font-weight-bolder float-right"
+                                      style="font-size: 18pt">{{ assessment_len }}</span> {% if 'tutors' in l_as_list and appointment_len > 0 %}<a href="{% url 'create_assessment' %}" class=" text-light">+</a>{% else %}{% endif %} </h3>
                         </div>
                         <div class="card-body shadow">
                             <div class="row">
@@ -117,7 +121,14 @@
                                             <label for="first_name" style="font-size: 14pt"
                                                    class="form-check-label font-weight-bolder text-uppercase text-dark"><a href="{% url 'assessment_details' assessment.id %}" class="alert-link">{{ assessment.course_title }}</a></label><br>
                                             <span class="text-secondary">{{ assessment.assessment_title }}</span><br>
-                                            <span class="font-italic text-dark" style="font-size: 12pt">{{ assessment.date_due }} {{ assessment.time_due }}</span><br>
+                                            <span class="font-italic text-dark" style="font-size: 12pt">Due: {{ assessment.date_due }} {{ assessment.time_due }}</span><br>
+                                            <span style="font-size: 12pt">
+                                                Status:
+                                                {% if assessment.status == 0 %}
+                                                    <span class="text-danger font-weight-bold">Not Active</span>
+                                                {% else %}<span class="text-info">Active</span>
+                                                {% endif %}
+                                            </span><br>
                                             <span class="font-italic text-dark card-link" style="font-size: 12pt"><a href="{% url 'set_question' assessment.id %}" style="font-size: 12pt">Add Questions</a> | <a href="{% url 'list_assessment_question' assessment.id %}" style="font-size: 12pt">View Questions</a></span>
                                         </div>
                                     {% endfor %}
@@ -146,7 +157,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header bg-dark shadow">
-                            <h3 class="text-light">Questions Created ( {{ question_len }} )</h3>
+                            <h3 class="text-light">Questions Created
+                                <span class="badge badge-light text-success font-weight-bolder float-right"
+                                      style="font-size: 18pt">{{ question_len }}</span></h3>
                         </div>
                         <div class="card-body shadow">
                             <div class="row">
@@ -185,7 +198,10 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header bg-success shadow">
-                            <h3 class="text-light">Submitted Assessments</h3>
+                            <h3 class="text-light">Submitted Assessments
+                                <span class="badge badge-light text-success font-weight-bolder float-right"
+                                      style="font-size: 18pt"> {{ sitting_len }}</span>
+                            </h3>
                         </div>
                         <div class="card-body shadow">
                             <div class="row">

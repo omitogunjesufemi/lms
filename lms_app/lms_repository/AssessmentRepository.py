@@ -57,11 +57,11 @@ class DjangoORMAssessmentRepository(AssessmentRepository):
             assessment = Assessment.objects.get(id=assessment_id)
             assessment.assessment_title = model.assessment_title
             assessment.assessment_content = model.assessment_content
-            assessment.courses_id = model.course_id
             assessment.total_score = model.total_score
             assessment.pass_mark = model.pass_mark
             assessment.time_due = model.time_due
             assessment.date_due = model.date_due
+            assessment.status = model.status
             assessment.save()
         except Assessment.DoesNotExist as e:
             print('This assessment does not exist!')
@@ -75,6 +75,7 @@ class DjangoORMAssessmentRepository(AssessmentRepository):
                                                      'pass_mark',
                                                      'date_due',
                                                      'time_due',
+                                                     'status',
                                                      ))
         assessment_list: List[ListAssessmentDto] = []
         for assessment in assessments:
@@ -86,6 +87,7 @@ class DjangoORMAssessmentRepository(AssessmentRepository):
             task.pass_mark = assessment['pass_mark']
             task.date_due = assessment['date_due']
             task.time_due = assessment['time_due']
+            task.status = assessment['status']
             assessment_list.append(task)
         return assessment_list
 
@@ -98,6 +100,7 @@ class DjangoORMAssessmentRepository(AssessmentRepository):
                                                      'pass_mark',
                                                      'date_due',
                                                      'time_due',
+                                                     'status',
                                                      ))
         assessment_list: List[ListAssessmentDto] = []
         for assessment in assessments:
@@ -110,6 +113,7 @@ class DjangoORMAssessmentRepository(AssessmentRepository):
                 task.pass_mark = assessment['pass_mark']
                 task.date_due = assessment['date_due']
                 task.time_due = assessment['time_due']
+                task.status = assessment['status']
                 assessment_list.append(task)
         return assessment_list
 
@@ -122,6 +126,7 @@ class DjangoORMAssessmentRepository(AssessmentRepository):
                                                      'pass_mark',
                                                      'date_due',
                                                      'time_due',
+                                                     'status',
                                                      ))
         assessment_list: List[ListAssessmentDto] = []
         for assessment in assessments:
@@ -134,6 +139,7 @@ class DjangoORMAssessmentRepository(AssessmentRepository):
                 task.pass_mark = assessment['pass_mark']
                 task.date_due = assessment['date_due']
                 task.time_due = assessment['time_due']
+                task.status = assessment['status']
                 assessment_list.append(task)
         return assessment_list
 
@@ -150,6 +156,7 @@ class DjangoORMAssessmentRepository(AssessmentRepository):
             task.pass_mark = assessment.pass_mark
             task.date_due = assessment.date_due
             task.time_due = assessment.time_due
+            task.status = assessment.status
             return task
         except Assessment.DoesNotExist as e:
             print('No assessment found!')

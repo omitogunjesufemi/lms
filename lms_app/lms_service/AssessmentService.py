@@ -49,7 +49,7 @@ class DefaultAssessmentManagementService(AssessmentManagementService):
         return self.repository.register(model)
 
     def edit(self, assessment_id, model: UpdateAssessmentDto):
-        return self.repository.edit(model)
+        return self.repository.edit(assessment_id, model)
 
     def list(self) -> List[ListAssessmentDto]:
         return self.repository.list()
