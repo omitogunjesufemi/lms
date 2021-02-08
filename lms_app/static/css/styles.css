@@ -1,0 +1,189 @@
+.course_img {
+  width: 100%;
+}
+
+.course_display {
+  justify-content: start;
+  padding-top: 20px;
+}
+
+.student_tutor_sign_up_contain {
+  display: grid;
+  height: 75%;
+  place-items: center;
+
+}
+
+.student_tutor_sign_up_wrapper {
+  display: inline-flex;
+  height: 90px;
+  width: 300px;
+  align-items: self-start;
+  justify-content: space-evenly;
+  border-radius: 5px;
+}
+
+.student_tutor_sign_up_wrapper .pick {
+  background: #ced4da;
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 0 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 0 10px;
+  border: 2px solid lightgray;
+  transition: all 0.3s ease;
+}
+
+.student_tutor_sign_up_wrapper .pick .dot {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background: #ffffff;
+  position: relative;
+}
+
+.student_tutor_sign_up_wrapper .pick .dot ::before {
+  position: absolute;
+  content: "";
+  top: 4px;
+  left: 4px;
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(1.5);
+  transition: all 0.3s ease;
+}
+
+input [type='radio']{
+  display: inline-flex;
+}
+
+#student:checked:checked ~ .student,
+#tutor:checked:checked ~ .tutor {
+  border-color: #28a745;
+  background-color: #28a745;
+}
+
+#student:checked:checked ~ .student.dot,
+#tutor:checked:checked ~ .tutor.dot {
+  background-color: #28a745;
+  border: #ffffff 2px solid;
+}
+
+#student:checked:checked ~ .student.dot::before,
+#tutor:checked:checked ~ .tutor.dot::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.student_tutor_sign_up_wrapper .pick span {
+  font-size: 12pt;
+  font-weight: bold;
+  color: #28a745;
+}
+
+#student:checked:checked ~ .student span,
+#tutor:checked:checked ~ .tutor span {
+  color: #ffffff;
+}
+
+
+
+.tabbed_contain{
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  border: #1d2124 1px solid;
+}
+
+.login_tab {
+  width: 100%;
+  padding: 10px 20px;
+  /*border: #1d2124 1px solid;*/
+}
+
+.sign_in_btn {
+  width: 25%;
+  padding: 10px;
+  margin: 0;
+  position: absolute;
+  top: 93%;
+  right: 32%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.register_in_btn {
+  width: 100%;
+  padding: 10px;
+  margin: 0;
+  position: absolute;
+  top: 85%;
+  left: 45%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-55%);
+}
+
+
+.rside{
+  width: 100%;
+  padding: 50px;
+  margin-left: 100px;
+  float: right;
+  border-radius: 10px;
+  background-color: #f4f7f8;
+  color: #137c8d;
+}
+
+.deside{
+  width: 100%;
+  padding: 20px;
+  margin-left: 100px;
+  float: right;
+  border-radius: 10px;
+  background-color: #ffffff;
+  color: #137c8d;
+}
+
+.column_section {
+  font-size: 10pt;
+  background-color: #CDD9D0;
+  color: #1d2124;
+  padding: 2px;
+  margin: 2px 0px;
+}
+
+.column_header_section {
+  font-size: 18pt;
+  background-color: #1c7430;
+  color: #ffffff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding:15px 5px ;
+}
+
+.column_fields {
+  font-size: 14pt;
+  background-color: #f4faf8;
+  padding:15px 5px ;
+  margin-bottom: 5px;
+
+}
+
+.dont_have_account {
+  width: 100%;
+  margin-top: 25px;
+  position: absolute;
+  top: 100%;
+  right: 20%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
