@@ -1,87 +1,120 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 mt-4">
-                <div class="card">
 
-                    <div class="card-body">
-                        <form method="post" action="{% url 'new_sitting' assessment_id %}">
-                            {% csrf_token %}
-                        {% for question in question_list %}
-                            <div class="form-group">
-                                <h5>{{ question.question_title }}</h5>
-                                <p>{{ question.question_content }}</p>
-                            </div>
+    <div class="container mt-5">
 
+        <div class="row justify-content-center mt-3 mb-2">
+            <h2 class="font-weight-bold text- text-success">{{ assessment.course_title }} Assessment: <span class="font-weight-light text-dark">{{ assessment.assessment_title }}</span></h2>
+        </div>
 
-                            <div class="form-group">
-                                <input type="radio" name={{ question.id }} class="custom-radio" value="choice1"
-                                        > {{ question.choice1 }}
-                            </div>
+        <div class="row font-weight-light mb-2 justify-content-center">
+            <h4 class="font-weight-light text-center">
+                    {{ assessment.assessment_content }}
+            </h4>
+        </div>
 
-                            <div class="form-group">
-                                <input type="radio" name={{ question.id }} class="custom-radio" value="choice2"
-                                        > {{ question.choice2 }}
-                            </div>
+        <div class="row font-weight-light justify-content-center">
+            <h4 class="font-weight-light text-center">
+                Question {% if questions.number == question_count %}
+                            <span class="text-success font-weight-bold">{{ questions.number }}</span>
+                         {% else%}
+                            <span class="text-danger font-weight-bold">{{ questions.number }}</span>
+                         {% endif %}
 
-                            <div class="form-group">
-                                <input type="radio" name={{ question.id }} class="custom-radio" value="choice3"
-                                        > {{ question.choice3 }}
-                            </div>
-
-                            <div class="form-group">
-                                <input type="radio" name={{ question.id }} class="custom-radio" value="choice4"
-                                        > {{ question.choice4 }}
-                            </div>
-
-                            <br>
-                        {% endfor %}
-
-                        <div class="form-group float-xl-right">
-                            <button type="submit" class="btn btn-success" name="submit" value="Submit">Submit Assessment</button>
-
-
-                            <!--Modal for Tutor Application-->
-                            <div class="modal fade" id="apply{{ course.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Assessment Submission</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div>
-                                                <span>Are you sure you want to submit now?<br>
-                                                By submitting, you won't be able to change your answers. Do
-                                                    still want to continue?
-                                                </span>
-                                            </div>
-
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!--End of Modal-->
-
-                        </div>
-
-                        </form>
-                    </div>
-
-                </div>
-
-            </div>
-
+                of <span class="text-success font-weight-bold">{{ question_count }}</span>
+            </h4>
         </div>
 
     </div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-9">
+                <div class="card pagination border-0 ">
+                    <div class="card-body" id="radioInputContainer">
+                            <div class="mt-4">
+                                <form method="POST" action="{% url 'new_sitting' assessment.id %}" style="font-size: 16pt;" name="quiz">
+                                    {% csrf_token %}
+
+                                    {% for question in questions %}
+
+                                        <div class="form-group text-center">
+                                            <h3 class="font-weight-normal">{{ question.question_content }}</h3>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="radio" name={{ question.id }} class="custom-radio" value="choice1"
+                                            > {{ question.choice1 }}
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="radio" name={{ question.id }} class="custom-radio" value="choice2"
+                                            > {{ question.choice2 }}
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="radio" name={{ question.id }} class="custom-radio" value="choice3"
+                                            > {{ question.choice3 }}
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="radio" name={{ question.id }} class="custom-radio" value="choice4"
+                                            > {{ question.choice4 }}
+                                        </div>
+                                    {% endfor %}
+
+                                    {% if questions.number == question_count %}
+                                        <div class="form-group">
+                                            <button type="submit"
+                                               class="btn btn-outline-success float-right"
+                                                    id="submit_test">
+                                                Submit
+                                            </button>
+                                        </div>
+
+                                    {% endif %}
+
+                                </form>
+                            </div>
+
+                            <br>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container ">
+        <div class="row paginator justify-content-center mt-3">
+
+            {% if questions.has_previous %}
+                <a href="?page=1">
+                    <button class="btn btn-outline-success"> &laquo;</button>
+                </a>
+                <a href="?page={{ questions.previous_page_number }}">
+                    <button class="btn btn-outline-success ml-1">Previous</button>
+                </a>
+            {% else %}
+                <a href="#" class="text-secondary">
+                    <button class="btn btn-outline-secondary" disabled="disabled">Previous</button>
+                </a>
+            {% endif %}
+
+
+            <div class="col-6 text-center">Time</div>
+
+            {% if questions.has_next %}
+                <a href="?page={{ questions.next_page_number }}"><button class="btn btn-outline-success">Next</button></a>
+                <a href="?page={{ questions.paginator.num_pages }}">
+                    <button class="btn btn-outline-success ml-1"> &raquo;</button>
+                </a>
+
+            {% else %}
+                <a href="#"><button class="btn btn-outline-secondary" disabled="disabled">Next</button></a>
+            {% endif %}
+        </div>
+    </div>
+
+
 {% endblock %}

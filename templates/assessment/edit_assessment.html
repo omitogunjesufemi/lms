@@ -17,8 +17,7 @@
                             <p style="font-size: 12pt;" class="text-center">
                                 All changes will take effect immediately you update
                                 This assessment by default will be hidden
-                                from students who enrolled for it. By ticking this box, you are activating the assessment
-                                to be seen by the students enrolled for its course.
+                                from students who enrolled for it.
                             </p>
                         </div>
 
@@ -85,7 +84,7 @@
 
                                 <div class="form-row px-3">
                                     <div class="">
-                                        <input type="checkbox" class="" id="status" name="status" value="1">
+                                        <input type="checkbox" class="" id="status" name="status" checked="{{ assessment.status }}">
                                         <small class="font-italic">Activate Assessment (All enrolled student will see
                                             this assessment) </small>
                                     </div>

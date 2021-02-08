@@ -15,8 +15,13 @@
                         Enroll For {{ course.course_title }}</a>
                     {% endif %}
                 {% elif 'tutors' in l_as_list  %}
-                    <a href="#" class="btn btn-outline-success float-right" data-target="#apply{{ course.id }}" data-toggle="modal">
-                        Apply as Tutor For {{ course.course_title }}</a>
+                    {% if tutor_id in tutor_list %}
+                        <a href="#" class="btn btn-outline-success float-right" data-target="#apply{{ course.id }}" data-toggle="modal">
+                            Apply as Tutor For {{ course.course_title }}</a>
+                    {% else %}
+                        <a href="#" class="btn btn-outline-success float-right" data-target="#" data-toggle="#">
+                            Resign as Tutor For {{ course.course_title }}</a>
+                    {% endif %}
                 {% elif 'admin' in l_as_list  %}
                     <a href="{% url 'edit_course' course.id %}" class="btn btn-outline-success float-right">
                         Edit {{ course.course_title }}</a>

@@ -46,9 +46,10 @@
 
                     <ul class="nav navbar-nav justify-content-end">
                         <div class="container-fluid">
-                            <form action="#" class="d-flex">
-                                <input type="search" placeholder="Search Courses" class="form-control">
-                                <button class="btn btn-outline-success">Search</button>
+                            <form action="{% url 'search_course' %}" class="d-flex" method="post">
+                                {% csrf_token %}
+                                <input type="search" placeholder="Search Courses" class="form-control" name="search_course">
+                                <button class="btn btn-outline-success" type="submit">Search</button>
                             </form>
                         </div>
                     </ul>
@@ -110,6 +111,7 @@
 <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/bootstrap-confirm-delete.js' %}"></script>
+<script src="{% static 'js/take_assessment.js' %}"></script>
 <script src="{% static 'js/registration_validation.js' %}"></script>
 <script src="{% static 'js/field_validation.js' %}"></script>
 <script src="{% static 'jQuery/jquery.validate.min.js' %}"></script>

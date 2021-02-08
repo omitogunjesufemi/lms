@@ -15,12 +15,10 @@ def grade_assessment(request, sitting_id):
 
         return redirect('student_details')
     else:
-        context={
+        context = {
             'message': 'You are not authorised'
         }
         return render(request, 'error_message.html', context)
-
-
 
 
 def __set_grading_attribute_request(request: HttpRequest, sitting_id):

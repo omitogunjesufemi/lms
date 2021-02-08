@@ -50,7 +50,6 @@ class DjangoORMAssessmentRepository(AssessmentRepository):
         assessment.pass_mark = model.pass_mark
         assessment.date_due = model.date_due
         assessment.time_due = model.time_due
-        assessment.status = model.status
         assessment.save()
 
     def edit(self, assessment_id, model: UpdateAssessmentDto):
@@ -58,7 +57,6 @@ class DjangoORMAssessmentRepository(AssessmentRepository):
             assessment = Assessment.objects.get(id=assessment_id)
             assessment.assessment_title = model.assessment_title
             assessment.assessment_content = model.assessment_content
-            assessment.courses_id = model.course_id
             assessment.total_score = model.total_score
             assessment.pass_mark = model.pass_mark
             assessment.time_due = model.time_due

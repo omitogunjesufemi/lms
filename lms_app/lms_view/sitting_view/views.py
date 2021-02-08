@@ -8,6 +8,7 @@ from lms_app.service_controllers import service_controller
 from django.core.paginator import Paginator
 
 
+
 def welcome(request):
     pass
 
@@ -37,7 +38,7 @@ def new_sitting(request, assessment_id):
                 sitting_question_list.append(question.id)
                 sitting_answer_list.append(question.answer)
 
-        question_count = questions.count()
+        question_count = len(questions)
         paginator = Paginator(questions, 1)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
@@ -51,7 +52,7 @@ def new_sitting(request, assessment_id):
             'l_as_list': l_as_list,
             'question_count': question_count,
             'paginator': paginator,
-            'page_obj': page_obj,
+            'questions': page_obj,
             'page_number': page_number,
         }
 
