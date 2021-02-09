@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-form-label-sm mt-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-uppercase text-center">Questions</h3>
+                    </div>
+
+                    <div class="card-body">
+                        <table class="table table-hover table-responsive text-center">
+                            <thead>
+                            <tr>
+                                <th>Question Title</th>
+                                <th>Answer</th>
+                                <th>Mark</th>
+                                <th></th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            {% for question in questions %}
+                                <tbody>
+                                <tr>
+                                    <td>{{ question.question_title }}</td>
+                                    <td>{{ question.answer }}</td>
+                                    <td>{{ question.assigned_mark }}</td>
+                                    <td></td>
+                                    <td>
+
+                                        <div class="btn-group">
+                                            <a href="{% url 'question_details' question.id %}" class="btn btn-outline-dark btn-sm">Details</a>
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            {% endfor %}
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-form-label-sm mt-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-uppercase text-center">Sitting</h3>
+                    </div>
+
+                    <div class="card-body">
+                        <table class="table table-hover table-responsive text-center">
+                            <thead>
+                            <tr>
+                                <th>Assessment Title</th>
+                                <th>Participant</th>
+                                <th>Date Submitted</th>
+                                <th>Time Submitted</th>
+                                <th></th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            {% for sitting in sittings %}
+                                <tbody>
+                                <tr>
+                                    <td>{{ sitting.assessment_title }}</td>
+                                    <td>{{ sitting.participant_registration_number }}</td>
+                                    <td>{{ sitting.date_submitted }}</td>
+                                    <td>{{ sitting.time_submitted }}</td>
+                                    <td></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="#" class="btn btn-outline-secondary btn-sm">Edit</a>
+                                        </div>
+
+                                        <div class="btn-group">
+                                            <a href="#" class="btn btn-outline-dark btn-sm">Details</a>
+                                        </div>
+
+                                        <div class="btn-group">
+                                            <a href="#" class="btn btn-outline-danger btn-sm">Delete</a>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            {% endfor %}
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 mt-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Course Registration</h3>
+                    </div>
+
+                    <div class="card-body">
+                        <form method="post" action="{% url 'edit_course' course.id %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <div class="form-group">
+                                <label for="course_title" class="form-check-label">Course Title </label>
+                                <input name="course_title" class="form-control" id="course_title" value="{{ course.course_title }}">
+                                <p id="course_title_validate" style="color: red; font-size: 10pt;" >
+                                    **The above field is missing
+                                </p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="course_slug" class="form-check-label">Brief Intro </label>
+                                <input name="course_slug" class="form-control" id="course_slug" value="{{ course.course_slug }}" required>
+
+                                <p id="course_slug_validate" style="color: red; font-size: 10pt;" >
+                                    **The above field is missing
+                                </p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="course_description" class="form-check-label">Course Description</label>
+                                <textarea name="course_description" class="form-control" id="course_description" >{{ course.course_description }}</textarea>
+                                <p id="course_description_validate" style="color: red; font-size: 10pt;" >
+                                    **The above field is missing
+                                </p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="file_upload" class="col-form-label">Upload Display Picture</label>
+                                <input type="file" class="form-row" id="file_upload" name="file_upload">
+                            </div>
+
+
+
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

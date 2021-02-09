@@ -1,0 +1,59 @@
+{% extends 'base_2.html' %}
+{% block content %}
+
+    <div class="container mt-5">
+
+        <div class="row justify-content-center mt-5 mb-4">
+            <a href="{% url 'index' %}" class="btn btn-outline-success btn-lg float-right">
+                L.M.S</a>
+        </div>
+
+        <div class="row justify-content-center mb-3">
+            <h2 class="font-weight-light text-center">Register an account</h2>
+        </div>
+
+        <div class="row no-gutters">
+            <div class="col-6 no-gutters">
+                <div class="row justify-content-center">
+                    {% load static %}<img src="{% static 'img/team/team-2.jpg' %}"
+                                          alt="lms student" style="width: 22em; height: 22rem; border-radius: 50%">
+                </div>
+
+                <div class="row justify-content-center">
+                    <p class="mt-2 font-weight-light" style="font-size: 18pt">For Students Only!</p>
+                </div>
+
+                <div class="row justify-content-center">
+                    <a href="{% url 'register_student' %}" class="btn btn-outline-success btn-lg"> Student</a>
+                </div>
+            </div>
+
+
+            <div class="col-6 no-gutters">
+                <div class="row justify-content-center">
+                    {% load static %}<img src="{% static 'img/team/team-1.jpg' %}"
+                                          alt="lms student" style="width: 350px; height: 350px; border-radius: 50%">
+                </div>
+
+                <div class="row justify-content-center">
+                    <p class="mt-2 font-weight-light" style="font-size: 18pt">For Tutors Only!</p>
+                </div>
+
+                <div class="row justify-content-center">
+                    <a href="{% url 'register_tutor' %}" class="btn btn-outline-success btn-lg"> Tutor</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="container mt-2 mb-2">
+        <div class="row justify-content-center">
+            <span>Already registered? <a href="{% url 'login_post' %}"> Login </a></span>
+        </div>
+    </div>
+
+    <br><br>
+
+{% endblock %}

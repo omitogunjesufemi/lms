@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 mt-1">
+
+                <div class="row justify-content-center text-secondary mt-4">
+                    <span>Welcome to LMS App. Below are the available courses.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="ml-5 mr-5">
+        <div class="">
+            <div class="card-deck mt-2">
+                <!--Courses-->
+                {% for course in courses %}
+                    <div class="mt-4">
+                        <div class="card shadow border-0" style="width: 377px;">
+                            <div class="card-img-top">
+                                {% if course.file != "" %}
+                                    <img src="../../Files/{{ course.file }}" alt="{{ course.course_title }}" class="course_img justify-content-center" style="width: 375px; height: 247px;">
+                                {% else %}
+                                    {% load static %}<img src="{% static 'img/Screenshot 2021-02-01 094946.png' %}" alt="{{ course.course_title }}" class="course_img float-right">
+                                {% endif %}
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title text-uppercase">{{ course.course_title }}</h3>
+                                <p class="card-text" style="text-align: justify">
+                                    Learning Python is easy.
+                                    Whether you're new to programming or an experienced developer,
+                                    it's easy to learn and use Python.
+                                </p>
+                                <a href="{% url 'course_details' course.id %}" class="float-right">View Course</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <br><br><br>
+{% endblock %}

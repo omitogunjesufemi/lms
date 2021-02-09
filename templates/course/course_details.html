@@ -1,0 +1,288 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col">
+                <h3 class="font-weight-lighter">What You Will Learn</h3>
+            </div>
+            <div class="col">
+                {% if 'students' in l_as_list  %}
+                    {% if student_id in student_list %}
+                        <a href="{% url 'unenroll' enrollment %}" class="btn btn-outline-success float-right">
+                            Un-Enroll For {{ course.course_title }}</a>
+                    {% else %}
+                        <a href="{% url 'initiate_enrollment' course.id %}" class="btn btn-outline-success float-right">
+                        Enroll For {{ course.course_title }}</a>
+                    {% endif %}
+                {% elif 'tutors' in l_as_list  %}
+                    {% if tutor_id in tutor_list %}
+                        <a href="#" class="btn btn-outline-success float-right" data-target="#apply{{ course.id }}" data-toggle="modal">
+                            Apply as Tutor For {{ course.course_title }}</a>
+                    {% else %}
+                        <a href="#" class="btn btn-outline-success float-right" data-target="#" data-toggle="#">
+                            Resign as Tutor For {{ course.course_title }}</a>
+                    {% endif %}
+                {% elif 'admin' in l_as_list  %}
+                    <a href="{% url 'edit_course' course.id %}" class="btn btn-outline-success float-right">
+                        Edit {{ course.course_title }}</a>
+                {% else %}
+                    <a href="{% url 'initiate_enrollment' course.id %}" class="btn btn-outline-success float-right">
+                        Enroll For {{ course.course_title }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="card border-0 shadow">
+                <div class="row no-gutters">
+                    <div class="col">
+                        <div class="card-block px-5 pt-4">
+                            <h4 class="card-title mt-2">{{ course.course_title }}</h4>
+                            <p class="card-text">{{ course.course_slug }}</p>
+                        </div>
+
+                        <div class="card-footer bg-white no-gutters mt-5 px-5 pt-2">
+                            <a href="#" class="card-text" id="see_more_details"><span class="font-weight-bolder" style="font-size: 14pt;">+</span> See More Details</a>
+                        </div>
+                    </div>
+                    <div class="col-auto ">
+                        {% if course.file == '' %}
+                            {% load static %}<img src="{% static 'img/Screenshot 2021-02-01 094946.png' %}" alt="{{ course.course_title }}" class="course_img float-right">
+                        {% else %}
+                            <img src="../../Files/{{ course.file }}" alt="{{ course.course_title }}" class="course_img float-right" style="width: 337px;">
+                        {% endif %}
+                    </div>
+                </div>
+
+
+                <!--Modal for Tutor Application-->
+                <div class="modal fade" id="apply{{ course.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title font-weight-light" id="exampleModalLabel">Submit Application For {{ course.course_title }}</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" action="{% url 'tutor_application' course.id %}" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="message-text" class="col-form-label">Qualifications:</label>
+                                        <textarea
+                                                class="form-control" id="qualifications"
+                                                placeholder="Write a summary of your qualification ans experience..."
+                                                name="qualifications"
+                                        ></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="file_upload" class="col-form-label">Upload CV</label>
+                                        <input type="file" class="form-control" name="file" id="file">
+                                    </div>
+
+
+                                    <div class="modal-footer">
+                                        <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Apply</button>
+                                    </div>
+
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!--End of Modal-->
+
+                <div class="row no-gutters justify-content-around mt-5" id="course_extra_details">
+                    <!--Course Syllabus-->
+                    <div class="col-6">
+                        <div class="card-block">
+                            <h6>PREREQUISITE KNOWLEDGE</h6>
+                            <p class="small">In order to succeed, we recommend having experience using the web,
+                                being able to perform a search on Google, and (most importantly)
+                                the determination to keep pushing forward in the art of coding in Python.
+                            </p>
+                        </div>
+
+                        <section class="">
+                            <ul>
+                                <li>
+                                    <div>
+                                        <header>
+                                            <h4 class="h5">Introduction</h4>
+                                        </header>
+                                    </div>
+                                    <div class="small">
+                                        <article>
+                                            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illo delectus
+                                                at doloribus nihil voluptatum ea tempora aperiam recusandae. Dicta
+                                                accusamus quis alias enim ex labore incidunt error corrupti minima illo?
+                                            </p>
+                                        </article>
+                                    </div>
+                                </li>
+
+                                <br><br>
+
+                                <li>
+                                    <div>
+                                        <header>
+                                            <h4 class="h5">Data Types</h4>
+                                        </header>
+                                    </div>
+                                    <div class="small">
+                                        <article>
+                                            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illo delectus
+                                                at doloribus nihil voluptatum ea tempora aperiam recusandae. Dicta
+                                                accusamus quis alias enim ex labore incidunt error corrupti minima illo?
+                                            </p>
+                                        </article>
+                                    </div>
+                                </li>
+
+                                <br><br>
+
+                                <li>
+                                    <div>
+                                        <header>
+                                            <h4 class="h5">Conditional Statements</h4>
+                                        </header>
+                                    </div>
+                                    <div class="small">
+                                        <article>
+                                            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illo delectus
+                                                at doloribus nihil voluptatum ea tempora aperiam recusandae. Dicta
+                                                accusamus quis alias enim ex labore incidunt error corrupti minima illo?
+                                            </p>
+                                        </article>
+                                    </div>
+                                </li>
+
+                                <br><br>
+
+                                <li>
+                                    <div>
+                                        <header>
+                                            <h4 class="h5">Functions</h4>
+                                        </header>
+                                    </div>
+                                    <div class="small">
+                                        <article>
+                                            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illo delectus
+                                                at doloribus nihil voluptatum ea tempora aperiam recusandae. Dicta
+                                                accusamus quis alias enim ex labore incidunt error corrupti minima illo?
+                                            </p>
+                                        </article>
+                                    </div>
+                                </li>
+
+                                <br><br>
+
+                            </ul>
+                        </section>
+
+                    </div>
+
+                    <div class="col-4 px-5 ml-5">
+                        <div class="rside mb-5">
+                            <svg width="50"
+                                 height="36"
+                                 viewBox="0 0 50 36">
+                                <g fill="none"
+                                   fill-rule="evenodd"
+                                   stroke="#7D97AD"
+                                   stroke-width="2" stroke-linecap="round"
+                                   stroke-linejoin="round">
+                                    <path d="M42 5h2.99063C45.54809 5 46 5.438615 46 5.998746v19.002508C46 25.552846 45.556738 26 45.003217 26H4.996782C4.446275 26 4 25.561385 4 25.001254V5.998746C4 5.447154 4.443353 5 5.00937 5H8"></path>
+                                    <path d="M21 22H8V2h9.009246C21.42242 2 25 5.580076 25 9.991652V26m0 0c0-2.20914-1.79086-4-4-4m8 0h13V2h-9.009247C28.577583 2 25 5.580076 25 9.991652V26m0 0c0-2.20914 1.79086-4 4-4"></path>
+                                    <path d="M46 8h2.001043C48.552753 8 49 8.439458 49 9.002462v19.995076C49 29.551183 48.55547 30 47.997452 30H2.002548C1.448856 30 1 29.560542 1 28.997538V9.002462C1 8.448817 1.44266 8 1.998957 8H4m21 22v-4"></path>
+                                </g>
+                            </svg>
+                            <h6 class="text-uppercase small font-weight-bolder mt-3 mb-3">NEED TO PREPARE?</h6>
+                            <div class="small font-italic" style="font-size: 12pt;">Prior programming experience is not required.</div>
+                        </div>
+                        <br>
+                        <br>
+
+                        <div class="mt-5">
+                            <div class="card deside border-0 shadow">
+                                {% load static %}<img src="{% static 'img/card-icon-nd000.svg' %}" alt=""
+                                                      style="width: 55px; height: 44px;" class="px-1 pt-1">
+
+                                <div class="h3 card-body">
+                                    <h4 class="font-weight-light">
+                                        Over <span class="font-weight-bold">10</span> students enrolled for
+                                        <span class="font-weight-bold">{{ course.course_title }}</span>!
+
+                                    </h4>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br>
+
+    <hr>
+    <div class="container mt-5 shadow-sm">
+        <div class="row justify-content-center column_header_section">
+            <div class="col col-9">Program Offerings</div>
+            <div class="col col-3 text-center">Availability</div>
+        </div>
+
+        <div class="row justify-content-center column_section">
+            <div class="col">COURSE CONTENT</div>
+        </div>
+
+        <div class="row justify-content-center column_fields">
+            <div class="col-9">Well drafted assessments question</div>
+            <div class="col-3 text-center">HH</div>
+        </div>
+        <div class="row justify-content-center column_fields">
+            <div class="col-9">Time-framed Assessments</div>
+            <div class="col-3 text-center">HH</div>
+        </div>
+        <div class="row justify-content-center column_fields">
+            <div class="col-9">Breakdown of Results</div>
+            <div class="col-3 text-center">HH</div>
+        </div>
+
+        <div class="row justify-content-center column_section">
+            <div class="col-12">STUDENT SERVICE</div>
+        </div>
+
+        <div class="row justify-content-center column_fields">
+            <div class="col-9">Well drafted assessments question</div>
+            <div class="col-3 text-center">HH</div>
+        </div>
+        <div class="row justify-content-center column_fields">
+            <div class="col-9">Time-framed Assessments</div>
+            <div class="col-3 text-center">HH</div>
+        </div>
+        <div class="row justify-content-center column_fields">
+            <div class="col-9">Breakdown of Results</div>
+            <div class="col-3 text-center">HH</div>
+        </div>
+
+    </div>
+
+    <br><br><br>
+
+
+
+
+
+
+
+{% endblock %}
