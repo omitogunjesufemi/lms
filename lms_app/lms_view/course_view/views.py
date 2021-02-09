@@ -110,7 +110,6 @@ def course_details(request, course_id):
 
     if request.user.groups != 'students' or request.user.is_anonymous:
         enrollment = 0
-        return enrollment
 
     context = {
         'username': username,
