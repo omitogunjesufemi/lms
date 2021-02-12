@@ -58,6 +58,7 @@ def cancel_enrollment(request, enrollment_id):
     if request.user.has_perm('lms_app.delete_enrollment'):
         try:
             service_controller.enrollment_management_service().delete(enrollment_id)
+            return redirect('student_details')
         except Enrollment.DoesNotExist as e:
             print('You are not enrolled for this course!')
             raise e

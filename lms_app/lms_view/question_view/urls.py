@@ -9,4 +9,5 @@ urlpatterns = [
     path('delete/<int:question_id>', views.delete_question, name='delete_question'),
     path('details/<int:question_id>', views.question_details, name='question_details'),
     path('get_questions/<int:assessment_id>', views.list_questions_for_assessment, name='list_assessment_question'),
+    path('qns_api/<int:assessment_id>', views.question_end_point, name='qns_api'),
 ]

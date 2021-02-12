@@ -1,6 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import viewsets
+
+from lms_app.serializers import *
+
 from lms_app.lms_dto.QuestionDto import *
 from lms_app.service_controllers import service_controller, Question, Assessment
 
@@ -86,6 +93,15 @@ def list_questions(request):
             'message': 'You are not authorised'
         }
         return render(request, 'error_message.html', context)
+
+
+@api_view(['GET'])
+def question_end_point(request, assessment_id):
+    if request.method == 'GET':
+        questions = service_controller.question_management_service().list_for_assessment(assessment_id=assessment_id)
+        serializer = QuestionSerializer(questions, many=True)
+        json_data = serializer.data
+        return Response(json_data)
 
 
 @login_required(login_url='login')

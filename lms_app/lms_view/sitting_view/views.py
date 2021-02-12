@@ -39,21 +39,18 @@ def new_sitting(request, assessment_id):
                 sitting_answer_list.append(question.answer)
 
         question_count = len(questions)
-        paginator = Paginator(questions, 1)
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
+        # paginator = Paginator(questions, 1)
+        # page_number = request.GET.get('page')
+        # page_obj = paginator.get_page(page_number)
 
         context = {
             'username': username,
             'assessment': assessment,
             'assessment_id': assessment_id,
-            'question_list': questions,
+            'questions': questions,
             'sitting_question_list': sitting_question_list,
             'l_as_list': l_as_list,
             'question_count': question_count,
-            'paginator': paginator,
-            'questions': page_obj,
-            'page_number': page_number,
         }
 
         sitting = __set_question_method(request, sitting_answer_list,
@@ -136,7 +133,7 @@ def sitting_details(request, sitting_id):
         }
         return render(request, 'sitting/sitting_details.html', context)
     else:
-        context={
+        context = {
             'message': 'You are not authorised'
         }
         return render(request, 'error_message.html', context)

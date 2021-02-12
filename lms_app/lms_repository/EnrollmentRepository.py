@@ -118,7 +118,8 @@ class DjangoORMEnrollmentRepository(EnrollmentRepository):
 
     def delete(self, enrollment_id):
         try:
-            Enrollment.objects.get(enrollment_id).delete()
+            enrollment = Enrollment.objects.get(id=enrollment_id)
+            enrollment.delete()
         except Enrollment.DoesNotExist as e:
             print('Cannot delete as you are not enrolled for the course!')
             raise e

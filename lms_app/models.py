@@ -81,7 +81,7 @@ class Assessment(models.Model):
 class Question(models.Model):
     assessment = models.ForeignKey(Assessment, default='', on_delete=models.CASCADE)
     question_title = models.CharField(max_length=200)
-    content = models.TextField(max_length=2000, blank=True)
+    question_content = models.TextField(max_length=2000, blank=True)
     choice1 = models.TextField(max_length=2000, default='')
     choice2 = models.TextField(max_length=2000, default='')
     choice3 = models.TextField(max_length=2000, default='')

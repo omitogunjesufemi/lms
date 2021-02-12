@@ -46,7 +46,7 @@ class DjangoORMQuestionRepository(QuestionRepository):
         question = Question()
         question.assessment_id = model.assessment_id
         question.question_title = model.question_title
-        question.content = model.question_content
+        question.question_content = model.question_content
         question.answer = model.answer
         question.choice1 = model.choice1
         question.choice2 = model.choice2
@@ -65,7 +65,7 @@ class DjangoORMQuestionRepository(QuestionRepository):
             question = Question.objects.get(id=question_id)
             question.id = question_id
             question.question_title = model.question_title
-            question.content = model.question_content
+            question.question_content = model.question_content
             question.answer = model.answer
             question.choice1 = model.choice1
             question.choice2 = model.choice2
@@ -89,7 +89,7 @@ class DjangoORMQuestionRepository(QuestionRepository):
                                                  'question_title',
                                                  'assigned_mark',
                                                  'assessment_id',
-                                                 'assessment__question__content',
+                                                 'assessment__question__question_content',
                                                  'assessment__question__choice1',
                                                  'assessment__question__choice2',
                                                  'assessment__question__choice3',
@@ -102,7 +102,7 @@ class DjangoORMQuestionRepository(QuestionRepository):
             test = ListQuestionDto()
             test.id = question['id']
             test.question_title = question['question_title']
-            test.question_content = question['assessment__question__content']
+            test.question_content = question['assessment__question__question_content']
             test.answer = question['answer']
             test.choice1 = question['assessment__question__choice1']
             test.choice2 = question['assessment__question__choice2']
@@ -118,7 +118,7 @@ class DjangoORMQuestionRepository(QuestionRepository):
                                                  'question_title',
                                                  'assigned_mark',
                                                  'assessment_id',
-                                                 'content',
+                                                 'question_content',
                                                  'choice1',
                                                  'choice2',
                                                  'choice3',
@@ -133,7 +133,7 @@ class DjangoORMQuestionRepository(QuestionRepository):
                 test = ListQuestionDto()
                 test.id = question['id']
                 test.question_title = question['question_title']
-                test.question_content = question['content']
+                test.question_content = question['question_content']
                 test.answer = question['answer']
                 test.choice1 = question['choice1']
                 test.choice2 = question['choice2']
@@ -149,7 +149,7 @@ class DjangoORMQuestionRepository(QuestionRepository):
                                                  'question_title',
                                                  'assigned_mark',
                                                  'assessment_id',
-                                                 'content',
+                                                 'question_content',
                                                  'choice1',
                                                  'choice2',
                                                  'choice3',
@@ -163,7 +163,7 @@ class DjangoORMQuestionRepository(QuestionRepository):
                 test = ListQuestionDto()
                 test.id = question['id']
                 test.question_title = question['question_title']
-                test.question_content = question['content']
+                test.question_content = question['question_content']
                 test.answer = question['answer']
                 test.choice1 = question['choice1']
                 test.choice2 = question['choice2']
@@ -181,7 +181,7 @@ class DjangoORMQuestionRepository(QuestionRepository):
             test.id = question.id
             test.assessment_id = question.assessment.id
             test.question_title = question.question_title
-            test.question_content = question.content
+            test.question_content = question.question_content
             test.answer = question.answer
             test.choice1 = question.choice1
             test.choice2 = question.choice2

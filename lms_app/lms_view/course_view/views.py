@@ -85,7 +85,7 @@ def course_details(request, course_id):
     students_for_course = service_controller.student_management_service().list_student_for_course(course_id)
     tutor_for_course = service_controller.appointment_management_service().list_tutor_for_course_appointed(course_id)
 
-    if request.user.groups == 'students':
+    if 'students' in l_as_list:
         user_id = request.user.id
         student_id = service_controller.student_management_service().details(user_id).id
 
@@ -94,13 +94,18 @@ def course_details(request, course_id):
                 student_list.append(student_id)
 
         enrollments = service_controller.enrollment_management_service().list_enrollment_for_student(student_id)
-        for enroll in enrollments:
-            if course_id == enroll.course_id:
-                enrollment = enroll.id
-            else:
-                enrollment = 0
+        if len(enrollments) == 0:
+            enrollment = 0
+        else:
+            for enroll in enrollments:
+                if course_id == enroll.course_id:
+                    enrollment = enroll.id
+                else:
+                    enrollment = 0
 
-    elif request.user.groups == 'tutors':
+        tutor_id = 0
+
+    elif 'tutors' in l_as_list:
         user_id = request.user.id
         tutor_id = service_controller.tutor_management_service().details(user_id).id
 
@@ -108,16 +113,20 @@ def course_details(request, course_id):
             if tutor_id == tutor.id:
                 tutor_list.append(tutor_id)
 
-    if request.user.groups != 'students' or request.user.is_anonymous:
+        student_id = 0
         enrollment = 0
-        return enrollment
+
+    elif l_as_list == None:
+        enrollment = 0
 
     context = {
         'username': username,
         'l_as_list': l_as_list,
         'course': course,
         'student_list': student_list,
+        'student_id': student_id,
         'tutor_list': tutor_list,
+        'tutor_id': tutor_id,
         'enrollment': enrollment,
     }
     return render(request, 'course/course_details.html', context)
