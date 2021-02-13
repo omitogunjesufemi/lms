@@ -33,3 +33,14 @@
 //         sessionStorage.setItem(str, $(this).val());
 //    });
 // });
+
+  // Loading hasn't finished yet
+     function onloading(){
+
+        alert('Page Loaded')
+
+
+
+        console.log('Doing Something');
+
+    }

@@ -187,3 +187,13 @@ input [type='radio']{
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+
+#submit_test {
+  width: 50%;
+  margin-top: 260px;
+  position: absolute;
+  top: 100%;
+  right: 20%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}

@@ -9,6 +9,7 @@
                         <div class="card-header bg-dark">
                             <h3 class="text-light">
                                 Assessment Details
+                            {% if 'admin' in l_as_list or 'tutors' in l_as_list %}
                                 <span class="float-right custom-switch">
                                     {% if assessment.status == 0 %}
                                         <span class="badge badge-success text-light font-weight-light">
@@ -20,6 +21,8 @@
                                         </span>
                                     {% endif %}
                                 </span>
+                            {% else %}
+                            {% endif %}
                             </h3>
                         </div>
                         <div class="card-body">

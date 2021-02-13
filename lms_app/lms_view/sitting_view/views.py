@@ -39,9 +39,9 @@ def new_sitting(request, assessment_id):
                 sitting_answer_list.append(question.answer)
 
         question_count = len(questions)
-        # paginator = Paginator(questions, 1)
-        # page_number = request.GET.get('page')
-        # page_obj = paginator.get_page(page_number)
+        paginator = Paginator(questions, 1)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
 
         context = {
             'username': username,
