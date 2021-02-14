@@ -1,5 +1,10 @@
 $(document).ready(function () {
 
+    $("#just_t").hide();
+    $('#t_readmore').click( function (){
+        $("#just_t").show();
+    });
+
     $('#login-form').trigger("reset");
 
     $("input").change(function(e) {
@@ -20,6 +25,9 @@ $(document).ready(function () {
             $("input").after(img);
         }
     });
+
+
+
 
     $('.modal').on('hidden.bs.modal', function () {
         $('#modal_content').modal('dispose');

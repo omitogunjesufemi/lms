@@ -1,112 +1,201 @@
 {% extends 'base.html' %}
 {% block content %}
-    <section>
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                {% load static %}<img class="d-block w-100" src="{% static "img/slide/slide-1.jpg" %}" alt="First slide">
-                <div class="carousel-caption d-none d-md-block ">
-                    <h1>Welcome to LMS.<br> A learning management system!</h1>
-                    <p class="text-light">Get started with us now. <a href="#" data-toggle="modal" data-target="#registration">Get Started</a> </p>
+{#    <section>#}
+{#    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">#}
+{#        <ol class="carousel-indicators">#}
+{#            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>#}
+{#            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>#}
+{#            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>#}
+{#        </ol>#}
+{#        <div class="carousel-inner">#}
+{#            <div class="carousel-item active">#}
+{#                {% load static %}<img class="d-block w-100" src="{% static "img/slide/slide-1.jpg" %}" alt="First slide">#}
+{#                <div class="carousel-caption d-none d-md-block ">#}
+{#                    <h1>Welcome to LMS.<br> A learning management system!</h1>#}
+{#                    <p class="text-light">Get started with us now. <a href="#" data-toggle="modal" data-target="#registration">Get Started</a> </p>#}
+{##}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="carousel-item">#}
+{#                {% load static %}<img class="d-block w-100" src="{% static "img/slide/slide-2.jpg" %}" alt="Second slide">#}
+{#                <div class="carousel-caption d-none d-md-block text-dark">#}
+{#                    <h1>Welcome to LMS.<br> A learning management system!</h1>#}
+{#                    <p class="text-light">Get started with us now. <a href="#" data-toggle="modal" data-target="#registration">Get Started</a> </p>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="carousel-item">#}
+{#                {% load static %}<img class="d-block w-100"  src="{% static "img/slide/slide-3.jpg" %}" alt="Third slide">#}
+{#                <div class="carousel-caption d-none d-md-block">#}
+{#                    <h1>Welcome to LMS.<br> A learning management system!</h1>#}
+{#                    <p class="text-light">Get started with us now. <a href="" data-toggle="modal" data-target="#registration">Get Started</a> </p>#}
+{#                </div>#}
+{#            </div>#}
+{##}
 
-                </div>
-            </div>
-            <div class="carousel-item">
-                {% load static %}<img class="d-block w-100" src="{% static "img/slide/slide-2.jpg" %}" alt="Second slide">
-                <div class="carousel-caption d-none d-md-block text-dark">
-                    <h1>Welcome to LMS.<br> A learning management system!</h1>
-                    <p class="text-light">Get started with us now. <a href="#" data-toggle="modal" data-target="#registration">Get Started</a> </p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                {% load static %}<img class="d-block w-100"  src="{% static "img/slide/slide-3.jpg" %}" alt="Third slide">
-                <div class="carousel-caption d-none d-md-block">
-                    <h1>Welcome to LMS.<br> A learning management system!</h1>
-                    <p class="text-light">Get started with us now. <a href="" data-toggle="modal" data-target="#registration">Get Started</a> </p>
-                </div>
-            </div>
+{##}
+{##}
+{#            </div>#}
+{#        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">#}
+{#            <span class="carousel-control-prev-icon" aria-hidden="true"></span>#}
+{#            <span class="sr-only">Previous</span>#}
+{#        </a>#}
+{#        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">#}
+{#            <span class="carousel-control-next-icon" aria-hidden="true"></span>#}
+{#            <span class="sr-only">Next</span>#}
+{#        </a>#}
+{#    </div>#}
+{#    </section>#}
 
-            <div class="modal fade" id="registration" tabindex="1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header bg-white">
-                            <h3 class="modal-title text-success font-weight-light" >Register as:</h3>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="container-fluid mt-3 mb-3">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="row justify-content-center">
-                                            {% load static %}<img src="{% static 'img/team/team-2.jpg' %}"
-                                                                  alt="lms student" style="width: 150px; height: 150px; border-radius: 50%">
-                                            <p class="mt-2">For Students Only!</p>
-                                        </div>
-
-                                        <div class="row justify-content-center">
-                                            <a href="{% url 'register_student' %}" class="btn btn-outline-success"> Student</a>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="row justify-content-center">
-                                            {% load static %}<img src="{% static 'img/team/team-1.jpg' %}"
-                                                                  alt="lms student" style="width: 150px; height: 150px; border-radius: 50%">
-                                            <p class="mt-2">For Tutors Only!</p>
-                                        </div>
-
-                                        <div class="row justify-content-center">
-                                            <a href="{% url 'register_tutor' %}" class="btn btn-outline-success"> Tutor</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="container mt-2 mb-2">
-                                <div class="row justify-content-center">
-                                    <span>Already registered? <a href="{% url 'login_post' %}"> Login </a></span>
-                                </div>
-                            </div>
-
-                        </div>
-
+    <div class="">
+        {% load static %}<img src="{% static 'img/home_bg.jpg' %}" style="width: 100%; height: auto" alt="lms">
+        <div id="img_home">
+            <div class="card shadow-sm border-0 p-2">
+                <div class="card-body ">
+                    <div>
+                        <h3 class="font-weight-bolder text-secondary">Embrace the Future</h3>
                     </div>
+                    <div>
+                        <p class="font-weight-light mt-3" style="font-size: 16pt;">A learning management system to help you learn.</p>
+                    </div>
+                    <div>
+                        <span class="font-weight-light mt-3" style="font-size: 12pt;">Get started with us now. <a href="" data-toggle="modal" data-target="#registration" class="text-success font-weight-bold">Get Started</a></span>
+                    </div>
+
                 </div>
-
-
-            </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-    </section>
-
-    <hr>
-
-    <div class="container" id="about_us">
-        <div class="row">
-            <div class="col-md-12">
-                <h3 class="font-weight-bold text-center" style="font-size: 45pt; font-family: serif;">ABOUT US</h3>
             </div>
         </div>
 
-        <hr>
+        <div class="modal fade" id="registration" tabindex="1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-white">
+                        <h3 class="modal-title text-success font-weight-light" >Register as:</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="container-fluid mt-3 mb-3">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="row justify-content-center">
+                                        {% load static %}<img src="{% static 'img/team/team-2.jpg' %}"
+                                                              alt="lms student" style="width: 150px; height: 150px; border-radius: 50%">
+                                        <p class="mt-2">For Students Only!</p>
+                                    </div>
+
+                                    <div class="row justify-content-center">
+                                        <a href="{% url 'register_student' %}" class="btn btn-outline-success"> Student</a>
+                                    </div>
+
+                                </div>
+                                <div class="col-6">
+                                    <div class="row justify-content-center">
+                                        {% load static %}<img src="{% static 'img/team/team-1.jpg' %}"
+                                                              alt="lms student" style="width: 150px; height: 150px; border-radius: 50%">
+                                        <p class="mt-2">For Tutors Only!</p>
+                                    </div>
+
+                                    <div class="row justify-content-center">
+                                        <a href="{% url 'register_tutor' %}" class="btn btn-outline-success"> Tutor</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container mt-2 mb-2">
+                            <div class="row justify-content-center">
+                                <span>Already registered? <a href="{% url 'login_post' %}"> Login </a></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+    </div>
+
+    <section class="mb-5" style="background: rgb(236,245,237); padding: 15px;">
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <h2 class="font-weight-light">Don't waste your valuable time or resource</h2>
+            </div>
+            <div class="row justify-content-center font-weight-light">
+                <p style="font-size: 16pt;">Only LMS has all the critical factors to deliver real results</p>
+            </div>
+            <div class="row justify-content-around mt-3">
+                <div class="card-deck">
+                    <div class="card shadow-sm border-0 cards">
+                        <div class="card-body p-4 ">
+                            <div class="mt-3 mb-3 text-center">
+                                <h5 style="color: #062c33">Student Account</h5>
+                            </div>
+                            <div style="text-align: justify; padding: 10px" class="font-weight-light">
+                                <p class="card__text">
+                                    On LMS, you can be a tutor or a student, but you cannot be both at the same time.
+                                    As a student, you will be only able to add courses, view assessment details, and
+                                    answer the assessment questions on which you will be graded.
+                                </p>
+                            </div>
+                            <div>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card shadow-sm border-0 cards">
+
+                        <div class="card-body p-4 ">
+                            <div class="mt-3 mb-3 text-center">
+                                <h5 style="color: #139b44">Tutor Account</h5>
+                            </div>
+                            <div style="text-align: justify; padding: 10px" class="font-weight-light">
+                                <p class="card__text">
+                                    On LMS, you can be a tutor or a student, but you cannot be both at the same time.
+                                    As a tutor, you will be only able to apply for created courses. After with you will
+                                    then be able to create assessment and set questions based on those assessments.
+
+                                </p>
+                            </div>
+                            <div>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card shadow-sm border-0 cards">
+                        <div class="card-body p-4 ">
+                            <div class="mt-3 mb-3 text-center">
+                                <h5 style="color: #b7a008">Courses and Assessments</h5>
+                            </div>
+                            <div style="text-align: justify; padding: 10px" class="font-weight-light">
+                                <p class="card__text">With LMS, courses can be created and assessment set for those courses as well.
+                                    Tutors assigned to the courses with be able to create assessment and add various
+                                    questions to the assessment.
+                                </p>
+                            </div>
+                            <div>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container mt-5 mb-5" id="about_us">
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <h3 class="font-weight-light text-center" style="font-size: 45pt;">About Us</h3>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-12">
-                <p class="text-secondary" style="font-size: 20pt; text-align: justify;">A learning management system (LMS) is an application for e-learning practices and, in its most common
+                <p class="text-secondary font-weight-light" style="font-size: 16pt; text-align: justify;">A learning management system (LMS) is an application for e-learning practices and, in its most common
                     form, consists of two elements: a server that performs the base functionality and a user interface
                     that is operated by instructors and students. A learning management system provides an instructor
                     with a way to create and deliver content, monitor student participation and assess student
@@ -121,15 +210,13 @@
                 </p>
             </div>
         </div>
-        <hr>
-        <div class="row">
+        <div class="row mt-5 mb-5">
             <div class="col-12">
-                <h5 class="font-weight-bold text-center" style="font-size: 25pt; font-family: serif;">WHAT WE ARE TRYING TO SOLVE</h5>
+                <h5 class="font-weight-light text-center" style="font-size: 35pt;">What We are Trying To Solve</h5>
             </div>
         </div>
-        <hr>
         <div class="row">
-            <div class="col-md-12 text-secondary" style="font-size: 20pt; text-align: justify;">
+            <div class="col-md-12 text-secondary font-weight-light" style="font-size: 16pt; text-align: justify;">
                 <p>
                     Due to the COVID-19 pandemic, the education system in Nigeria has welcomed the use of technology
                     to break the physical meeting for teaching students. Student would only need internet connectivity
