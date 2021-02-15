@@ -64,7 +64,7 @@ def __application_attribute_request(request: HttpRequest, course_id, tutor_id):
     create_application_dto.tutor_id = tutor_id
     create_application_dto.course_id = course_id
     create_application_dto.qualifications = request.POST['qualifications']
-    create_application_dto.file = request.FILES['file_upload']
+    create_application_dto.file = request.FILES.get('file_upload')
     return create_application_dto
 
 
@@ -72,7 +72,7 @@ def __create_if_post_method(request, course_id, tutor_id, context):
     if request.method == 'POST':
         try:
             application = __application_attribute_request(request, course_id, tutor_id)
-            if Appointment.objects.filter(course_id=course_id, tutor_id=tutor_id).exists():
+            if Appointment.objects.filter(course_id=course_id, tutors_id=tutor_id).exists():
                 context['saved'] = 'failed'
                 context['message'] = 'You are already appointed for the choosen course. Please select another course!'
                 return 0

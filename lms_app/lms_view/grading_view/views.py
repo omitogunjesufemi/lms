@@ -3,6 +3,7 @@ from django.http import HttpRequest
 from django.shortcuts import render, redirect
 from lms_app.lms_dto.GradingDto import *
 from lms_app.service_controllers import service_controller, Question
+from django.contrib import messages
 
 
 @login_required(login_url='login')
@@ -12,7 +13,7 @@ def grade_assessment(request, sitting_id):
 
         }
         __initiate_grading_method(request, sitting_id=sitting_id, context=context)
-
+        messages.success(request, message='Assessment Submitted Successfully!')
         return redirect('student_details')
     else:
         context = {

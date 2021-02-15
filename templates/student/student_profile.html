@@ -1,5 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
+
+    <section class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show">
+                    <strong>
+                        Successfully Submitted!
+                    </strong>
+                    <br>
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </section>
+
     <section>
         <div class="container mt-5">
             <div class="row">
@@ -157,7 +173,7 @@
                                                 <span class="font-italic text-dark" style="font-size: 12pt">Due: {{ assessment.date_due }} {{ assessment.time_due }}</span><br>
                                                 {% if assessment.id in sitting_list %}
                                                     <span class="text-dark" style="font-size: 12pt"><span class="text-secondary">Test Taken</span> | <a href="{% url 'assessment_details' assessment.id %}">Details</a></span>
-                                                {% elif not assessment.id in sitting_list and assessment.status == 0 %}
+                                                {% elif not assessment.id in sitting_list and assessment.status != 0 %}
                                                     <span class="text-dark" style="font-size: 12pt"><a href="{% url 'new_sitting' assessment.id %}">Take Test</a> | <a href="{% url 'assessment_details' assessment.id %}">Details</a></span>
                                                 {% elif not assessment.id in sitting_list and assessment.status == 0 %}
                                                     <span class="text-dark" style="font-size: 12pt"><span class="text-danger">Not Available Yet</span> | <a href="{% url 'assessment_details' assessment.id %}">Details</a></span>

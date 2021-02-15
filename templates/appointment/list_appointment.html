@@ -3,17 +3,19 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-form-label-sm mt-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="text-uppercase text-center">Assigned Tutors</h3>
+                <div class="card border-0 ">
+                    <div class="card-header border-0 bg-white">
+                        <h1 class="text-uppercase text-center font-weight-light">{{ course.course_title }} Assigned Tutors</h1>
                     </div>
 
                     <div class="card-body">
                         <table class="table table-hover table-responsive text-center">
                             <thead>
                             <tr>
-                                <th>Course Title</th>
                                 <th>Tutor Name</th>
+                                <th></th>
+                                <th>Tutor RegNo</th>
+                                <th></th>
                                 <th></th>
                                 <th>Actions</th>
                             </tr>
@@ -21,16 +23,40 @@
                             {% for appointment in appointments %}
                                 <tbody>
                                 <tr>
-                                    <td>{{ appointment.course_title }}</td>
                                     <td>{{ appointment.tutors_first_name }} {{ appointment.tutors_last_name }}</td>
+                                    <td></td>
+                                    <td>{{ appointment.tutors_reg }}</td>
+                                    <td></td>
                                     <td></td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="#" class="btn btn-outline-secondary btn-sm">Edit</a>
-                                        </div>
+                                            <a href="" class="text-danger btn btn-outline-danger border-top border-left border-right" data-toggle="modal" data-target="#deletecourse{{ course.id }}">Delete</a>
 
-                                        <div class="btn-group">
-                                            <a href="#" class="btn btn-outline-danger btn-sm">Delete</a>
+                                            <div class="modal fade" id="deletecourse{{ course.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title text-danger" >Un-enroll from {{ enrollment.course_title }}?</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            When this course is delete, all assessment, questions and sittings related to it will be gone.<br>
+                                                            Do you still want to continue with the process?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <div class="btn">
+                                                                <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
+                                                            </div>
+                                                            <div class="btn">
+                                                                <a href="{% url 'delete_course' course.id %}" class="btn btn-danger">Delete {{ course.course_title }}</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </td>
 

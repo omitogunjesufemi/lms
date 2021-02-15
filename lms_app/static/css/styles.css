@@ -190,10 +190,10 @@ input [type='radio']{
 
 #submit_test {
   width: 50%;
-  margin-top: 260px;
+  margin-top: 200px;
   position: absolute;
   top: 100%;
-  right: 20%;
+  right: 23%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
@@ -217,6 +217,14 @@ input [type='radio']{
 .card__text {
  font-size: 13pt;
 }
+
+.course_form_text {
+  border: none;
+  border-bottom: 2px green solid;
+  border-radius: 0;
+  font-size: 16pt;
+}
+
 
 
 @media screen and (max-width: 765px) {

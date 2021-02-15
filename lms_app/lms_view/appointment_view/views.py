@@ -67,8 +67,14 @@ def update_appointment(request, course_id):
 def list_appointments(request):
     if request.user.is_superuser:
         username = request.user.username
+
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
+
         appointments = service_controller.appointment_management_service().list()
         context = {
+            'l_as_list': l_as_list,
             'username': username,
             'appointments': appointments,
         }
@@ -84,10 +90,17 @@ def list_appointments(request):
 def list_tutor_for_appointment(request, course_id):
     if request.user.is_superuser:
         username = request.user.username
-        appointments = service_controller.appointment_management_service().list_appoint_for_tutor(course_id)
+
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
+        course = service_controller.course_management_service().details(course_id)
+        appointments = service_controller.appointment_management_service().list_tutor_for_course_appointed(course_id)
         context = {
+            'l_as_list': l_as_list,
             'username': username,
             'appointments': appointments,
+            'course': course,
         }
         return render(request, 'appointment/list_appointment.html', context)
     else:

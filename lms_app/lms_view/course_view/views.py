@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
@@ -49,7 +50,8 @@ def edit_course(request, course_id):
         edited_course = __edit_if_post_method(request, course_id, context)
         if edited_course is not None:
             context['course'] = edited_course
-            return redirect('admin_details')
+            messages.success(request, message='Changes Saved!')
+            return redirect('course_details', course_id)
         return render(request, 'course/edit_course.html', context)
     else:
         context={
@@ -116,8 +118,15 @@ def course_details(request, course_id):
         student_id = 0
         enrollment = 0
 
+    elif 'admin' in l_as_list:
+        enrollment = 0
+        student_id = 0
+        tutor_id = 0
+
     elif l_as_list == None:
         enrollment = 0
+        student_id = 0
+        tutor_id = 0
 
     context = {
         'username': username,
@@ -153,6 +162,7 @@ def course_delete(request, course_id):
     if request.user.has_perm('lms_app.delete_course'):
         try:
             service_controller.course_management_service().delete(course_id)
+            redirect('admin_details')
         except Course.DoesNotExist as e:
             print('This course does not exist!')
             raise e

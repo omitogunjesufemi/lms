@@ -53,6 +53,7 @@ def list_enrollments(request):
         }
         return render(request, 'error_message.html', context)
 
+
 @login_required(login_url='login')
 def cancel_enrollment(request, enrollment_id):
     if request.user.has_perm('lms_app.delete_enrollment'):

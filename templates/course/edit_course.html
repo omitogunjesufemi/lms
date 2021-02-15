@@ -2,10 +2,11 @@
 {% block content %}
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6 mt-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Course Registration</h3>
+            <div class="col-md-6 mt-5">
+                <div class="card border-0">
+                    <div class="card-header bg-white border-0">
+                        <h3 class="text-center text-success font-weight-bold" style="font-size: 24pt;">Editing:
+                            <span class="font-weight-light">{{ course.course_title }}</span></h3>
                     </div>
 
                     <div class="card-body">
@@ -14,7 +15,9 @@
 
                             <div class="form-group">
                                 <label for="course_title" class="form-check-label">Course Title </label>
-                                <input name="course_title" class="form-control" id="course_title" value="{{ course.course_title }}">
+                                <input name="course_title"
+                                       class="form-control course_form_text"
+                                       id="course_title" value="{{ course.course_title }}">
                                 <p id="course_title_validate" style="color: red; font-size: 10pt;" >
                                     **The above field is missing
                                 </p>
@@ -22,7 +25,7 @@
 
                             <div class="form-group">
                                 <label for="course_slug" class="form-check-label">Brief Intro </label>
-                                <input name="course_slug" class="form-control" id="course_slug" value="{{ course.course_slug }}" required>
+                                <input name="course_slug" class="form-control course_form_text" id="course_slug" value="{{ course.course_slug }}" required>
 
                                 <p id="course_slug_validate" style="color: red; font-size: 10pt;" >
                                     **The above field is missing
@@ -31,8 +34,10 @@
 
                             <div class="form-group">
                                 <label for="course_description" class="form-check-label">Course Description</label>
-                                <textarea name="course_description" class="form-control" id="course_description" >{{ course.course_description }}</textarea>
-                                <p id="course_description_validate" style="color: red; font-size: 10pt;" >
+                                <textarea
+                                        name="course_description"
+                                        class="form-control course_form_text" id="course_description" >{{ course.course_description }}</textarea>
+                                <p id="course_description_validate" style="color: red; font-size: 10pt; height: 300px; padding: 15px;" >
                                     **The above field is missing
                                 </p>
                             </div>
@@ -45,7 +50,7 @@
 
 
 
-                            <div class="form-group">
+                            <div class="form-group float-right">
                                 <button type="submit" class="btn btn-success">Submit</button>
                             </div>
 

@@ -2,7 +2,7 @@ from abc import ABCMeta, abstractmethod
 from typing import List
 
 from lms_app.lms_dto.EnrollmentDto import *
-from lms_app.models import Enrollment
+from lms_app.models import Enrollment, Sitting, Grading
 
 
 class EnrollmentRepository(metaclass=ABCMeta):
@@ -119,6 +119,27 @@ class DjangoORMEnrollmentRepository(EnrollmentRepository):
     def delete(self, enrollment_id):
         try:
             enrollment = Enrollment.objects.get(id=enrollment_id)
+            student_id = enrollment.student_id
+            sittings = Sitting.objects.all()
+            sitting = []
+            for sitting__ in sittings:
+                if student_id == sitting__.participant_id:
+                    sitting.append(sitting__)
+
+            if len(sitting) == 0:
+                pass
+            elif len(sitting) == 1:
+                sitting_id = sitting[0].id
+                grading = Grading.objects.get(sitting_id=sitting_id)
+                grading.delete()
+                Sitting.objects.get(id=sitting_id).delete()
+            elif len(sitting) > 1:
+                for sit in sitting:
+                    sitting_id = sitting[sit].id
+                    grading = Grading.objects.get(sitting_id=sitting_id)
+                    grading.delete()
+                    Sitting.objects.get(id=sitting_id).delete()
+
             enrollment.delete()
         except Enrollment.DoesNotExist as e:
             print('Cannot delete as you are not enrolled for the course!')

@@ -80,7 +80,7 @@ class DjangoORMCourseRepository(CourseRepository):
 
     def delete(self, course_id):
         try:
-            Course.objects.get(course_id).delete()
+            Course.objects.get(id=course_id).delete()
         except Course.DoesNotExist as e:
             print('Cannot delete Course because it does not exist!')
             raise e

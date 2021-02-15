@@ -60,7 +60,7 @@ class DefaultAppointmentManagementService(AppointmentManagementService):
         return self.repository.list_appoint_for_tutor(tutor_id)
 
     def list_tutor_for_course_appointed(self, course_id) -> List[ListAppointmentDto]:
-        return self.repository.list_appoint_for_tutor(course_id)
+        return self.repository.list_tutor_for_course_appointed(course_id)
 
     def details(self, tutors_id) -> AppointmentDetailsDto:
         return self.repository.details(tutors_id)

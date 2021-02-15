@@ -2,7 +2,7 @@ from abc import ABCMeta, abstractmethod
 from typing import List
 
 from lms_app.lms_dto.AppointmentDto import *
-from lms_app.models import Appointment
+from lms_app.models import Appointment, Apply
 
 
 class AppointmentRepository(metaclass=ABCMeta):
@@ -110,24 +110,25 @@ class DjangoORMAppointmentRepository(AppointmentRepository):
         return appointment_list
 
     def list_tutor_for_course_appointed(self, course_id) -> List[ListAppointmentDto]:
-        appointments = list(Appointment.objects.values('id', 'tutors__user__first_name', 'tutors__user__last_name',
-                                                       'course__course_title',
-                                                       'tutors__registration_number',
-                                                       'tutors_id',
-                                                       'course_id'))
+        appointments = list(Appointment.objects.filter(course_id=course_id).values('id', 'tutors__user__first_name',
+                                                                                   'tutors__user__last_name',
+                                                                                   'course__course_title',
+                                                                                   'tutors__registration_number',
+                                                                                   'date_appointed',
+                                                                                   'tutors_id',
+                                                                                   'course_id'))
 
         appointment_list: List[ListAppointmentDto] = []
         for appointment in appointments:
-            if course_id == appointment['course_id']:
-                contract = ListAppointmentDto()
-                contract.id = appointment['id']
-                contract.course_title = appointment['course__course_title']
-                contract.course_id = appointment['course_id']
-                contract.tutors_first_name = appointment['tutors__user__first_name']
-                contract.tutors_last_name = appointment['tutors__user__last_name']
-                contract.tutors_reg = appointment['tutors__registration_number']
-                contract.tutors_id = appointment['tutors_id']
-                appointment_list.append(contract)
+            contract = ListAppointmentDto()
+            contract.id = appointment['id']
+            contract.course_title = appointment['course__course_title']
+            contract.course_id = appointment['course_id']
+            contract.tutors_first_name = appointment['tutors__user__first_name']
+            contract.tutors_last_name = appointment['tutors__user__last_name']
+            contract.tutors_reg = appointment['tutors__registration_number']
+            contract.tutors_id = appointment['tutors_id']
+            appointment_list.append(contract)
         return appointment_list
 
     def details(self, tutors_id) -> AppointmentDetailsDto:
@@ -148,7 +149,14 @@ class DjangoORMAppointmentRepository(AppointmentRepository):
 
     def delete(self, appointment_id):
         try:
-            Appointment.objects.get(appointment_id).delete()
+            appoint = Appointment.objects.get(id=appointment_id)
+            course_id = appoint.course_id
+            tutor_id = appoint.tutors_id
+            apply = Apply.objects.get(course_id=course_id, tutor_id=tutor_id)
+            apply.status = 0
+            apply.save()
+            appoint.delete()
+
         except Appointment.DoesNotExist as e:
             print('Cannot delete as you are not appointed for the course!')
             raise e

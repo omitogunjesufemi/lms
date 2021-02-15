@@ -23,7 +23,7 @@ def add_comment(request, assessment_id):
         }
         __create_if_post_method(request, assessment_id, context)
         if request.method == 'POST' and context['saved']:
-            return redirect('tutor_details')
+            return redirect('sitting_details')
     else:
         context={
             'message': 'You are not authorised'
