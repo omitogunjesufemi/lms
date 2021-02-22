@@ -2,10 +2,10 @@
 {% block content %}
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6 mt-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Create a Question</h3>
+            <div class="col-8 mt-4">
+                <div class="card border-0">
+                    <div class="card-header border-0 bg-white">
+                        <h3 class="font-weight-light text-center" style="font-size: 28pt;">Create a Question</h3>
                     </div>
 
                     <div class="card-body">
@@ -14,54 +14,62 @@
 
                             <div class="form-group">
                                 <label for="assessment_id" class="form-check-label">Assessment Title</label>
-                                <select name="assessment_id" class="form-control" id="assessment_id" required>
+                                <select name="assessment_id" class="form-control course_form_text" id="assessment_id" required>
                                         <option value="{{ assessment.id }}">{{ assessment.assessment_title }} ({{ assessment.course_title }})</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="question_title" class="form-check-label">Question Title</label>
-                                <input name="question_title" class="form-control" id="question_title" required>
+                                <input name="question_title" class="form-control course_form_text" id="question_title" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="question_content" class="form-check-label">Question Content</label>
-                                <textarea name="question_content" class="form-control" id="question_content" required></textarea>
+                                <textarea name="question_content" class="form-control course_form_text" id="question_content" required></textarea>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="choice1" class="form-check-label">Choice 1</label>
+                                    <textarea name="choice1" class="form-control course_form_text" id="choice1" required></textarea>
+                                </div>
+
+                                <div class="form-group col-6">
+                                    <label for="choice2" class="form-check-label">Choice 2</label>
+                                    <textarea name="choice2" class="form-control course_form_text" id="choice2"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="choice3" class="form-check-label">Choice 3</label>
+                                    <textarea name="choice3" class="form-control course_form_text" id="choice3" required></textarea>
+                                </div>
+
+                                <div class="form-group col-6">
+                                    <label for="choice4" class="form-check-label">Choice 4</label>
+                                    <textarea name="choice4" class="form-control course_form_text" id="choice4" required></textarea>
+                                </div>
                             </div>
 
 
-                            <div class="form-group">
-                                <label for="choice1" class="form-check-label">Choice 1</label>
-                                <textarea name="choice1" class="form-control" id="choice1" required></textarea>
-                            </div>
 
-                            <div class="form-group">
-                                <label for="choice2" class="form-check-label">Choice 2</label>
-                                <textarea name="choice2" class="form-control" id="choice2"></textarea>
-                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label for="answer" class="form-check-label">Answer</label>
+                                    <input name="answer" class="form-control course_form_text" id="answer" required>
+                                </div>
 
-                            <div class="form-group">
-                                <label for="choice3" class="form-check-label">Choice 3</label>
-                                <textarea name="choice3" class="form-control" id="choice3" required></textarea>
-                            </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="assigned_mark" class="form-check-label">Assigned Mark</label>
+                                    <input name="assigned_mark" class="form-control course_form_text" id="assigned_mark" type="number" required>
+                                </div>
 
-                            <div class="form-group">
-                                <label for="choice4" class="form-check-label">Choice 4</label>
-                                <textarea name="choice4" class="form-control" id="choice4" required></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="answer" class="form-check-label">Answer</label>
-                                <input name="answer" class="form-control" id="answer" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="assigned_mark" class="form-check-label">Assigned Mark</label>
-                                <input name="assigned_mark" class="form-control" id="assigned_mark" type="number" required>
                             </div>
 
 
-                            <div class="form-group float-xl-right">
+                            <div class="form-group float-xl-right mt-3">
                                 <button type="submit" class="btn btn-success" name="submit" value="Save">Save</button>
                                 <button type="submit" class="btn btn-success" name="submit" value="AddMore">Save and Add More</button>
                             </div>

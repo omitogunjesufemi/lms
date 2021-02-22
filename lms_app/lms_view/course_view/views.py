@@ -112,7 +112,7 @@ def course_details(request, course_id):
         tutor_id = service_controller.tutor_management_service().details(user_id).id
 
         for tutor in tutor_for_course:
-            if tutor_id == tutor.id:
+            if tutor_id == tutor.tutors_id:
                 tutor_list.append(tutor_id)
 
         student_id = 0

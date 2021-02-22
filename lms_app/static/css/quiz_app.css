@@ -1,3 +1,15 @@
+:root {
+    --white: #ffffff;
+    --light: #f0eff3;
+    --black: #000000;
+    --dark-blue: #1f2029;
+    --dark-light: #353746;
+    --red: #da2c4d;
+    --yellow: #f8ab37;
+    --grey: #ecedf3;
+    --green: #017c01;
+}
+
 .slide, .slides{
     position: absolute;
     left: 0;
@@ -17,8 +29,26 @@
     margin-top: 40px;
 }
 
-/*.disable {*/
-/*    pointer-events: none;*/
-/*    cursor: default;*/
-/*    color: #5a6268;*/
-/*}*/
+/*Radio Selections*/
+
+label.btn-block{
+    text-align: start;
+    position: relative;
+}
+
+label.btn {
+    padding: 18px 18px;
+}
+
+label.btn:hover {
+    background-color: #c2e7ce;
+}
+
+.btn-light:not(:disabled):not(.disabled).active, .btn-light:not(:disabled):not(.disabled):active, .show>.btn-light.dropdown-toggle {
+    color: white;
+    background-color: #1c7430;
+}
+
+input[type="radio"]{
+    visibility:hidden;
+}

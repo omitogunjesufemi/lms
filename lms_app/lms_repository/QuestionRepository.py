@@ -72,8 +72,10 @@ class DjangoORMQuestionRepository(QuestionRepository):
             question.choice3 = model.choice3
             question.choice4 = model.choice4
 
-            assessment = question.assessment.id
-            total_score_for_assessment = int(assessment.total_score) - int(question.assigned_mark)
+            assessment = Assessment.objects.get(id=question.assessment_id)
+            prev_total_score = int(assessment.total_score)
+            new_grade = int(question.assigned_mark)
+            total_score_for_assessment = prev_total_score - new_grade
 
             question.assigned_mark = model.assigned_mark
             question.save()
@@ -195,7 +197,7 @@ class DjangoORMQuestionRepository(QuestionRepository):
 
     def delete(self, question_id):
         try:
-            Question.objects.get(question_id).delete()
+            Question.objects.get(id=question_id).delete()
         except Question.DoesNotExist as e:
             print('Cannot delete as the question cannot be found!')
             raise e

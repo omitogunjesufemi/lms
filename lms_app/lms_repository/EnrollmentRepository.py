@@ -25,6 +25,10 @@ class EnrollmentRepository(metaclass=ABCMeta):
         """List the student and courses enrolled"""
         raise NotImplementedError
 
+    def list_student_for_enrollment(self, student_id) -> List[ListEnrollmentDto]:
+        """List the student and courses enrolled"""
+        raise NotImplementedError
+
     def details(self, enrollment_id) -> EnrollmentDetailsDto:
         """Details of a particular enrollment"""
         raise NotImplementedError
@@ -74,6 +78,29 @@ class DjangoORMEnrollmentRepository(EnrollmentRepository):
             contract.date_enrolled = enrollment['date_enrolled']
             appointment_list.append(contract)
         return appointment_list
+
+    def list_student_for_enrollment(self, course_id) -> List[ListEnrollmentDto]:
+        enrollments = list(Enrollment.objects.filter(course_id=course_id).values('id', 'student_id',
+                                                                              'student__registration_number',
+                                                                              'course__course_title',
+                                                                              'course__course_description',
+                                                                              'course_id',
+                                                                              'date_enrolled'
+                                                     ))
+
+        appointment_list: List[ListEnrollmentDto] = []
+        for enrollment in enrollments:
+            contract = ListEnrollmentDto()
+            contract.id = enrollment['id']
+            contract.course_id = enrollment['course_id']
+            contract.course_title = enrollment['course__course_title']
+            contract.course_description = enrollment['course__course_description']
+            contract.student_id = enrollment['student_id']
+            contract.student_registration_number = enrollment['student__registration_number']
+            contract.date_enrolled = enrollment['date_enrolled']
+            appointment_list.append(contract)
+        return appointment_list
+
 
     def list_enrollment_for_student(self, student_id) -> List[ListEnrollmentDto]:
         enrollments = list(Enrollment.objects.values('id', 'student_id',
@@ -135,7 +162,7 @@ class DjangoORMEnrollmentRepository(EnrollmentRepository):
                 Sitting.objects.get(id=sitting_id).delete()
             elif len(sitting) > 1:
                 for sit in sitting:
-                    sitting_id = sitting[sit].id
+                    sitting_id = sit.id
                     grading = Grading.objects.get(sitting_id=sitting_id)
                     grading.delete()
                     Sitting.objects.get(id=sitting_id).delete()

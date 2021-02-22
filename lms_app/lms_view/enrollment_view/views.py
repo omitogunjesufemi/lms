@@ -33,18 +33,20 @@ def initiate_enrollment(request, course_id):
         return render(request, 'error_message.html', context)
 
 @login_required(login_url='login')
-def list_enrollments(request):
+def list_enrollments(request, course_id):
     if request.user.has_perm('lms_app.view_enrollment'):
         l_as_list = []
         for g in request.user.groups.all():
             l_as_list.append(g.name)
 
         username = request.user.username
-        enrollments = service_controller.enrollment_management_service().list()
+        enrollments = service_controller.enrollment_management_service().list_student_for_enrollment(course_id)
+        course = service_controller.course_management_service().details(course_id)
         context = {
             'enrollments': enrollments,
             'username': username,
             'l_as_list': l_as_list,
+            'course': course,
         }
         return render(request, 'enrollment/list_enrollment.html', context)
     else:

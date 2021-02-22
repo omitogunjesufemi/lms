@@ -226,7 +226,11 @@
                                                     <span class="text-secondary">{{ assessment.assessment_title }} </span><br>
                                                     <span class="font-italic text-dark" style="font-size: 12pt">Due: {{ assessment.date_due }} {{ assessment.time_due }}</span><br>
                                                     <span class="font-italic text-dark" style="font-size: 12pt">Submitted: {{ sitting.date_submitted }} {{ sitting.time_submitted }}</span><br>
-                                                    <span class="font-italic text-dark" style="font-size: 12pt"><a href="{% url 'sitting_details' sitting.id %}">View Details</a></span>
+                                                    <span class="font-italic text-dark" style="font-size: 12pt"><a href="{% url 'sitting_details' sitting.id %}">View Details</a>
+                                                        {% if request.user.is_superuser %}
+                                                            | <a href="{% url 'delete_sitting' sitting.id %}" class="text-danger">Delete</a>
+                                                        {% endif %}
+                                                    </span>
                                                 </div>
                                             {% endif %}
                                         {% endfor %}

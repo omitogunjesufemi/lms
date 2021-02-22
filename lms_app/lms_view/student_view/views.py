@@ -106,6 +106,13 @@ def list_student_for_courses(request, course_id):
         return render(request, 'error_message.html', context)
 
 
+def dashboard(request):
+    context = {
+
+    }
+    return render(request, 'student/dashboard.html', context)
+
+
 @login_required(login_url='login')
 def student_details(request):
     if request.user.has_perm('lms_app.view_student'):

@@ -2,10 +2,10 @@
 {% block content %}
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6 mt-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Update a Question</h3>
+            <div class="col-md-8 mt-4">
+                <div class="card border-0">
+                    <div class="card-header bg-white border-0 text-center ">
+                        <h1 class="font-weight-light">Update a Question</h1>
                     </div>
 
                     <div class="card-body">
@@ -14,47 +14,47 @@
 
                             <div class="form-group">
                                 <label for="question_title" class="form-check-label">Question Title</label>
-                                <input name="question_title" class="form-control" id="question_title" value="{{ question.question_title }}" required>
+                                <input name="question_title" class="form-control course_form_text" id="question_title" value="{{ question.question_title }}" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="question_content" class="form-check-label"> Question Content </label>
-                                <textarea name="question_content" class="form-control" id="question_content" required>{{ question.question_content }}</textarea>
+                                <textarea name="question_content" class="form-control course_form_text" id="question_content" required>{{ question.question_content }}</textarea>
                             </div>
 
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for="choice1" class="form-check-label">Choice 1</label>
-                                    <textarea name="choice1" class="form-control" id="choice1" value="{{ question.choice1 }}" required></textarea>
+                                    <textarea name="choice1" class="form-control course_form_text" id="choice1" required>{{ question.choice1 }}</textarea>
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     <label for="choice2" class="form-check-label">Choice 2</label>
-                                    <textarea name="choice2" class="form-control" id="choice2" value="{{ question.choice2 }}" required></textarea>
+                                    <textarea name="choice2" class="form-control course_form_text" id="choice2"  required>{{ question.choice2 }}</textarea>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for="choice3" class="form-check-label">Choice 3</label>
-                                    <textarea name="choice3" class="form-control" id="choice3" value="{{ question.choice3 }}" required></textarea>
+                                    <textarea name="choice3" class="form-control course_form_text" id="choice3"  required>{{ question.choice3 }}</textarea>
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     <label for="choice4" class="form-check-label">Choice 4</label>
-                                    <textarea name="choice4" class="form-control" id="choice4" value="{{ question.choice4 }}" required></textarea>
+                                    <textarea name="choice4" class="form-control course_form_text" id="choice4"  required>{{ question.choice4 }}</textarea>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="form-group col-4">
                                     <label for="answer" class="form-check-label">Answer</label>
-                                    <input name="answer" class="form-control" id="answer" value="{{ question.answer}}" required>
+                                    <input name="answer" class="form-control course_form_text" id="answer" value="{{ question.answer}}" required>
                                 </div>
 
                                 <div class="form-group col-4">
                                     <label for="assigned_mark" class="form-check-label">Assigned Mark</label>
-                                    <input name="assigned_mark" class="form-control" id="assigned_mark" type="number" value="{{ question.assigned_mark }}" required>
+                                    <input name="assigned_mark" class="form-control course_form_text" id="assigned_mark" type="number" value="{{ question.assigned_mark }}" required>
                                 </div>
 
                                 <div class="form-group col-4 mt-4 float-right">

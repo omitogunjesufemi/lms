@@ -21,3 +21,4 @@ def registration(request):
 
     }
     return render(request, 'registration_page.html', context)
+

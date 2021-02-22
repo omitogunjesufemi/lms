@@ -164,7 +164,7 @@ class DjangoORMAssessmentRepository(AssessmentRepository):
 
     def delete(self, assessment_id):
         try:
-            Assessment.objects.get(assessment_id).delete()
+            Assessment.objects.get(id=assessment_id).delete()
         except Assessment.DoesNotExist as e:
             print('Cannot delete as the assessment cannot be found!')
             raise e

@@ -23,6 +23,10 @@ class EnrollmentManagementService(metaclass=ABCMeta):
         """List the student and courses enrolled"""
         raise NotImplementedError
 
+    def list_student_for_enrollment(self, course_id) -> List[ListEnrollmentDto]:
+        """List the student and courses enrolled"""
+        raise NotImplementedError
+
     def details(self, enrollment_id) -> EnrollmentDetailsDto:
         """Details of a particular enrollment"""
         raise NotImplementedError
@@ -46,6 +50,9 @@ class DefaultEnrollmentManagementService(EnrollmentManagementService):
 
     def list(self) -> List[ListEnrollmentDto]:
         return self.repository.list()
+
+    def list_student_for_enrollment(self, course_id) -> List[ListEnrollmentDto]:
+        return self.repository.list_student_for_enrollment(course_id)
 
     def list_enrollment_for_student(self, student_id) -> List[ListEnrollmentDto]:
         return self.repository.list_enrollment_for_student(student_id)

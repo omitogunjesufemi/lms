@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    <section class="secmt-5">
+    <section class="mt-5">
         <div class="container-fluid mt-5">
             <div class="row">
                 <div class="col-sm mt-5">
@@ -49,11 +49,10 @@
 
                 <div class="col-sm mt-5">
 
-
                             {% for question in questions %}
                                 {% for qns, ans in user_choice.items %}
                                     {% if question.id == qns|add:"0" %}
-                                        <div class="slides ">
+                                        <div class="">
 
                                             <h3 class="text-success font-weight-bold text-center text-uppercase">Questions Answered</h3>
 
@@ -68,7 +67,7 @@
                                             <div class="row justify-content-around">
                                                 <div class="form-group col-9 " style="font-size: 16pt">
                                                     <label for="first_name" style="font-size: 14pt"
-                                                           class="form-check-label font-weight-bolder text-uppercase text-dark">Options: </label><br>
+                                                           class="form-check-label font-weight-bolder text-uppercase text-dark">Options: </label><br><br>
                                                     <span class="font-italic" style="padding-right: 50px">  <input type="radio" {% if ans == "'choice1'" %}checked{% else %}disabled{% endif %}>    A. {{ question.choice1 }}</span>{% if question.answer == "choice1" %}<span class="text-success">Correct</span>{% else %}<span class="text-danger">Wrong</span>{% endif %}<br>
                                                     <span class="font-italic" style="padding-right: 50px">  <input type="radio" {% if ans == "'choice2'" %}checked{% else %}disabled{% endif %}>    B. {{ question.choice2 }}</span>{% if question.answer == "choice2" %}<span class="text-success">Correct</span>{% else %}<span class="text-danger">Wrong</span>{% endif %}<br>
                                                     <span class="font-italic" style="padding-right: 50px">  <input type="radio" {% if ans == "'choice3'" %}checked{% else %}disabled{% endif %}>    C. {{ question.choice3 }}</span>{% if question.answer == "choice3" %}<span class="text-success">Correct</span>{% else %}<span class="text-danger">Wrong</span>{% endif %}<br>
@@ -82,21 +81,57 @@
                                 {% endfor %}
 
                             {% endfor %}
-                        </div>
-                    </div>
+
                 </div>
-            </section>
+                <div class="container ">
+        <div class="row paginator justify-content-center mt-3">
+
+            {% if questions.has_previous %}
+                <a href="?page=1">
+                    <button class="btn btn-outline-success"> &laquo;</button>
+                </a>
+                <a href="?page={{ questions.previous_page_number }}">
+                    <button class="btn btn-outline-success ml-1" id="prv">
+                        Previous
+                    </button>
+                </a>
+            {% else %}
+                <a href="#" class="text-secondary">
+                    <button class="btn btn-outline-secondary" disabled="disabled" id="prv">Previous</button>
+                </a>
+            {% endif %}
+
+
+            <div class="col-6 text-center">
+                {% for i in list_qns %}
+                    <a href="?page={{ i }}" class="">
+                        <button class="btn btn-outline-success"> {{ i }} </button>
+                    </a>
+                {% endfor %}
+            </div>
+
+            {% if questions.has_next %}
+                <a href="?page={{ questions.next_page_number }}">
+                    <button class="btn btn-outline-success" id="nxt">
+                        Next
+                    </button>
+                </a>
+                <a href="?page={{ questions.paginator.num_pages }}">
+                    <button class="btn btn-outline-success ml-1"> &raquo;</button>
+
+                </a>
+
+            {% else %}
+                <a href="#"><button class="btn btn-outline-secondary" disabled="disabled" id="nxt">Next</button></a>
+            {% endif %}
+        </div>
+    </div>
+            </div>
         </div>
     </section>
 
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <button class="btn btn-outline-success ml-1" id="prev">Previous</button>
-            <div class="col-6 text-center"></div>
-            <button class="btn btn-outline-success" id="nxt">Next</button>
 
-        </div>
-    </div>
+
 
     <div>
         <div class="">

@@ -1,146 +1,164 @@
+
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-9">
-            <div class="card pagination border-0 ">
-                <div class="card-body" id="radioInputContainer">
-                    <div class="mt-4">
-                        {% extends 'base.html' %}
-                        {% block content %}
+    <div class="container mt-5">
 
-                            <div class="container mt-5">
+        <div class="row justify-content-center mt-3 mb-2">
+            <h2 class="font-weight-bold text- text-success">{{ assessment.course_title }} Assessment: <span class="font-weight-light text-dark">{{ assessment.assessment_title }}</span></h2>
+        </div>
 
-                                <div class="row justify-content-center mt-3 mb-2">
-                                    <h2 class="font-weight-bold text- text-success">{{ assessment.course_title }} Assessment: <span class="font-weight-light text-dark">{{ assessment.assessment_title }}</span></h2>
-                                </div>
+        <div class="row font-weight-light mb-2 justify-content-center">
+            <h4 class="font-weight-light text-center">
+                {{ assessment.assessment_content }}
+            </h4>
+        </div>
 
-                                <div class="row font-weight-light mb-2 justify-content-center">
-                                    <h4 class="font-weight-light text-center">
-                                        {{ assessment.assessment_content }}
-                                    </h4>
-                                </div>
+        <div class="row font-weight-light justify-content-center">
+            <h4 class="font-weight-light text-center">
+                Question {% if questions.number == question_count %}
+                <span class="text-success font-weight-bold">{{ questions.number }}</span>
+            {% else%}
+                <span class="text-danger font-weight-bold">{{ questions.number }}</span>
+            {% endif %}
 
-                                <div class="row font-weight-light justify-content-center">
-                                    <h4 class="font-weight-light text-center">
-                                        Question {% if questions.number == question_count %}
-                                        <span class="text-success font-weight-bold">{{ questions.number }}</span>
-                                    {% else%}
-                                        <span class="text-danger font-weight-bold">{{ questions.number }}</span>
-                                    {% endif %}
+                of <span class="text-success font-weight-bold">{{ question_count }}</span>
+            </h4>
+        </div>
 
-                                        of <span class="text-success font-weight-bold">{{ question_count }}</span>
-                                    </h4>
-                                </div>
+    </div>
 
-                            </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-9">
+                <div class="card pagination border-0 ">
+                    <div class="card-body" id="radioInputContainer">
+                        <div class="mt-4">
+                            <form method="POST" action="{% url 'new_sitting' assessment.id %}" style="font-size: 16pt;" name="quiz" onsubmit="submit_quiz()">
+                                {% csrf_token %}
 
-                            <div class="container">
-                                <div class="row justify-content-center">
-                                    <div class="col-9">
-                                        <div class="card pagination border-0 ">
-                                            <div class="card-body" id="radioInputContainer">
-                                                <div class="mt-4">
-                                                    <form method="POST" action="{% url 'new_sitting' assessment.id %}" style="font-size: 16pt;" name="quiz">
-                                                        {% csrf_token %}
+                                {% for question in questions %}
 
-                                                        {% for question in questions %}
+                                    <div>
+                                        <div class="form-group text-center">
+                                            <h3 class="font-weight-normal">{{ question.question_content }}</h3>
+                                        </div>
 
-                                                            <div class="form-group text-center">
-                                                                <h3 class="font-weight-normal">{{ question.question_content }}</h3>
-                                                            </div>
+                                        <div data-toggle="buttons">
+                                            <div class="form-group">
+                                                <label class="btn btn-lg btn-light btn-block">
+                                                    <input type="radio" name="{{ question.id }}" class="custom-radio qns_option choice1" value="choice1"
+                                                           id="choice1" onclick="setCookie({{ question.id }}, 'choice1')" onchange="setCookie({{ question.id }}, 'choice1')"
+                                                    > {{ question.choice1 }}
+                                                </label>
+                                            </div>
 
-                                                            <div class="form-group">
-                                                                <input type="radio" name="{{ question.id }}" class="custom-radio qns_option choice1" value="choice1"
-                                                                       id="choice1"
-                                                                > {{ question.choice1 }}
-                                                            </div>
+                                            <div class="form-group">
+                                                <label class="btn btn-lg btn-light btn-block">
+                                                    <input type="radio" name="{{ question.id }}" class="custom-radio qns_option" value="choice2"
+                                                           id="choice2" onclick="setCookie({{ question.id }}, 'choice2')" onchange="setCookie({{ question.id }}, 'choice2')"
+                                                    > {{ question.choice2 }}
+                                                </label>
+                                            </div>
 
-                                                            <div class="form-group">
-                                                                <input type="radio" name="{{ question.id }}" class="custom-radio qns_option" value="choice2"
-                                                                       id="choice2"
-                                                                > {{ question.choice2 }}
-                                                            </div>
+                                            <div class="form-group">
+                                                <label class="btn btn-lg btn-light btn-block">
+                                                    <input type="radio" name="{{ question.id }}" class="custom-radio qns_option" value="choice3"
+                                                           id="choice3" onclick="setCookie({{ question.id }}, 'choice3')" onchange="setCookie({{ question.id }}, 'choice3')"
+                                                    > {{ question.choice3 }}
+                                                </label>
+                                            </div>
 
-                                                            <div class="form-group">
-                                                                <input type="radio" name="{{ question.id }}" class="custom-radio qns_option" value="choice3"
-                                                                       id="choice3"
-                                                                > {{ question.choice3 }}
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <input type="radio" name="{{ question.id }}" class="custom-radio qns_option" value="choice4"
-                                                                       id="choice4"
-                                                                > {{ question.choice4 }}
-                                                            </div>
-                                                        {% endfor %}
-
-                                                        {% if questions.number == question_count %}
-                                                            <div class="form-group">
-                                                                <button type="submit"
-                                                                        class="btn btn-outline-success float-right"
-                                                                        id="submit_test">
-                                                                    Submit
-                                                                </button>
-                                                            </div>
-
-                                                        {% endif %}
-
-                                                    </form>
-                                                </div>
-
-                                                <br>
-
+                                            <div class="form-group">
+                                                <label class="btn btn-lg btn-light btn-block">
+                                                    <input type="radio" name="{{ question.id }}" class="custom-radio qns_option" value="choice4"
+                                                           id="choice4" onclick="setCookie({{ question.id }}, 'choice4')" onchange="setCookie({{ question.id }}, 'choice4')"
+                                                    > {{ question.choice4 }}
+                                                </label>
                                             </div>
                                         </div>
+
+
+
+                                        <input type="hidden" name="qns" id="qns" value="{{ question.id }}">
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="container ">
-                                <div class="row paginator justify-content-center mt-3">
-
-                                    {% if questions.has_previous %}
-                                        <a href="?page=1">
-                                            <button class="btn btn-outline-success"> &laquo;</button>
-                                        </a>
-                                        <a href="?page={{ questions.previous_page_number }}" id="prv">
-                                            <button class="btn btn-outline-success ml-1" id="prv">Previous</button>
-                                        </a>
-                                    {% else %}
-                                        <a href="#" class="text-secondary">
-                                            <button class="btn btn-outline-secondary" disabled="disabled">Previous</button>
-                                        </a>
-                                    {% endif %}
 
 
-                                    <div class="col-6 text-center">Time</div>
+                                {% endfor %}
 
-                                    {% if questions.has_next %}
-                                        <a href="?page={{ questions.next_page_number }}" id="nxt">
-                                            <button class="btn btn-outline-success" id="nxt">
-                                                Next</button></a>
-                                        <a href="?page={{ questions.paginator.num_pages }}">
-                                            <button class="btn btn-outline-success ml-1"> &raquo;</button>
-                                        </a>
+                                <input type="hidden" name="questions" id="questions" value="{{ sitting_question_list }}">
+                                <input type="hidden" name="answer" id="answer" value="">
 
-                                    {% else %}
-                                        <a href="#"><button class="btn btn-outline-secondary" disabled="disabled">Next</button></a>
-                                    {% endif %}
-                                </div>
-                            </div>
+                                {% if questions.number == question_count %}
+                                    <div class="form-group">
+                                        <button type="submit"
+                                                class="btn btn-outline-success float-right"
+                                                id="submit_quiz">
+                                            Submit
+                                        </button>
+                                    </div>
 
+                                {% endif %}
 
-                        {% endblock %}
+                            </form>
+                        </div>
+
+                        <br>
+
                     </div>
-
-                    <br>
-
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+    <div class="container ">
+        <div class="row paginator justify-content-center mt-3">
+
+            {% if questions.has_previous %}
+                <a href="?page=1">
+                    <button class="btn btn-outline-success"> &laquo;</button>
+                </a>
+                <a href="?page={{ questions.previous_page_number }}">
+                    <button class="btn btn-outline-success ml-1" id="prv">
+                        Previous
+                    </button>
+                </a>
+            {% else %}
+                <a href="#" class="text-secondary">
+                    <button class="btn btn-outline-secondary" disabled="disabled" id="prv">Previous</button>
+                </a>
+            {% endif %}
+
+
+
+            <div class="col-6 text-center">
+                {% for i in list_qns %}
+                    <a href="?page={{ i }}" class="">
+                        <button class="btn btn-outline-success"> {{ i }} </button>
+                    </a>
+                {% endfor %}
+            </div>
+
+            {% if questions.has_next %}
+                <a href="?page={{ questions.next_page_number }}">
+                    <button class="btn btn-outline-success" id="nxt">
+                        Next
+                    </button>
+                </a>
+                <a href="?page={{ questions.paginator.num_pages }}">
+                    <button class="btn btn-outline-success ml-1"> &raquo;</button>
+
+                </a>
+
+            {% else %}
+                <a href="#"><button class="btn btn-outline-secondary" disabled="disabled" id="nxt">Next</button></a>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+
 
 {% endblock %}

@@ -2,7 +2,7 @@ from abc import ABCMeta, abstractmethod
 from typing import List
 
 from lms_app.lms_dto.SittingDto import *
-from lms_app.models import Sitting
+from lms_app.models import Sitting, Grading
 
 
 class SittingRepository(metaclass=ABCMeta):
@@ -136,7 +136,8 @@ class DjangoORMSittingRepository(SittingRepository):
 
     def delete(self, sitting_id):
         try:
-            Sitting.objects.get(sitting_id).delete()
+            Grading.objects.get(sitting_id=sitting_id).delete()
+            Sitting.objects.get(id=sitting_id).delete()
         except Sitting.DoesNotExist as e:
             print('Cannot delete the sitting!')
             raise e
