@@ -57,6 +57,33 @@ def list_enrollments(request, course_id):
 
 
 @login_required(login_url='login')
+def list_enrollment_for_student(request, student_id):
+    if request.user.has_perm('lms_app.view_enrollment'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
+        username = request.user.username
+
+        enrollments = service_controller.enrollment_management_service().list_enrollment_for_student(student_id)
+        enrollment_len = len(enrollments)
+        context = {
+            'username': username,
+            'l_as_list': l_as_list,
+            'enrollments': enrollments,
+            'enrollment_len': enrollment_len,
+            'student_id': student_id,
+            'presently': 'Courses',
+
+        }
+        return render(request, 'student/student_courses.html', context)
+    else:
+        context={
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
+
+
+@login_required(login_url='login')
 def cancel_enrollment(request, enrollment_id):
     if request.user.has_perm('lms_app.delete_enrollment'):
         try:

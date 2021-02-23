@@ -1,4 +1,6 @@
 import uuid
+
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
@@ -28,6 +30,7 @@ def register_student(request):
         if user is not None:
             login(request, user)
             if user.groups.filter(name__exact='students').exists():
+
                 return redirect('student_details')
             return redirect('register')
     return render(request, 'student/register.html', context)
@@ -50,13 +53,16 @@ def edit_student(request, student_id):
         context = {
             'student': student,
             'l_as_list': l_as_list,
+            'student_id': student_id,
+            'presently': 'User Profile',
         }
 
         edited_student = __edit_if_post_method(request, student_id, context)
         if edited_student is not None:
             context['student'] = edited_student
-            return redirect('student_details')
-        return render(request, 'student/edit_student.html', context)
+            messages.add_message(request, messages.SUCCESS, 'Successfully updated.')
+            return redirect('edit_student', student_id)
+        return render(request, 'student/edit_profile.html', context)
     else:
         context={
             'message': 'You are not authorised'
@@ -110,7 +116,7 @@ def dashboard(request):
     context = {
 
     }
-    return render(request, 'student/dashboard.html', context)
+    return render(request, 'student/edit_profile.html', context)
 
 
 @login_required(login_url='login')

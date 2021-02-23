@@ -1,0 +1,106 @@
+{% extends 'dashbase.html' %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-default  alert-dismissible fade show">
+                        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important:{% endif %}
+                        <span class="font-weight-bold text-success"><i class="oi oi-bell" style="color:green"></i> {{ message }}</span>
+                        Your user profile was successfully updated. All changes made were saved.
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="col-md-9 justify-content-center">
+                <div class="card">
+                    <div class="card-header card-header-success">
+                        <h4 class="card-title">Edit Profile</h4>
+                        <p class="card-category">Complete your profile</p>
+                    </div>
+
+                    <div class="card-body">
+                        <form method="post" action="{% url 'edit_student' student.id %}">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="form-group col-4">
+                                    <label for="first_name" class="form-check-label">First Name </label>
+                                    <input name="first_name" class="form-control" id="first_name" value="{{ student.first_name }}">
+                                </div>
+
+                                <div class="form-group col-4">
+                                    <label for="last_name" class="form-check-label">Last Name </label>
+                                    <input name="last_name" class="form-control" id="last_name" value="{{ student.last_name }}">
+                                </div>
+
+                                <div class="form-group col-4">
+                                    <label for="username" class="form-check-label">Username </label>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">@</div>
+                                        <input name="username" class="form-control" id="username" value="{{ student.username }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="email" class="form-check-label">Email Address</label>
+                                    <input name="email" class="form-control" id="email" type="email" value="{{ student.email }}">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="phone" class="form-check-label">Telephone</label>
+                                    <input name="phone" class="form-control" id="phone" type="tel" value="{{ student.phone }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group float-right">
+                                <button type="submit" class="btn btn-success">Save Changes</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+{#            <div class="col-md-4">#}
+{##}
+{#                <div class="card card-profile">#}
+{##}
+{#                    <div class="card-avatar">#}
+{#                        <br>#}
+{#                        <br>#}
+{#                        <br>#}
+{#                    </div>#}
+{##}
+{#                    <div class="card-body">#}
+{#                        <h6 class="card-category text-gray mt-3">#}
+{#                            STUDENT#}
+{#                        </h6>#}
+{#                        <h4 class="card-title">#}
+{#                            Student Names#}
+{#                        </h4>#}
+{##}
+{#                        <h6 class="card-category mt-3">Username</h6>#}
+{#                        <h4 class="card-title">@username</h4>#}
+{##}
+{#                        <h6 class="card-category mt-3">#}
+{#                            Email Address#}
+{#                        </h6>#}
+{#                        <h4 class="card-title">user@lms.com</h4>#}
+{#                    </div>#}
+{##}
+{##}
+{##}
+{#                    <br>#}
+{#                    <br>#}
+{#                    <br>#}
+{##}
+{#                </div>#}
+{#            </div>#}
+        </div>
+
+    </div>
+{% endblock %}

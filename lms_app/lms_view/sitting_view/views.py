@@ -47,10 +47,6 @@ def new_sitting(request, assessment_id):
                 sitting_answer_list.append(question.answer)
                 i = i+1
 
-
-
-        request.session['question'] = data
-
         question_count = len(questions)
         paginator = Paginator(questions, 1)
         page_number = request.GET.get('page')

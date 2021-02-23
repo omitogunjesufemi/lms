@@ -1,0 +1,38 @@
+{% extends 'dashbase.html' %}
+{% block content %}
+    <div class="container">
+        <div class="float-right">
+            <a href="{% url 'list_courses' %}" class="text-dark">Add New Course</a>
+        </div>
+        <br>
+        {% if enrollment_len > 0 %}
+            <div class="card-deck">
+                {% for enrollment in enrollments %}
+                    <div class="card">
+                        <div class="card-header card-header-success">
+                            <h1 class="h1 font-weight-bolder">{{ enrollment.course_title }}</h1>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">{{ enrollment.course_title }}</h4>
+                        </div>
+
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="material-icons">access_time</i>
+                                Enrolled: {{ enrollment.date_enrolled }}
+                            </div>
+                            <span class="btn btn-success text-dark float-right"><a href="{% url 'course_details' enrollment.course_id %}" class="text-light">View</a></span>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+
+        {% else %}
+            <div class="form-group col-6 " style="font-size: 16pt">
+                <span class="font-italic text-secondary">You are not enrolled for a course yet!</span><br>
+                <a href="{% url 'list_courses' %}" ><span class="font-italic ml-1">Enroll Now</span></a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
