@@ -32,22 +32,27 @@ def register_tutor(request):
 
 
 @login_required(login_url='login')
-def edit_tutor(request, tutor_id):
+def edit_tutor(request):
     if request.user.has_perm('lms_app.change_tutor'):
         l_as_list = []
         for g in request.user.groups.all():
             l_as_list.append(g.name)
 
+        username = request.user.username
+
         try:
             user_id = request.user.id
             tutor = service_controller.tutor_management_service().details(user_id)
+            tutor_id = tutor.id
         except Tutor.DoesNotExist as e:
             print('You are not registered yet!')
             raise e
 
         context = {
             'tutor': tutor,
+            'tutor_id': tutor_id,
             'l_as_list': l_as_list,
+            'username': username,
         }
 
         edited_tutor = __edit_if_post_method(request, tutor_id, context)

@@ -24,7 +24,7 @@
                         <div class="card-header bg-success">
                             {% if 'students' in l_as_list %}
                             <h3 class="text-light">Welcome @{{ student.username }}
-                                <a href="{% url 'edit_student' student.id %}"
+                                <a href="{% url 'edit_student'%}"
                                    style="font-size: 14pt"
                                    class="float-right text-light form-text " >
                                     {% load static %}<img class="d-block w-100" src="{% static "img/002-pencil.png" %}" alt="Edit"></a> </h3>

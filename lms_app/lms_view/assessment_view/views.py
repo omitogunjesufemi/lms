@@ -109,10 +109,78 @@ def list_assessments(request):
         }
         return render(request, 'error_message.html', context)
 
+
+@login_required(login_url='login')
+def list_assessments_for_students(request):
+    if request.user.has_perm('lms_app.view_assessment'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
+        username = request.user.username
+        user_id = request.user.id
+        student = service_controller.student_management_service().details(user_id)
+        student_id = student.id
+        assessments = service_controller.assessment_management_service().list_assessment_for_student(student_id)
+        assessment_len = len(assessments)
+
+        sittings = service_controller.sitting_management_service().list_of_sitting_for_student_assessment(student_id)
+
+        sitting_list = []
+        for sitting in sittings:
+            for assessment in assessments:
+                if sitting.assessment_id == assessment.id:
+                    sitting_list.append(sitting.assessment_id)
+
+        context = {
+            'username': username,
+            'assessments': assessments,
+            'student_id': student_id,
+            'presently': 'Assessments',
+            'sitting_list': sitting_list,
+            'assessment_len': assessment_len,
+            'l_as_list': l_as_list,
+        }
+        return render(request, 'student/student_assessments.html', context)
+    else:
+        context = {
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
+
+
+@login_required(login_url='login')
+def list_assessments_for_tutor(request):
+    if request.user.has_perm('lms_app.view_assessment'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
+        username = request.user.username
+        user_id = request.user.id
+        tutor = service_controller.tutor_management_service().details(user_id)
+        tutor_id = tutor.id
+        assessments = service_controller.assessment_management_service().list_assessment_for_tutor(tutor_id)
+        assessment_len = len(assessments)
+
+        context = {
+            'username': username,
+            'assessments': assessments,
+            'tutor_id': tutor_id,
+            'presently': 'Assessments',
+            'assessment_len': assessment_len,
+            'l_as_list': l_as_list,
+        }
+        return render(request, 'tutor/tutor_assessments.html', context)
+    else:
+        context = {
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
+
+
+
 @login_required(login_url='login')
 def assessment_details(request, assessment_id):
     if request.user.has_perm('lms_app.view_assessment'):
-        # Getting User Group
         l_as_list = []
         for g in request.user.groups.all():
             l_as_list.append(g.name)

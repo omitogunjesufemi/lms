@@ -20,6 +20,7 @@ class ListAppointmentDto:
     tutors_last_name: str
     course_title: str
     course_description: str
+    date_appointed: date
     course_id: int
     tutors_id: int
     id: int

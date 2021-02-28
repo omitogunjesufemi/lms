@@ -225,6 +225,10 @@ input [type='radio']{
   font-size: 16pt;
 }
 
+.refresh_button{
+  cursor: pointer;
+}
+
 
 
 @media screen and (max-width: 765px) {

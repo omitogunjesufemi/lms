@@ -1,0 +1,38 @@
+{% extends 'dashbase.html' %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="card-deck">
+            {% if assessment_len > 0 %}
+                {% for assessment in assessments %}
+                    <div class="card">
+                        <div class="card-header">
+                            {% if assessment.status == 1 %}
+                                <h4 class="float-right badge badge-success text-light">Active</h4>
+                            {% else %}
+                                <h4 class="float-right badge badge-danger text-light">Not Active</h4>
+                            {% endif %}
+                            <h2 class="font-weight-bolder">{{ assessment.course_title }}</h2>
+                        </div>
+
+                        <div class="card-body">
+                            <h4 class="card-title">{{ assessment.assessment_title }}</h4>
+                            <p class="card-category font-weight-bolder">
+                                Due: {{ assessment.date_due }} | {{ assessment.time_due }}
+                            </p>
+                        </div>
+
+                        <div class="card-footer">
+                            <a href="{% url 'assessment_details' assessment.id %}" class="btn btn-sm btn-success float-right">View</a>
+                            <a href="{% url 'set_question' assessment.id %}" class="btn btn-sm btn-success float-right">Add Quiz</a>
+                            <a href="{% url 'list_assessment_question' assessment.id %}" class="btn btn-sm btn-success float-right">List Quiz</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="form-group col-6 " style="font-size: 16pt">
+                    <span class="font-italic text-secondary">You have not assessment created yet!</span><br>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

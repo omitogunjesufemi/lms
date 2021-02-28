@@ -34,7 +34,6 @@ def new_sitting(request, assessment_id):
         assessment = service_controller.assessment_management_service().details(assessment_id)
         questions = service_controller.question_management_service().list_for_assessment(assessment_id)
         sitting_question_list = []
-        data = serializers.serialize('json', sitting_question_list)
         sitting_answer_list = []
 
         i = 1

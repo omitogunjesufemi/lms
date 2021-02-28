@@ -91,6 +91,7 @@ class DjangoORMAppointmentRepository(AppointmentRepository):
                                                        'course__course_title',
                                                        'course__course_slug',
                                                        'tutors__registration_number',
+                                                       'date_appointed',
                                                        'tutors_id',
                                                        'course_id'))
 
@@ -103,6 +104,7 @@ class DjangoORMAppointmentRepository(AppointmentRepository):
                 contract.course_description = appointment['course__course_slug']
                 contract.course_id = appointment['course_id']
                 contract.tutors_first_name = appointment['tutors__user__first_name']
+                contract.date_appointed = appointment['date_appointed']
                 contract.tutors_last_name = appointment['tutors__user__last_name']
                 contract.tutors_reg = appointment['tutors__registration_number']
                 contract.tutors_id = appointment['tutors_id']

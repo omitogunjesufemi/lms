@@ -21,7 +21,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form method="post" action="{% url 'edit_student' student.id %}">
+                        <form method="post" action="{% url 'edit_student' %}">
                             {% csrf_token %}
                             <div class="row">
                                 <div class="form-group col-4">

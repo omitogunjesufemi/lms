@@ -14,6 +14,7 @@ def change_password(request):
     context = {
         'username': username,
         'l_as_list': l_as_list,
+        'presently': 'Change Password',
     }
     __change_if_post_method(request, context)
     if request.method == 'POST' and context['saved']:

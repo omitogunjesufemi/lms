@@ -110,6 +110,34 @@ def list_tutor_for_appointment(request, course_id):
         return render(request, 'error_message.html', context)
 
 
+@login_required(login_url='login')
+def list_appointment_for_tutor(request):
+    if request.user.has_perm('lms_app.view_appointment'):
+        username = request.user.username
+
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
+
+        user_id = request.user.id
+
+        tutor = service_controller.tutor_management_service().details(user_id)
+        tutor_id = tutor.id
+        appointments = service_controller.appointment_management_service().list_appoint_for_tutor(tutor_id)
+        appointment_len = len(appointments)
+        context = {
+            'l_as_list': l_as_list,
+            'username': username,
+            'appointments': appointments,
+            'appointment_len': appointment_len,
+            'tutor_id': tutor_id,
+        }
+        return render(request, 'tutor/tutor_courses.html', context)
+    else:
+        context = {
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 
 def appointment_details(request):

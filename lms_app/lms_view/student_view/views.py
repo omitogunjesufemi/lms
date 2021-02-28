@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
+from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
 
 from lms_app.lms_dto.StudentDto import *
@@ -37,15 +38,15 @@ def register_student(request):
 
 
 @login_required(login_url='login')
-def edit_student(request, student_id):
+def edit_student(request):
     if request.user.has_perm('lms_app.change_student'):
         l_as_list = []
         for g in request.user.groups.all():
             l_as_list.append(g.name)
-
         try:
             user_id = request.user.id
             student = service_controller.student_management_service().details(user_id)
+            student_id = student.id
         except Student.DoesNotExist as e:
             print('You are not registered yet!')
             raise e
@@ -61,7 +62,7 @@ def edit_student(request, student_id):
         if edited_student is not None:
             context['student'] = edited_student
             messages.add_message(request, messages.SUCCESS, 'Successfully updated.')
-            return redirect('edit_student', student_id)
+            return redirect('edit_student')
         return render(request, 'student/edit_profile.html', context)
     else:
         context={
@@ -91,6 +92,42 @@ def list_student(request):
         return render(request, 'error_message.html', context)
 
 
+def todo_list(request):
+    if request.user.has_perm('lms_app.view_assessment'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
+        username = request.user.username
+        user_id = request.user.id
+        student = service_controller.student_management_service().details(user_id)
+        student_id = student.id
+        assessments = service_controller.assessment_management_service().list_assessment_for_student(student_id)
+        assessment_len = len(assessments)
+
+        sittings = service_controller.sitting_management_service().list_of_sitting_for_student_assessment(student_id)
+
+        sitting_list = []
+        for sitting in sittings:
+            for assessment in assessments:
+                if sitting.assessment_id == assessment.id:
+                    sitting_list.append(sitting.assessment_id)
+        context = {
+            'username': username,
+            'assessments': assessments,
+            'student_id': student_id,
+            'presently': 'To-Do List',
+            'sitting_list': sitting_list,
+            'assessment_len': assessment_len,
+            'l_as_list': l_as_list,
+        }
+        return render(request, 'student/todo_assessments.html', context)
+    else:
+        context = {
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
+
+
 @login_required(login_url='login')
 def list_student_for_courses(request, course_id):
     if request.user.has_perm('lms_app.view_student'):
@@ -112,13 +149,6 @@ def list_student_for_courses(request, course_id):
         return render(request, 'error_message.html', context)
 
 
-def dashboard(request):
-    context = {
-
-    }
-    return render(request, 'student/edit_profile.html', context)
-
-
 @login_required(login_url='login')
 def student_details(request):
     if request.user.has_perm('lms_app.view_student'):
@@ -127,6 +157,8 @@ def student_details(request):
             l_as_list.append(g.name)
 
         username = request.user.username
+
+        last_login = request.user.last_login
         user_id = request.user.id
         student = service_controller.student_management_service().details(user_id)
         student_id = student.id
@@ -140,6 +172,13 @@ def student_details(request):
         # Getting all sittings and attempted assessments by Student
         sittings = service_controller.sitting_management_service().list_of_sitting_for_student_assessment(student_id)
         sitting_len = len(sittings)
+
+        current_period = datetime.now()
+        today_date = current_period.date()
+
+        today_time = current_period.time()
+
+        pending = assessment_len - sitting_len
 
         sitting_list = []
         for sitting in sittings:
@@ -158,8 +197,13 @@ def student_details(request):
             'username': username,
             'sittings': sittings,
             'l_as_list': l_as_list,
+            'presently': 'Dashboard',
+            'last_login': last_login,
+            'pending': pending,
+            'today_date': today_date,
+            'today_time': today_time,
         }
-        return render(request, 'student/student_profile.html', context)
+        return render(request, 'student/student_dashboard.html', context)
     else:
         context={
             'message': 'You are not authorised'

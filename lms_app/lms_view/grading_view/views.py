@@ -13,8 +13,8 @@ def grade_assessment(request, sitting_id):
 
         }
         __initiate_grading_method(request, sitting_id=sitting_id, context=context)
-        messages.success(request, message='Assessment Submitted Successfully!')
-        return redirect('student_details')
+        messages.success(request, message='Your assessment submission was successful and has been graded.')
+        return redirect('todo_list')
     else:
         context = {
             'message': 'You are not authorised'

@@ -17008,12 +17008,12 @@ legend {
 }
 
 a {
-  color: #9c27b0;
+  color: green;
 }
 
 a:hover,
 a:focus {
-  color: #89229b;
+  color: #008000;
   text-decoration: none;
 }
 

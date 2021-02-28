@@ -169,18 +169,7 @@ md = {
 
     color = Math.floor((Math.random() * 6) + 1);
 
-    $.notify({
-      icon: "add_alert",
-      message: "Welcome to <b>Material Dashboard Pro</b> - a beautiful admin panel for every web developer."
 
-    }, {
-      type: type[color],
-      timer: 3000,
-      placement: {
-        from: from,
-        align: align
-      }
-    });
   },
 
   initDocumentationCharts: function() {

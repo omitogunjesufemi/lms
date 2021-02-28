@@ -1,15 +1,27 @@
-{% extends 'base.html' %}
+{% extends 'dashbase.html' %}
 {% block content %}
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-9 mt-4">
+    <div class="container-fluid">
+        <div class="row">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-default  alert-dismissible fade show">
+                        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important:{% endif %}
+                        <span class="font-weight-bold text-success"><i class="oi oi-bell" style="color:green"></i> {{ message }}</span>
+                        Your user profile was successfully updated. All changes made were saved.
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="col-md-9 justify-content-center">
                 <div class="card">
-                    <div class="card-header">
-                        <h3>Edit Student</h3>
+                    <div class="card-header card-header-success">
+                        <h4 class="card-title">Edit Profile</h4>
+                        <p class="card-category">Complete your profile</p>
                     </div>
 
                     <div class="card-body">
-                        <form method="post" action="{% url 'edit_tutor' tutor.id %}">
+                        <form method="post" action="{% url 'edit_tutor' %}">
                             {% csrf_token %}
                             <div class="row">
                                 <div class="form-group col-4">
@@ -43,17 +55,51 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group float-right">
                                 <button type="submit" class="btn btn-success">Save Changes</button>
                             </div>
 
                         </form>
+
                     </div>
-
                 </div>
-
             </div>
 
+            {#            <div class="col-md-4">#}
+            {##}
+            {#                <div class="card card-profile">#}
+            {##}
+            {#                    <div class="card-avatar">#}
+            {#                        <br>#}
+            {#                        <br>#}
+            {#                        <br>#}
+            {#                    </div>#}
+            {##}
+            {#                    <div class="card-body">#}
+            {#                        <h6 class="card-category text-gray mt-3">#}
+            {#                            STUDENT#}
+            {#                        </h6>#}
+            {#                        <h4 class="card-title">#}
+            {#                            Student Names#}
+            {#                        </h4>#}
+            {##}
+            {#                        <h6 class="card-category mt-3">Username</h6>#}
+            {#                        <h4 class="card-title">@username</h4>#}
+            {##}
+            {#                        <h6 class="card-category mt-3">#}
+            {#                            Email Address#}
+            {#                        </h6>#}
+            {#                        <h4 class="card-title">user@lms.com</h4>#}
+            {#                    </div>#}
+            {##}
+            {##}
+            {##}
+            {#                    <br>#}
+            {#                    <br>#}
+            {#                    <br>#}
+            {##}
+            {#                </div>#}
+            {#            </div>#}
         </div>
 
     </div>

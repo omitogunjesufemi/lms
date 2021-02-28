@@ -57,12 +57,15 @@ def list_enrollments(request, course_id):
 
 
 @login_required(login_url='login')
-def list_enrollment_for_student(request, student_id):
+def list_enrollment_for_student(request):
     if request.user.has_perm('lms_app.view_enrollment'):
         l_as_list = []
         for g in request.user.groups.all():
             l_as_list.append(g.name)
         username = request.user.username
+        user_id = request.user.id
+        student = service_controller.student_management_service().details(user_id)
+        student_id = student.id
 
         enrollments = service_controller.enrollment_management_service().list_enrollment_for_student(student_id)
         enrollment_len = len(enrollments)

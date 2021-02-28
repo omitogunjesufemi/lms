@@ -1,0 +1,37 @@
+{% extends 'dashbase.html' %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-success">
+                    <div class="card-title font-weight-bolder">
+                        Question Created by {{ username }}
+                        <i onclick="refresh_questions()" class="material-icons float-right refresh_button" >refresh</i>
+                    </div>
+                    <div class="card-category">This are list for all question.
+                        The refresh button updates all the questions newly added</div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-success">
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Question Title</th>
+                                    <th>Answer</th>
+                                    <th>Points</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="question_body">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

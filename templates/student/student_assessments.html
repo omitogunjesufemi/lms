@@ -1,0 +1,42 @@
+{% extends 'dashbase.html' %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="card-deck">
+            {% if assessment_len > 0 %}
+                {% for assessment in assessments %}
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="font-weight-bolder">{{ assessment.course_title }}</h2>
+
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">{{ assessment.assessment_title }}</h4>
+                            <p class="card-category font-weight-bolder">
+                                Due: {{ assessment.date_due }} | {{ assessment.time_due }}
+                            </p>
+
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="material-icons">access_time</i>
+                                Uploaded:
+                            </div>
+                            {% if assessment.id in sitting_list %}
+                                <span class="text-warning font-weight-bolder text-uppercase">Test Already Taken</span>
+                            {% elif not assessment.id in sitting_list and assessment.status != 0 %}
+                                <a href="{% url 'new_sitting' assessment.id %}" class="btn btn-success">Take Test</a>
+                            {% elif not assessment.id in sitting_list and assessment.status == 0 %}
+                                <span class="text-danger font-weight-bolder text-uppercase">Not Available Yet</span>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="form-group col-6 " style="font-size: 16pt">
+                    <span class="font-italic text-secondary">No assessment has been set for your course yet!</span><br>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

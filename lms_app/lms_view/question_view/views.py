@@ -89,7 +89,7 @@ def list_questions(request):
         }
         return render(request, 'question/list_questions.html', context)
     else:
-        context={
+        context = {
             'message': 'You are not authorised'
         }
         return render(request, 'error_message.html', context)
@@ -102,6 +102,42 @@ def question_end_point(request, assessment_id):
         serializer = QuestionSerializer(questions, many=True)
         json_data = serializer.data
         return Response(json_data)
+
+
+@api_view(['GET'])
+def tutor_questions(request):
+    if request.method == 'GET':
+        user_id = request.user.id
+        tutor = service_controller.tutor_management_service().details(user_id)
+        tutor_id = tutor.id
+        questions = service_controller.question_management_service().list_question_for_tutor(tutor_id)
+        serializer = TutorQuestionsSerializer(questions, many=True)
+        json_data = serializer.data
+        return Response(json_data)
+
+
+@login_required(login_url='login')
+def list_questions_for_tutor(request):
+    if request.user.has_perm('lms_app.view_question'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
+
+        username = request.user.username
+        user_id = request.user.id
+        tutor = service_controller.tutor_management_service().details(user_id)
+        tutor_id = tutor.id
+        context = {
+            'tutor_id': tutor_id,
+            'username': username,
+            'l_as_list': l_as_list,
+        }
+        return render(request, 'tutor/tutor_questions.html', context)
+    else:
+        context = {
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
 
 
 @login_required(login_url='login')

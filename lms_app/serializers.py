@@ -13,3 +13,14 @@ class QuestionSerializer(serializers.ModelSerializer):
         #           ]
 
         fields = '__all__'
+
+
+class TutorQuestionsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Question(models.Model)
+        fields = '__all__'
+
+class AssessmentSubmittedForTutor(serializers.ModelSerializer):
+    class Meta:
+        model = Assessment(models.Model)
+        fields = '__all__'
