@@ -75,6 +75,7 @@ class DjangoORMSittingRepository(SittingRepository):
                                                'assessment__assessment_title',
                                                'date_submitted',
                                                'time_submitted',
+                                               'time_submitted',
                                                ))
         sitting_list: List[ListSittingDto] = []
         for sitting in sittings:

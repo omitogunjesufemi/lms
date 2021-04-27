@@ -4,8 +4,12 @@ from typing import List
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 from lms_app.lms_dto.AssessmentDto import *
 from lms_app.lms_dto.CourseDto import *
+from lms_app.serializers import *
 from lms_app.service_controllers import service_controller, Tutor, Assessment
 
 
@@ -214,6 +218,31 @@ def delete_assessment(request, assessment_id):
             'message': 'You are not authorised'
         }
         return render(request, 'error_message.html', context)
+
+
+# APIs
+@api_view(['GET'])
+def tutor_assessments(request):
+    if request.method == 'GET':
+        user_id = request.user.id
+        tutor = service_controller.tutor_management_service().details(user_id)
+        tutor_id = tutor.id
+        assessments = service_controller.assessment_management_service().list_assessment_for_tutor(tutor_id)
+        serializer = Assessments(assessments, many=True)
+        json_data = serializer.data
+        return Response(json_data)
+
+
+@api_view(['GET'])
+def student_assessments(request):
+    if request.method == 'GET':
+        user_id = request.user.id
+        student = service_controller.student_management_service().details(user_id)
+        student_id = student.id
+        assessments = service_controller.assessment_management_service().list_assessment_for_student(student_id)
+        serializer = Assessments(assessments, many=True)
+        json_data = serializer.data
+        return Response(json_data)
 
 
 def __set_assessment_attribute_request(request: HttpRequest):

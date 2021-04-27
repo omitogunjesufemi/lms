@@ -24,6 +24,7 @@ class ListAppointmentDto:
     course_id: int
     tutors_id: int
     id: int
+    status: int
 
 
 class AppointmentDetailsDto:

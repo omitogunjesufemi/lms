@@ -163,6 +163,7 @@ def list_questions_for_assessment(request, assessment_id):
         }
         return render(request, 'error_message.html', context)
 
+
 @login_required(login_url='login')
 def question_details(request, question_id):
     if request.user.has_perm('lms_app.view_question'):
@@ -185,6 +186,7 @@ def question_details(request, question_id):
             'message': 'You are not authorised'
         }
         return render(request, 'error_message.html', context)
+
 
 @login_required(login_url='login')
 def delete_question(request, question_id):

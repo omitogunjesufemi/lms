@@ -3,8 +3,12 @@ import datetime
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 from lms_app.lms_dto.EnrollmentDto import *
 from lms_app.models import Enrollment
+from lms_app.serializers import Enrollments
 from lms_app.service_controllers import service_controller
 
 
@@ -101,6 +105,20 @@ def cancel_enrollment(request, enrollment_id):
         }
         return render(request, 'error_message.html', context)
 
+
+# APIs
+@api_view(["GET"])
+def enrollments_for_a_course(request, course_id):
+    if request.method == "GET":
+        enrollments = service_controller.enrollment_management_service().list_student_for_enrollment(course_id)
+        serializer = Enrollments(enrollments, many=True)
+        json_data = serializer.data
+        return Response(json_data)
+
+
+@api_view(["GET"])
+def all_enrollments(request):
+    pass
 
 def __set_enrollment_attribute_request(request: HttpRequest):
     initiate_enrollment_dto = InitiateEnrollmentDto()

@@ -135,6 +135,32 @@ def tutor_details(request):
         }
         return render(request, 'error_message.html', context)
 
+
+@login_required(login_url='login')
+def tutor_profile(request):
+    if request.user.has_perm('lms_app.view_tutor'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
+        user_id = request.user.id
+
+        username = request.user.username
+        tutor = service_controller.tutor_management_service().details(user_id)
+        tutor_id = tutor.id
+        context = {
+            'tutor': tutor,
+            'tutor_id': tutor_id,
+            'username': username,
+            'l_as_list': l_as_list,
+        }
+        return render(request, 'tutor/tutor_dashboard.html', context)
+    else:
+        context = {
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
+
+
 @login_required(login_url='login')
 def tutor_details_for_admin(request, tutor_id):
     if request.user.has_perm('lms_app.view_tutor'):

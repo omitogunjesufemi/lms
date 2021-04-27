@@ -1,0 +1,38 @@
+{% extends 'dashbase.html' %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-success">
+                    <div class="card-title font-weight-bolder">
+                        Submission to {{ username }}
+                        <i onclick="refresh_submission_list()" class="material-icons float-right refresh_button" >refresh</i>
+                    </div>
+                    <div class="card-category">This are list for all submitted assignments.
+                        The refresh button updates new submissions</div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-success">
+                            <tr>
+                                <th>S/N</th>
+                                <th>Student</th>
+                                <th>Assessment Title</th>
+                                <th>Date Submitted</th>
+                                <th>Time Submitted</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody id="submission_body">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

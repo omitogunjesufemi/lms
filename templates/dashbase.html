@@ -32,10 +32,22 @@
             <div class="sidebar-wrapper ps-container ps-theme-default">
                 <ul class="nav">
                     <li class="nav-item active">
-                        <a href="{% url 'student_details' %}" class="nav-link">
-                            <i class="material-icons">dashboard</i>
-                            <p>Dashboard</p>
-                        </a>
+                        {% if 'students' in l_as_list %}
+                            <a href="{% url 'student_details' %}" class="nav-link">
+                                <i class="material-icons">dashboard</i>
+                                <p>Dashboard</p>
+                            </a>
+                        {% elif 'tutors' in l_as_list %}
+                            <a href="{% url 'tutor_dashboard' %}" class="nav-link">
+                                <i class="material-icons">dashboard</i>
+                                <p>Dashboard</p>
+                            </a>
+                        {% elif 'admin' in l_as_list %}
+                            <a href="#" class="nav-link">
+                                <i class="material-icons">dashboard</i>
+                                <p>Dashboard</p>
+                            </a>
+                        {% endif %}
                     </li>
 
                     <li class="nav-item">
@@ -109,7 +121,7 @@
                                 <p>To-Do List</p>
                             </a>
                         {% elif 'tutors' in l_as_list %}
-                            <a href="#" class="nav-link">
+                            <a href="{% url 'submissions_for_tutor' %}" class="nav-link">
                                 <i class="material-icons">upcoming</i>
                                 <p>Submissions</p>
                             </a>
@@ -290,6 +302,7 @@
     <script src="{% static 'js/plugins/jquery.tagsinput.js' %}"></script>
     <script src="{% static 'js/plugins/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'js/quiz_app.js' %}"></script>
+    <script src="{% static 'js/tutor_dashboard.js' %}"></script>
     <script src="{% static 'js/registration_validation.js' %}"></script>
     <script src="{% static 'js/field_validation.js' %}"></script>
     <script src="{% static 'jQuery/jquery.validate.min.js' %}"></script>

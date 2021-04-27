@@ -3,8 +3,12 @@ import datetime
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, FileResponse, Http404
 from django.shortcuts import render, redirect
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 from lms_app.lms_dto.AppointmentDto import *
 from lms_app.models import Appointment, Apply
+from lms_app.serializers import Appointments
 from lms_app.service_controllers import service_controller
 
 
@@ -171,6 +175,17 @@ def delete_appointment(request, appointment_id):
         }
         return render(request, 'error_message.html', context)
 
+
+# API
+@api_view(["GET"])
+def courses_for_tutor(request):
+    user_id = request.user.id
+    tutor = service_controller.tutor_management_service().details(user_id)
+    tutor_id = tutor.id
+    appointments = service_controller.appointment_management_service().list_appoint_for_tutor(tutor_id)
+    serializer = Appointments(appointments, many=True)
+    json_data = serializer.data
+    return Response(json_data)
 
 
 def __set_appointment_attribute_request(request: HttpRequest):

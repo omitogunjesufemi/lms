@@ -5,6 +5,11 @@ from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from lms_app.serializers import *
+
 from lms_app.lms_dto.SittingDto import *
 from lms_app.service_controllers import service_controller
 from django.core.paginator import Paginator
@@ -156,6 +161,51 @@ def sitting_details(request, sitting_id):
             'comment_len': comment_len,
         }
         return render(request, 'sitting/sitting_details.html', context)
+    else:
+        context = {
+            'message': 'You are not authorised'
+        }
+        return render(request, 'error_message.html', context)
+
+
+@api_view(['GET'])
+def list_submissions_for_tutors(request):
+    if request.method == 'GET':
+        user_id = request.user.id
+        tutor = service_controller.tutor_management_service().details(user_id)
+        tutor_id = tutor.id
+        assessments = service_controller.assessment_management_service().list_assessment_for_tutor(tutor_id)
+        sittings = service_controller.sitting_management_service().list()
+        sitting_list: List = []
+
+        for sitting in sittings:
+            for assessment in assessments:
+                if assessment.id == sitting.assessment_id:
+                    sitting_list.append(sitting)
+
+        serializer = AssessmentSubmittedForTutor(sitting_list, many=True)
+        json_data = serializer.data
+        return Response(json_data)
+
+
+@login_required(login_url='login')
+def submissions_for_tutors(request):
+    if request.user.has_perm('lms_app.view_sitting'):
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
+
+        username = request.user.username
+        user_id = request.user.id
+        tutor = service_controller.tutor_management_service().details(user_id)
+        tutor_id = tutor.id
+        context = {
+            'tutor': tutor,
+            'tutor_id': tutor_id,
+            'l_as_list': l_as_list,
+            'username': username,
+        }
+        return render(request, 'tutor/tutor_submissions.html', context)
     else:
         context = {
             'message': 'You are not authorised'
