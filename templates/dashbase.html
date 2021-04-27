@@ -236,7 +236,7 @@
                                             Profile</a>
                                     {% elif 'tutors' in l_as_list %}
                                         <h6 class="text-success pt-1 pl-3 pr-3">{{ username }} is logged in as a tutor.</h6>
-                                        <a class="dropdown-item" href="{% url 'tutor_details' %}">Profile</a>
+                                        <a class="dropdown-item" href="{% url 'tutor_dashboard' %}">Profile</a>
                                     {% elif 'admin' in l_as_list %}
                                         <div class="ml-5">
                                             <span style="font-size: small" class="text-success">{{ username }} is logged<br> in as an admin.<br></span>
@@ -247,7 +247,14 @@
                                                 Profile</a>
                                         </div>
                                     {% endif %}
-                                    <a class="dropdown-item" href="{% url 'student_assessments' %}">Assessments</a>
+
+                                    {% if 'students' in l_as_list %}
+                                        <a class="dropdown-item" href="{% url 'student_assessments' %}">Assessments</a>
+                                    {% elif 'tutors' in l_as_list %}
+                                        <a class="dropdown-item" href="{% url 'submissions_for_tutor' %}">Submissions</a>
+                                    {% elif 'admin' in l_as_list %}
+                                        <a class="dropdown-item" href="{% url 'student_assessments' %}">Assessments</a>
+                                    {% endif %}
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
                                 </div>

@@ -3,7 +3,6 @@ let quiz_container = document.getElementById('question_body');
 let submission_container = document.getElementById('submission_body');
 
 let host = window.location.host
-
 //Fetching from API
 
 function tutor_questions(){

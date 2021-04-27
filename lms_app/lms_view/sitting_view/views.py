@@ -188,6 +188,27 @@ def list_submissions_for_tutors(request):
         return Response(json_data)
 
 
+@api_view(['GET'])
+def list_of_late_submissions_for_tutors(request):
+    if request.method == 'GET':
+        user_id = request.user.id
+        tutor = service_controller.tutor_management_service().details(user_id)
+        tutor_id = tutor.id
+        assessments = service_controller.assessment_management_service().list_assessment_for_tutor(tutor_id)
+        sittings = service_controller.sitting_management_service().list()
+        sitting_list: List = []
+
+        for sitting in sittings:
+            for assessment in assessments:
+                if assessment.date_due <= sitting.date_submitted:
+                    if assessment.time_due <= sitting.time_submitted:
+                        sitting_list.append(sitting)
+
+        serializer = AssessmentSubmittedForTutor(sitting_list, many=True)
+        json_data = serializer.data
+        return Response(json_data)
+
+
 @login_required(login_url='login')
 def submissions_for_tutors(request):
     if request.user.has_perm('lms_app.view_sitting'):

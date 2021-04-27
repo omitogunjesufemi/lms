@@ -145,12 +145,18 @@ def tutor_profile(request):
         user_id = request.user.id
 
         username = request.user.username
+        last_login = request.user.last_login
         tutor = service_controller.tutor_management_service().details(user_id)
         tutor_id = tutor.id
+        appointments = service_controller.appointment_management_service().list_appoint_for_tutor(tutor_id)
+        appointment_len = len(appointments)
         context = {
             'tutor': tutor,
             'tutor_id': tutor_id,
             'username': username,
+            'appointments': appointments,
+            'appointment_len': appointment_len,
+            'last_login': last_login,
             'l_as_list': l_as_list,
         }
         return render(request, 'tutor/tutor_dashboard.html', context)

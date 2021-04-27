@@ -39,10 +39,11 @@ class Enrollments(serializers.ModelSerializer):
         fields = ['student_id', 'course_id', 'date_enrolled']
 
 class Sittings:
-    def __init__(self, id, participant_registration_number, assessment_id, assessment_title, date_submitted, time_submitted):
+    def __init__(self, id, participant_registration_number, sitting_id, assessment_id, assessment_title, date_submitted, time_submitted):
         self.id = id
         self.participant_registration_number = participant_registration_number
         self.assessment_id = assessment_id
+        self.sitting_id = sitting_id
         self.assessment_title = assessment_title
         self.date_submitted = date_submitted
         self.time_submitted = time_submitted
