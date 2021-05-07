@@ -8,5 +8,6 @@ urlpatterns = [
     path('course_tutor/<int:course_id>', views.list_tutor_for_appointment, name='course_tutor_list'),
     path('tutor', views.list_appointment_for_tutor, name='tutor_appointment'),
     path('api/tutor', views.courses_for_tutor, name='tutor_appointment_api'),
+    path('api/appointment', views.list_appointments_api, name='appointments_api'),
     path('delete/<int:appointment_id>', views.delete_appointment, name='delete_appointment'),
 ]

@@ -72,6 +72,29 @@ def list_admins(request):
 
 
 @login_required(login_url='login')
+def admin_dashboard(request):
+    if request.user.is_superuser:
+        l_as_list = []
+        for g in request.user.groups.all():
+            l_as_list.append(g.name)
+        user_id = request.user.id
+        username = request.user.username
+        admin = service_controller.admin_management_service().details(user_id)
+
+        context = {
+            'admin': admin,
+            'username': username,
+            'l_as_list': l_as_list,
+        }
+        return render(request, 'admin/admin_dashboard.html', context)
+    else:
+        context = {
+            'message': 'You are not authorised!'
+        }
+        return render(request, 'error_message.html', context)
+
+
+@login_required(login_url='login')
 def admin_details(request):
     if request.user.is_superuser:
         l_as_list = []

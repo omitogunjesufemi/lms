@@ -1,4 +1,220 @@
 {% extends 'dashbase.html' %}
 {% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-warning card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">account_box</i>
+                        </div>
 
+                        <p class="card-category">Students</p>
+                        <h3 class="card-title" id="student_count"></h3>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">account_circle</i>
+                            <a href="#" class="text-danger">View Students...</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+
+                <div class="card card-stats">
+                    <div class="card-header card-header-success card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">turned_in</i>
+                        </div>
+
+                        <p class="card-category">Tutors</p>
+                        <h3 class="card-title" id="tutor_count"></h3>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons text-success">check_circle</i>
+                            <a href="#" class="text-dark">View Tutors</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+
+                <div class="card card-stats">
+                    <div class="card-header card-header-info card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">class</i>
+                        </div>
+
+                        <p class="card-category">Courses</p>
+                        <h3 class="card-title" id="courses_count"></h3>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons text-info">dashboard_customize</i>
+                            <a href="{% url 'list_courses' %}" class="text-dark"> Add more...</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-6">
+
+                <div class="card card-stats">
+                    <div class="card-header card-header-primary card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">library_books</i>
+                        </div>
+
+                        <p class="card-category">Assessments</p>
+                        <h3 class="card-title" id="assessment_count"></h3>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons text-primary">stream</i>
+                            <a href="{% url 'tutor_assessments' %}" class="text-dark">View Assessment</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+
+                <div class="card">
+                    <div class="card-header card-header-tabs card-header-success">
+                        <div class="nav-tabs-navigation">
+                            <div class="nav-tabs-wrapper">
+                                <span class="nav-tabs-title">Tasks:</span>
+                                <ul class="nav nav-tabs" data-tabs="tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active show" href="#appointments" data-toggle="tab">
+                                            <i class="material-icons">assignment</i> Appointments
+                                            <div class="ripple-container"></div>
+                                            <div class="ripple-container"></div></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#in_active" data-toggle="tab">
+                                            <i class="material-icons">pending</i> In-active Assessments
+                                            <div class="ripple-container"></div>
+                                            <div class="ripple-container"></div></a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="tab-content">
+
+                            <div class="tab-pane active show" id="appointments">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Tutor Reg</th>
+                                        <th>Course Title</th>
+                                        <th>Date Appointed</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="font-weight-bolder" id="all_appointments">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane" id="in_active">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Title</th>
+                                        <th>Turned-In</th>
+                                        <th>Time</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody class="font-weight-bolder" id="all_submission">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane" id="in_active">
+
+                                <table class="table">
+
+                                    <thead>
+
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Title</th>
+                                        <th>Due</th>
+                                        <th>Time</th>
+                                        <th>Action</th>
+                                    </tr>
+
+                                    </thead>
+
+                                    <tbody id="late_submission">
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="card-img-top justify-content-around">
+                                    {% load static %} <img src="{% static 'img/faces/face-0.jpg' %}" alt="lms_app user"
+                                                           style="border-radius: 100px; width: 200px; height: 200px;">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <h6 class="card-title font-weight-bolder text-secondary">FULL NAME</h6>
+                                <h5 class="card-title font-weight-bolder text-success">{{ admin.first_name }} {{ admin.last_name }}</h5> <br>
+
+                                <h6 class="card-title font-weight-bolder text-secondary">STUDENTS</h6>
+                                <h5 class="card-title font-weight-bolder text-success">{{ admin.reg_no }}</h5><br>
+
+                                <h6 class="card-title font-weight-bolder text-secondary">TUTORS</h6>
+                                <h5 class="card-title font-weight-bolder text-success">{{ admin.reg_no }}</h5><br>
+
+                                <h6 class="card-title font-weight-bolder text-secondary">APPOINTMENTS</h6>
+                                <h5 class="card-title font-weight-bolder text-success">{{ appointment_len }} Courses</h5><br>
+
+                            </div>
+                        </div>
+
+                        <div class="card-footer border-top">
+                            <div class="stats">
+                                <i class="material-icons"></i>
+                                <a href="#" class="text-dark">Last Login: {{ last_login }} </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 {% endblock %}

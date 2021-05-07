@@ -71,6 +71,8 @@ class DjangoORMAppointmentRepository(AppointmentRepository):
                                                        'course__course_title',
                                                        'tutors__registration_number',
                                                        'tutors_id',
+                                                       'date_appointed',
+                                                       'status',
                                                        'course_id'))
 
         appointment_list: List[ListAppointmentDto] = []
@@ -83,6 +85,8 @@ class DjangoORMAppointmentRepository(AppointmentRepository):
             contract.tutors_last_name = appointment['tutors__user__last_name']
             contract.tutors_reg = appointment['tutors__registration_number']
             contract.tutors_id = appointment['tutors_id']
+            contract.date_appointed = appointment['date_appointed']
+            contract.status = appointment['status']
             appointment_list.append(contract)
         return appointment_list
 

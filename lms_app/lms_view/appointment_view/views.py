@@ -188,6 +188,14 @@ def courses_for_tutor(request):
     return Response(json_data)
 
 
+@api_view(["GET"])
+def list_appointments_api(request):
+    appointments = service_controller.appointment_management_service().list()
+    serializer = Appointments(appointments, many=True)
+    json_data = serializer.data
+    return Response(json_data)
+
+
 def __set_appointment_attribute_request(request: HttpRequest):
     initiate_appointment_dto = InitiatedAppointmentDto()
     initiate_appointment_dto.date_appointed = datetime.date.today()

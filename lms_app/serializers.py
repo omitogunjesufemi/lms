@@ -27,10 +27,13 @@ class Assessments(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class Appointments(serializers.ModelSerializer):
-    class Meta:
-        model = Appointment(models.Model)
-        fields = ['course_id', 'date_appointed', 'status']
+class Appointments(serializers.Serializer):
+    id = serializers.IntegerField()
+    course_id = serializers.IntegerField()
+    tutors_reg = serializers.CharField()
+    course_title = serializers.CharField()
+    status = serializers.IntegerField()
+    date_appointed = serializers.DateField()
 
 
 class Enrollments(serializers.ModelSerializer):
