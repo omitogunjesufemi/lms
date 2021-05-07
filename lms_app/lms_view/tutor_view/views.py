@@ -88,55 +88,6 @@ def list_tutors(request):
 
 
 @login_required(login_url='login')
-def tutor_details(request):
-    if request.user.has_perm('lms_app.view_tutor'):
-        l_as_list = []
-        for g in request.user.groups.all():
-            l_as_list.append(g.name)
-        user_id = request.user.id
-
-        username = request.user.username
-        tutor = service_controller.tutor_management_service().details(user_id)
-        tutor_id = tutor.id
-        appointments = service_controller.appointment_management_service().list_appoint_for_tutor(tutor_id)
-        appointment_len = len(appointments)
-        assessments = service_controller.assessment_management_service().list_assessment_for_tutor(tutor_id)
-        assessment_len = len(assessments)
-        questions = service_controller.question_management_service().list_question_for_tutor(tutor_id)
-        question_len = len(questions)
-
-        sittings = service_controller.sitting_management_service().list()
-        sitting_list = []
-
-        for sitting in sittings:
-            for assessment in assessments:
-                if assessment.id == sitting.assessment_id:
-                    sitting_list.append(sitting)
-
-        sitting_len = len(sitting_list)
-
-        context = {
-            'tutor': tutor,
-            'appointments': appointments,
-            'assessments': assessments,
-            'questions': questions,
-            'sitting_list': sitting_list,
-            'appointment_len': appointment_len,
-            'assessment_len': assessment_len,
-            'question_len': question_len,
-            'sitting_len': sitting_len,
-            'username': username,
-            'l_as_list': l_as_list,
-        }
-        return render(request, 'tutor/tutor_profile.html', context)
-    else:
-        context={
-            'message': 'You are not authorised'
-        }
-        return render(request, 'error_message.html', context)
-
-
-@login_required(login_url='login')
 def tutor_profile(request):
     if request.user.has_perm('lms_app.view_tutor'):
         l_as_list = []
@@ -148,14 +99,10 @@ def tutor_profile(request):
         last_login = request.user.last_login
         tutor = service_controller.tutor_management_service().details(user_id)
         tutor_id = tutor.id
-        appointments = service_controller.appointment_management_service().list_appoint_for_tutor(tutor_id)
-        appointment_len = len(appointments)
         context = {
             'tutor': tutor,
             'tutor_id': tutor_id,
             'username': username,
-            'appointments': appointments,
-            'appointment_len': appointment_len,
             'last_login': last_login,
             'l_as_list': l_as_list,
         }

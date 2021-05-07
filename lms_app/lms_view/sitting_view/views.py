@@ -169,23 +169,42 @@ def sitting_details(request, sitting_id):
 
 
 @api_view(['GET'])
-def list_submissions_for_tutors(request):
-    if request.method == 'GET':
-        user_id = request.user.id
-        tutor = service_controller.tutor_management_service().details(user_id)
-        tutor_id = tutor.id
-        assessments = service_controller.assessment_management_service().list_assessment_for_tutor(tutor_id)
-        sittings = service_controller.sitting_management_service().list()
-        sitting_list: List = []
+def list_submissions(request):
+    if request.method == "GET":
+        if request.user.student_set.exists():
+            user_id = request.user.id
+            student = service_controller.student_management_service().details(user_id=user_id)
+            student_id = student.id
+            sitting_list: List = service_controller.sitting_management_service().list_of_sitting_for_student_assessment(student_id)
+            serializer = Submissions(sitting_list, many=True)
+            json_data = serializer.data
+            return Response(json_data)
 
-        for sitting in sittings:
-            for assessment in assessments:
-                if assessment.id == sitting.assessment_id:
-                    sitting_list.append(sitting)
+        elif request.user.tutor_set.exists():
+            user_id = request.user.id
+            tutor = service_controller.tutor_management_service().details(user_id)
+            tutor_id = tutor.id
+            assessments = service_controller.assessment_management_service().list_assessment_for_tutor(tutor_id)
+            sittings = service_controller.sitting_management_service().list()
+            sitting_list: List = []
 
-        serializer = AssessmentSubmittedForTutor(sitting_list, many=True)
-        json_data = serializer.data
-        return Response(json_data)
+            for sitting in sittings:
+                for assessment in assessments:
+                    if assessment.id == sitting.assessment_id:
+                        sitting_list.append(sitting)
+
+            serializer = Submissions(sitting_list, many=True)
+            json_data = serializer.data
+            return Response(json_data)
+
+        elif request.user.adminuser_set.exists():
+            user_id = request.user.id
+            admin = service_controller.admin_management_service().details(user_id=user_id)
+            admin_id = admin.id
+            sittings = service_controller.sitting_management_service().list()
+            serializer = Submissions(sittings, many=True)
+            json_data = serializer.data
+            return Response(json_data)
 
 
 @api_view(['GET'])
@@ -204,7 +223,7 @@ def list_of_late_submissions_for_tutors(request):
                     if assessment.time_due <= sitting.time_submitted:
                         sitting_list.append(sitting)
 
-        serializer = AssessmentSubmittedForTutor(sitting_list, many=True)
+        serializer = Submissions(sitting_list, many=True)
         json_data = serializer.data
         return Response(json_data)
 

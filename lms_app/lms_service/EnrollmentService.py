@@ -27,6 +27,10 @@ class EnrollmentManagementService(metaclass=ABCMeta):
         """List the student and courses enrolled"""
         raise NotImplementedError
 
+    def list_enrollments_assigned_to_tutor(self, tutor_id) -> List[ListEnrollmentDto]:
+        """List the student assigned to a particular tutor"""
+        raise NotImplementedError
+
     def details(self, enrollment_id) -> EnrollmentDetailsDto:
         """Details of a particular enrollment"""
         raise NotImplementedError
@@ -56,6 +60,9 @@ class DefaultEnrollmentManagementService(EnrollmentManagementService):
 
     def list_enrollment_for_student(self, student_id) -> List[ListEnrollmentDto]:
         return self.repository.list_enrollment_for_student(student_id)
+
+    def list_enrollments_assigned_to_tutor(self, tutor_id) -> List[ListEnrollmentDto]:
+        return self.repository.list_enrollments_assigned_to_tutor(tutor_id)
 
     def details(self, enrollment_id) -> EnrollmentDetailsDto:
         return self.repository.details(enrollment_id)

@@ -14,18 +14,17 @@ class QuestionSerializer(serializers.ModelSerializer):
 
         fields = '__all__'
 
-
 class TutorQuestionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question(models.Model)
         fields = '__all__'
 
-
 class Assessments(serializers.ModelSerializer):
+    course_title = serializers.CharField()
+    sitting = serializers.IntegerField()
     class Meta:
         model = Assessment(models.Model)
         fields = '__all__'
-
 
 class Appointments(serializers.Serializer):
     id = serializers.IntegerField()
@@ -41,20 +40,11 @@ class Enrollments(serializers.ModelSerializer):
         model = Enrollment(models.Model)
         fields = ['student_id', 'course_id', 'date_enrolled']
 
-class Sittings:
-    def __init__(self, id, participant_registration_number, sitting_id, assessment_id, assessment_title, date_submitted, time_submitted):
-        self.id = id
-        self.participant_registration_number = participant_registration_number
-        self.assessment_id = assessment_id
-        self.sitting_id = sitting_id
-        self.assessment_title = assessment_title
-        self.date_submitted = date_submitted
-        self.time_submitted = time_submitted
 
-
-class AssessmentSubmittedForTutor(serializers.Serializer):
+class Submissions(serializers.Serializer):
     id = serializers.IntegerField()
     participant_registration_number = serializers.CharField()
+    assessment_course = serializers.CharField()
     assessment_title = serializers.CharField()
     assessment_id = serializers.IntegerField()
     date_submitted = serializers.DateField()

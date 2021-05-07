@@ -29,6 +29,10 @@ class EnrollmentRepository(metaclass=ABCMeta):
         """List the student and courses enrolled"""
         raise NotImplementedError
 
+    def list_enrollments_assigned_to_tutor(self, tutor_id) -> List[ListEnrollmentDto]:
+        """List the student assigned to a particular tutor"""
+        raise NotImplementedError
+
     def details(self, enrollment_id) -> EnrollmentDetailsDto:
         """Details of a particular enrollment"""
         raise NotImplementedError
@@ -100,6 +104,30 @@ class DjangoORMEnrollmentRepository(EnrollmentRepository):
             contract.date_enrolled = enrollment['date_enrolled']
             appointment_list.append(contract)
         return appointment_list
+
+
+    def list_enrollments_assigned_to_tutor(self, tutor_id) -> List[ListEnrollmentDto]:
+        enrollments = list(Enrollment.objects.values('id', 'student_id',
+                                                     'student__registration_number',
+                                                     'course__course_title',
+                                                     'course__course_description',
+                                                     'course_id',
+                                                     'course__appointment__tutors_id',
+                                                     'date_enrolled'
+                                                     ))
+        assigned_list: List[ListEnrollmentDto] = []
+        for enrollment in enrollments:
+            if tutor_id == enrollment['course__appointment__tutors_id']:
+                contract = ListEnrollmentDto()
+                contract.id = enrollment['id']
+                contract.course_id = enrollment['course_id']
+                contract.course_title = enrollment['course__course_title']
+                contract.course_description = enrollment['course__course_description']
+                contract.student_id = enrollment['student_id']
+                contract.student_registration_number = enrollment['student__registration_number']
+                contract.date_enrolled = enrollment['date_enrolled']
+                assigned_list.append(contract)
+            return assigned_list
 
 
     def list_enrollment_for_student(self, student_id) -> List[ListEnrollmentDto]:

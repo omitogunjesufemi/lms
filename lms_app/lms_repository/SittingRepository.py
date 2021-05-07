@@ -92,8 +92,9 @@ class DjangoORMSittingRepository(SittingRepository):
 
     def list_of_sitting_for_student_assessment(self, student_id) -> List[ListSittingDto]:
         sittings = list(Sitting.objects.values('id',
+                                               # 'participant__course__course_title',
                                                'participant_id',
-                                               'assessment__course',
+                                               'assessment__course__course_title',
                                                'assessment__assessment_title',
                                                'assessment_id',
                                                'date_submitted',
@@ -105,7 +106,7 @@ class DjangoORMSittingRepository(SittingRepository):
                 participation = ListSittingDto()
                 participation.id = sitting['id']
                 participation.participant_registration_number = sitting['participant_id']
-                participation.assessment_course = sitting['assessment__course']
+                participation.assessment_course = sitting['assessment__course__course_title']
                 participation.assessment_title = sitting['assessment__assessment_title']
                 participation.assessment_id = sitting['assessment_id']
                 participation.date_submitted = sitting['date_submitted']

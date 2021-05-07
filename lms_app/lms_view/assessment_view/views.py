@@ -222,27 +222,56 @@ def delete_assessment(request, assessment_id):
 
 # APIs
 @api_view(['GET'])
-def tutor_assessments(request):
+def assessments_list(request):
     if request.method == 'GET':
-        user_id = request.user.id
-        tutor = service_controller.tutor_management_service().details(user_id)
-        tutor_id = tutor.id
-        assessments = service_controller.assessment_management_service().list_assessment_for_tutor(tutor_id)
-        serializer = Assessments(assessments, many=True)
-        json_data = serializer.data
-        return Response(json_data)
+        if request.user.student_set.exists():
+            user_id = request.user.id
+            student = service_controller.student_management_service().details(user_id)
+            student_id = student.id
+            assessments = service_controller.assessment_management_service().list_assessment_for_student(student_id)
+            serializer = Assessments(assessments, many=True)
+            json_data = serializer.data
+            return Response(json_data)
+
+        elif request.user.tutor_set.exists():
+            user_id = request.user.id
+            tutor = service_controller.tutor_management_service().details(user_id)
+            tutor_id = tutor.id
+            assessments = service_controller.assessment_management_service().list_assessment_for_tutor(tutor_id)
+            serializer = Assessments(assessments, many=True)
+            json_data = serializer.data
+            return Response(json_data)
 
 
 @api_view(['GET'])
-def student_assessments(request):
+def active_assessments(request):
     if request.method == 'GET':
-        user_id = request.user.id
-        student = service_controller.student_management_service().details(user_id)
-        student_id = student.id
-        assessments = service_controller.assessment_management_service().list_assessment_for_student(student_id)
-        serializer = Assessments(assessments, many=True)
-        json_data = serializer.data
-        return Response(json_data)
+        if request.user.student_set.exists():
+            user_id = request.user.id
+            student = service_controller.student_management_service().details(user_id)
+            student_id = student.id
+            assessments = service_controller.assessment_management_service().list_assessment_for_student(student_id)
+            assessment_listing: List = []
+            for assessment in assessments:
+                if assessment.status != 0:
+                    assessment_listing.append(assessment)
+            serializer = Assessments(assessment_listing, many=True)
+            json_data = serializer.data
+            return Response(json_data)
+
+        elif request.user.tutor_set.exists():
+            user_id = request.user.id
+            tutor = service_controller.tutor_management_service().details(user_id)
+            tutor_id = tutor.id
+            assessments = service_controller.assessment_management_service().list_assessment_for_tutor(tutor_id)
+            assessment_listing: List = []
+            for assessment in assessments:
+                if assessment.status != 0:
+                    assessment_listing.append(assessment)
+            serializer = Assessments(assessment_listing, many=True)
+            json_data = serializer.data
+            return Response(json_data)
+
 
 
 def __set_assessment_attribute_request(request: HttpRequest):

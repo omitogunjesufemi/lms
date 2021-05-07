@@ -10,7 +10,7 @@
                         </div>
 
                         <p class="card-category">Pending...</p>
-                        <h3 class="card-title">{{ pending }}</h3>
+                        <h3 class="card-title" id="student_pending_assessment_length"></h3>
                     </div>
 
                     <div class="card-footer">
@@ -30,7 +30,7 @@
                         </div>
 
                         <p class="card-category">Submitted</p>
-                        <h3 class="card-title">{{ sitting_len }}</h3>
+                        <h3 class="card-title" id="student_submission_length"></h3>
                     </div>
 
                     <div class="card-footer">
@@ -51,7 +51,7 @@
                         </div>
 
                         <p class="card-category">Courses</p>
-                        <h3 class="card-title">{{ enrollment_len }}</h3>
+                        <h3 class="card-title" id="student_courses_length"></h3>
                     </div>
 
                     <div class="card-footer">
@@ -73,7 +73,7 @@
                         </div>
 
                         <p class="card-category">Assessments</p>
-                        <h3 class="card-title">{{ assessment_len }}</h3>
+                        <h3 class="card-title" id="student_assessment_length"></h3>
                     </div>
 
                     <div class="card-footer">
@@ -134,26 +134,8 @@
                                            <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="font-weight-bolder">
-                                    {% if assessment_len > 0 %}
-                                        {% for assessment in assessments %}
-                                            {% if not assessment.id in sitting_list and assessment.status != 0 %}
-                                                <tr>
-                                                    <td class="card-title font-weight-bolder">{{ assessment.course_title }}</td>
-                                                    <td class="card-title font-weight-bolder">{{ assessment.assessment_title }}</td>
-                                                    <td>{{ assessment.date_due }}</td>
-                                                    <td>{{ assessment.time_due }}</td>
-                                                    <td><a href="{% url 'new_sitting' assessment.id %}" class="btn btn-success">Do it!</a></td>
-                                                </tr>
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% else %}
-                                        <div class="form-group col-6 " style="font-size: 16pt">
-                                            <span class="font-italic text-secondary">No pending assessment. For now!</span><br>
-                                        </div>
-                                    {% endif %}
-
-                            </tbody>
+                                    <tbody class="font-weight-bolder" id="student_pending_assessment">
+                                    </tbody>
                                 </table>
                             </div>
                             <div class="tab-pane" id="turned_in">
@@ -168,24 +150,7 @@
                                         </tr>
                                     </thead>
 
-                                    <tbody class="font-weight-bolder">
-                                    {% if assessment_len > 0 %}
-                                        {% for assessment in assessments %}
-                                            {% if assessment.id in sitting_list %}
-                                                <tr>
-                                                    <td class="card-title font-weight-bolder">{{ assessment.course_title }}</td>
-                                                    <td class="card-title font-weight-bolder">{{ assessment.assessment_title }}</td>
-                                                    <td>{{ assessment.date_due }}</td>
-                                                    <td>{{ assessment.time_due }}</td>
-                                                    <td><a href="#" class="btn btn-success">View</a></td>
-                                                </tr>
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% else %}
-                                        <div class="form-group col-6 " style="font-size: 16pt">
-                                            <span class="font-italic text-secondary">No pending assessment. For now!</span><br>
-                                        </div>
-                                    {% endif %}
+                                    <tbody class="font-weight-bolder" id="all_submission">
 
                                     </tbody>
                                 </table>
@@ -206,23 +171,7 @@
 
                                     </thead>
 
-                                    <tbody>
-
-                                    {% if assessment_len > 0 %}
-                                        {% for assessment in assessments %}
-                                            <tr>
-                                                <td class="card-title font-weight-bolder">{{ assessment.course_title }}</td>
-                                                <td class="card-title font-weight-bolder">{{ assessment.assessment_title }}</td>
-                                                <td>{{ assessment.date_due }}</td>
-                                                <td>{{ assessment.time_due }}</td>
-                                                <td><a href="#" class="btn btn-success">View</a></td>
-                                            </tr>
-                                        {% endfor %}
-                                    {% else %}
-                                        <div class="form-group col-6 " style="font-size: 16pt">
-                                            <span class="font-italic text-secondary">No pending assessment. For now!</span><br>
-                                        </div>
-                                    {% endif %}
+                                    <tbody id="all_assessments">
 
                                     </tbody>
 
@@ -254,7 +203,7 @@
                                 <h5 class="card-title font-weight-bolder text-success">{{ student.registration_number }}</h5><br>
 
                                 <h6 class="card-title font-weight-bolder text-secondary">COURSES</h6>
-                                <h5 class="card-title font-weight-bolder text-success">{{ enrollment_len }} Courses</h5><br>
+                                <h5 class="card-title font-weight-bolder text-success" id="student_courses_length_1"> Courses</h5><br>
                             </div>
                         </div>
 

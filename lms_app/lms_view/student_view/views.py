@@ -101,23 +101,11 @@ def todo_list(request):
         user_id = request.user.id
         student = service_controller.student_management_service().details(user_id)
         student_id = student.id
-        assessments = service_controller.assessment_management_service().list_assessment_for_student(student_id)
-        assessment_len = len(assessments)
 
-        sittings = service_controller.sitting_management_service().list_of_sitting_for_student_assessment(student_id)
-
-        sitting_list = []
-        for sitting in sittings:
-            for assessment in assessments:
-                if sitting.assessment_id == assessment.id:
-                    sitting_list.append(sitting.assessment_id)
         context = {
             'username': username,
-            'assessments': assessments,
             'student_id': student_id,
             'presently': 'To-Do List',
-            'sitting_list': sitting_list,
-            'assessment_len': assessment_len,
             'l_as_list': l_as_list,
         }
         return render(request, 'student/todo_assessments.html', context)
@@ -150,7 +138,7 @@ def list_student_for_courses(request, course_id):
 
 
 @login_required(login_url='login')
-def student_details(request):
+def student_profile(request):
     if request.user.has_perm('lms_app.view_student'):
         l_as_list = []
         for g in request.user.groups.all():
@@ -162,44 +150,19 @@ def student_details(request):
         user_id = request.user.id
         student = service_controller.student_management_service().details(user_id)
         student_id = student.id
-        enrollments = service_controller.enrollment_management_service().list_enrollment_for_student(student_id)
-        enrollment_len = len(enrollments)
-
-        # Getting all Assessments for Student
-        assessments = service_controller.assessment_management_service().list_assessment_for_student(student_id)
-        assessment_len = len(assessments)
-
-        # Getting all sittings and attempted assessments by Student
-        sittings = service_controller.sitting_management_service().list_of_sitting_for_student_assessment(student_id)
-        sitting_len = len(sittings)
 
         current_period = datetime.now()
         today_date = current_period.date()
 
         today_time = current_period.time()
 
-        pending = assessment_len - sitting_len
-
-        sitting_list = []
-        for sitting in sittings:
-            for assessment in assessments:
-                if sitting.assessment_id == assessment.id:
-                    sitting_list.append(sitting.assessment_id)
 
         context = {
             'student': student,
-            'enrollments': enrollments,
-            'enrollment_len': enrollment_len,
-            'sitting_len': sitting_len,
-            'sitting_list': sitting_list,
-            'assessments': assessments,
-            'assessment_len': assessment_len,
             'username': username,
-            'sittings': sittings,
             'l_as_list': l_as_list,
             'presently': 'Dashboard',
             'last_login': last_login,
-            'pending': pending,
             'today_date': today_date,
             'today_time': today_time,
         }
@@ -209,6 +172,7 @@ def student_details(request):
             'message': 'You are not authorised'
         }
         return render(request, 'error_message.html', context)
+
 
 @login_required(login_url='login')
 def student_details_for_admin(request, student_id):
