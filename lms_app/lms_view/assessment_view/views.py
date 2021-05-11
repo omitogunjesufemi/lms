@@ -241,6 +241,12 @@ def assessments_list(request):
             serializer = Assessments(assessments, many=True)
             json_data = serializer.data
             return Response(json_data)
+        else:
+            assessments = service_controller.assessment_management_service().list()
+            serializer = AdminAssessments(assessments, many=True)
+            json_data = serializer.data
+            return Response(json_data)
+
 
 
 @api_view(['GET'])

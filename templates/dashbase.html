@@ -31,7 +31,7 @@
             </div>
             <div class="sidebar-wrapper ps-container ps-theme-default">
                 <ul class="nav">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         {% if 'students' in l_as_list %}
                             <a href="{% url 'student_details' %}" class="nav-link">
                                 <i class="material-icons">dashboard</i>
@@ -69,6 +69,36 @@
                         {% endif %}
 
                     </li>
+
+                    <li class="nav-item">
+
+                        {% if 'students' in l_as_list %}
+
+                        {% elif 'tutors' in l_as_list %}
+
+                        {% elif 'admin' in l_as_list %}
+                            <a href="#" class="nav-link">
+                                <i class="material-icons">ballot</i>
+                                <p>Students</p>
+                            </a>
+                        {% endif %}
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        {% if 'students' in l_as_list %}
+
+                        {% elif 'tutors' in l_as_list %}
+
+                        {% elif 'admin' in l_as_list %}
+                            <a href="#" class="nav-link">
+                                <i class="material-icons">ballot</i>
+                                <p>Tutors</p>
+                            </a>
+                        {% endif %}
+                    </li>
+
 
                     <li class="nav-item">
                         {% if 'students' in l_as_list %}
@@ -309,6 +339,7 @@
     <script src="{% static 'js/plugins/jquery.tagsinput.js' %}"></script>
     <script src="{% static 'js/plugins/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'js/tutor_questions.js' %}"></script>
+    <script src="{% static 'js/admin_dashboard.js' %}"></script>
     <script src="{% static 'js/tutor_dashboard.js' %}"></script>
     <script src="{% static 'js/tutor_submissions.js' %}"></script>
     <script src="{% static 'js/student_dashboard.js' %}"></script>

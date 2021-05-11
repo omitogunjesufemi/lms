@@ -90,6 +90,14 @@ def list_appointments(request):
         return render(request, 'error_message.html', context)
 
 
+@api_view(["GET"])
+def list_all_appointments(request):
+    if request.method == "GET":
+        pass
+    pass
+
+
+
 @login_required(login_url='login')
 def list_tutor_for_appointment(request, course_id):
     if request.user.is_superuser:

@@ -2,7 +2,11 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 from lms_app.lms_dto.CourseDto import *
+from lms_app.serializers import *
 from lms_app.service_controllers import service_controller, User, Course, AdminUser
 
 
@@ -73,6 +77,13 @@ def list_courses(request):
         'l_as_list': l_as_list,
     }
     return render(request, 'course/list_courses.html', context)
+
+@api_view(["GET"])
+def list_all_courses(request):
+    courses = service_controller.course_management_service().list()
+    serializer = Courses(courses, many=True)
+    json_data = serializer.data
+    return Response(json_data)
 
 
 def course_details(request, course_id):

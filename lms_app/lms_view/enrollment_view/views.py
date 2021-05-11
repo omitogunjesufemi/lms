@@ -1,5 +1,4 @@
 import datetime
-from typing import List
 
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
@@ -91,31 +90,6 @@ def list_enrollment_for_student(request):
         return render(request, 'error_message.html', context)
 
 
-@api_view(["GET"])
-def total_enrollments(request):
-    if request.method == "GET":
-        user_id = request.user.id
-        student = service_controller.student_management_service().details(user_id)
-        student_id = student.id
-        enrollments = service_controller.enrollment_management_service().list_enrollment_for_student(student_id)
-        serializer = Enrollments(enrollments, many=True)
-        json_data = serializer.data
-        return Response(json_data)
-
-
-@api_view(["GET"])
-def total_student_under_tutor(request):
-    if request.method == 'GET':
-        user_id = request.user.id
-        tutor = service_controller.tutor_management_service().details(user_id=user_id)
-        tutor_id = tutor.id
-        enrollments = service_controller.enrollment_management_service().list_enrollments_assigned_to_tutor(tutor_id)
-        serializer = Enrollments(enrollments, many=True)
-        json_data = serializer.data
-        return Response(json_data)
-
-
-
 @login_required(login_url='login')
 def cancel_enrollment(request, enrollment_id):
     if request.user.has_perm('lms_app.delete_enrollment'):
@@ -143,8 +117,28 @@ def enrollments_for_a_course(request, course_id):
 
 
 @api_view(["GET"])
-def all_enrollments(request):
-    pass
+def total_enrollments(request):
+    if request.method == "GET":
+        user_id = request.user.id
+        student = service_controller.student_management_service().details(user_id)
+        student_id = student.id
+        enrollments = service_controller.enrollment_management_service().list_enrollment_for_student(student_id)
+        serializer = Enrollments(enrollments, many=True)
+        json_data = serializer.data
+        return Response(json_data)
+
+
+@api_view(["GET"])
+def total_student_under_tutor(request):
+    if request.method == 'GET':
+        user_id = request.user.id
+        tutor = service_controller.tutor_management_service().details(user_id=user_id)
+        tutor_id = tutor.id
+        enrollments = service_controller.enrollment_management_service().list()
+        serializer = Enrollments(enrollments, many=True)
+        json_data = serializer.data
+        return Response(json_data)
+
 
 def __set_enrollment_attribute_request(request: HttpRequest):
     initiate_enrollment_dto = InitiateEnrollmentDto()

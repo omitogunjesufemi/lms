@@ -14,10 +14,30 @@ class QuestionSerializer(serializers.ModelSerializer):
 
         fields = '__all__'
 
+
 class TutorQuestionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question(models.Model)
         fields = '__all__'
+
+
+class Tutors(serializers.ModelSerializer):
+    class Meta:
+        model = Tutor(models.Model)
+        fields = ['phone', 'registration_number']
+
+
+class Students(serializers.ModelSerializer):
+    class Meta:
+        model = Student(models.Model)
+        fields = [ 'registration_number']
+
+
+class Courses(serializers.ModelSerializer):
+    class Meta:
+        model = Course(models.Model)
+        fields = ['id', 'course_title', 'course_slug']
+
 
 class Assessments(serializers.ModelSerializer):
     course_title = serializers.CharField()
@@ -25,6 +45,15 @@ class Assessments(serializers.ModelSerializer):
     class Meta:
         model = Assessment(models.Model)
         fields = '__all__'
+
+
+class AdminAssessments(serializers.ModelSerializer):
+    course_title = serializers.CharField()
+
+    class Meta:
+        model = Assessment(models.Model)
+        fields = '__all__'
+
 
 class Appointments(serializers.Serializer):
     id = serializers.IntegerField()

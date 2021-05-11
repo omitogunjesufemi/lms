@@ -10,7 +10,7 @@
                         </div>
 
                         <p class="card-category">Students</p>
-                        <h3 class="card-title" id="student_count"></h3>
+                        <h3 class="card-title" id="student_counts"></h3>
                     </div>
 
                     <div class="card-footer">
@@ -30,7 +30,7 @@
                         </div>
 
                         <p class="card-category">Tutors</p>
-                        <h3 class="card-title" id="tutor_count"></h3>
+                        <h3 class="card-title" id="tutor_counts"></h3>
                     </div>
 
                     <div class="card-footer">
@@ -51,7 +51,7 @@
                         </div>
 
                         <p class="card-category">Courses</p>
-                        <h3 class="card-title" id="courses_count"></h3>
+                        <h3 class="card-title" id="course_counts"></h3>
                     </div>
 
                     <div class="card-footer">
@@ -73,7 +73,7 @@
                         </div>
 
                         <p class="card-category">Assessments</p>
-                        <h3 class="card-title" id="assessment_count"></h3>
+                        <h3 class="card-title" id="assessment_counts"></h3>
                     </div>
 
                     <div class="card-footer">
@@ -102,6 +102,14 @@
                                             <div class="ripple-container"></div>
                                             <div class="ripple-container"></div></a>
                                     </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link show" href="#unenrolled" data-toggle="tab">
+                                            <i class="material-icons">assignment</i> Un-Enrolled
+                                            <div class="ripple-container"></div>
+                                            <div class="ripple-container"></div></a>
+                                    </li>
+
                                     <li class="nav-item">
                                         <a class="nav-link" href="#in_active" data-toggle="tab">
                                             <i class="material-icons">pending</i> In-active Assessments
@@ -129,11 +137,12 @@
                                         <th>Action</th>
                                     </tr>
                                     </thead>
-                                    <tbody class="font-weight-bolder" id="all_appointments">
+                                    <tbody class="font-weight-bolder" id="">
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="tab-pane" id="in_active">
+
+                            <div class="tab-pane" id="unenrolled">
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -145,10 +154,11 @@
                                     </tr>
                                     </thead>
 
-                                    <tbody class="font-weight-bolder" id="all_submission">
+                                    <tbody class="font-weight-bolder" id="">
                                     </tbody>
                                 </table>
                             </div>
+
                             <div class="tab-pane" id="in_active">
 
                                 <table class="table">
@@ -165,7 +175,7 @@
 
                                     </thead>
 
-                                    <tbody id="late_submission">
+                                    <tbody id="">
 
                                     </tbody>
 

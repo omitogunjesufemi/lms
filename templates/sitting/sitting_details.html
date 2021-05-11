@@ -65,13 +65,23 @@
                                             </div>
 
                                             <div class="row justify-content-around">
-                                                <div class="form-group col-9 " style="font-size: 16pt">
+                                                <div class="form-group col-9 " style="font-size: 16pt" data-toggle="buttons">
                                                     <label for="first_name" style="font-size: 14pt"
                                                            class="form-check-label font-weight-bolder text-uppercase text-dark">Options: </label><br><br>
-                                                    <span class="font-italic" style="padding-right: 50px">  <input type="radio" {% if ans == "'choice1'" %}checked{% else %}disabled{% endif %}>    A. {{ question.choice1 }}</span>{% if question.answer == "choice1" %}<span class="text-success">Correct</span>{% else %}<span class="text-danger">Wrong</span>{% endif %}<br>
-                                                    <span class="font-italic" style="padding-right: 50px">  <input type="radio" {% if ans == "'choice2'" %}checked{% else %}disabled{% endif %}>    B. {{ question.choice2 }}</span>{% if question.answer == "choice2" %}<span class="text-success">Correct</span>{% else %}<span class="text-danger">Wrong</span>{% endif %}<br>
-                                                    <span class="font-italic" style="padding-right: 50px">  <input type="radio" {% if ans == "'choice3'" %}checked{% else %}disabled{% endif %}>    C. {{ question.choice3 }}</span>{% if question.answer == "choice3" %}<span class="text-success">Correct</span>{% else %}<span class="text-danger">Wrong</span>{% endif %}<br>
-                                                    <span class="font-italic" style="padding-right: 50px">  <input type="radio" {% if question.answer == "choice4" %}checked{% else %}disabled{% endif %}>    D. {{ question.choice4 }}</span>{% if question.answer == "choice4" %}<span class="text-success">Correct{% else %}<span class="text-danger">Wrong</span>{% endif %}<br>
+                                                    <label class="btn btn-lg btn-light btn-block">
+                                                        <span class="font-italic" style="padding-right: 50px">  <input type="radio" {% if ans == "'choice1'" %}checked{% else %}disabled{% endif %}>    A. {{ question.choice1 }}</span>{% if question.answer == "choice1" and ans == "'choice1'" %}<span class="font-weight-bold text-light">Correct</span>{% elif question.answer != "choice1" and ans == "'choice1'" %}<span class="font-weight-bold text-danger">Wrong</span>{% endif %}<br>
+                                                    </label>
+
+                                                    <label class="btn btn-lg btn-light btn-block">
+                                                        <span class="font-italic" style="padding-right: 50px">  <input type="radio" {% if ans == "'choice2'" %}checked{% else %}disabled{% endif %}>    B. {{ question.choice2 }}</span>{% if question.answer == "choice2" and ans == "'choice2'" %}<span class="font-weight-bold text-light">Correct</span>{% elif question.answer != "choice2" and ans == "'choice2'" %}<span class="font-weight-bold text-danger">Wrong</span>{% endif %}<br>
+                                                    </label>
+
+                                                    <label class="btn btn-lg btn-light btn-block">
+                                                        <span class="font-italic" style="padding-right: 50px">  <input type="radio" {% if ans == "'choice3'" %}checked{% else %}disabled{% endif %}>    C. {{ question.choice3 }}</span>{% if question.answer == "choice3" and ans == "'choice3'" %}<span class="font-weight-bold text-light">Correct</span>{% elif question.answer != "choice3" and ans == "'choice3'" %}<span class="font-weight-bold text-danger">Wrong</span>{% endif %}<br>
+                                                    </label>
+
+                                                    <label class="btn btn-lg btn-light btn-block">
+                                                        <span class="font-italic" style="padding-right: 50px">  <input type="radio" {% if question.answer == "choice4" %}checked{% else %}disabled{% endif %}>    D. {{ question.choice4 }}</span>{% if question.answer == "choice4" and ans == "'choice4'" %}<span class="font-weight-bold text-light">Correct{% elif question.answer != "choice4" and ans == "'choice4'" %}<span class="font-weight-bold text-danger">Wrong</span>{% endif %}</span><br></label>
                                                 </div>
                                             </div>
 

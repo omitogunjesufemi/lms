@@ -7,8 +7,11 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from lms_app.lms_dto.StudentDto import *
+from lms_app.serializers import *
 from lms_app.service_controllers import service_controller, User, Student
 
 
@@ -90,6 +93,14 @@ def list_student(request):
             'message': 'You are not authorised'
         }
         return render(request, 'error_message.html', context)
+
+@api_view(["GET"])
+def list_all_students_api(request):
+    if request.method == "GET":
+        tutors = service_controller.student_management_service().list()
+        serializer = Students(tutors, many=True)
+        json_data = serializer.data
+        return Response(json_data)
 
 
 def todo_list(request):

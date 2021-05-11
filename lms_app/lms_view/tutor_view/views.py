@@ -3,7 +3,11 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 from lms_app.lms_dto.TutorDto import *
+from lms_app.serializers import *
 from lms_app.service_controllers import service_controller, User, Tutor
 
 
@@ -81,10 +85,19 @@ def list_tutors(request):
         }
         return render(request, 'tutor/list_tutor.html', context)
     else:
-        context={
+        context = {
             'message': 'You are not authorised'
         }
         return render(request, 'error_message.html', context)
+
+
+@api_view(["GET"])
+def list_all_tutor_api(request):
+    if request.method == "GET":
+        tutors = service_controller.tutor_management_service().list()
+        serializer = Tutors(tutors, many=True)
+        json_data = serializer.data
+        return Response(json_data)
 
 
 @login_required(login_url='login')
