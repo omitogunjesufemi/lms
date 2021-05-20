@@ -97,8 +97,8 @@ def list_student(request):
 @api_view(["GET"])
 def list_all_students_api(request):
     if request.method == "GET":
-        tutors = service_controller.student_management_service().list()
-        serializer = Students(tutors, many=True)
+        students = service_controller.student_management_service().list()
+        serializer = Students(students, many=True)
         json_data = serializer.data
         return Response(json_data)
 

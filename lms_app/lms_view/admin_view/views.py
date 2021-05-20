@@ -25,7 +25,7 @@ def register_admin(request):
 
 
 @login_required(login_url='login')
-def edit_admin(request, admin_id):
+def edit_admin(request):
     if request.user.is_superuser:
         username = request.user.username
         l_as_list = []
@@ -35,6 +35,7 @@ def edit_admin(request, admin_id):
         try:
             user_id = request.user.id
             admin = service_controller.admin_management_service().details(user_id)
+            admin_id = admin.id
         except AdminUser.DoesNotExist as e:
             print('You are not registered yet!')
             raise e
@@ -48,7 +49,7 @@ def edit_admin(request, admin_id):
         edited_admin = __edit_if_post_method(request, admin_id, context)
         if edited_admin is not None:
             context['admin'] = edited_admin
-            return redirect('admin_details')
+            return redirect('edit_admin')
         return render(request, 'admin/edit_admin.html', context)
     else:
         context = {

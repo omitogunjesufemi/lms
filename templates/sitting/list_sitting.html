@@ -1,60 +1,60 @@
-{% extends 'base.html' %}
+{% extends 'dashbase.html' %}
 {% block content %}
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-form-label-sm mt-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="text-uppercase text-center">Sitting</h3>
+    <div class="container-fluid">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-success">
+                    <div class="card-title font-weight-bolder">
+                        List of all Submissions
+                        <i onclick="submission_listing()" class="material-icons float-right refresh_button" >refresh</i>
                     </div>
-
-                    <div class="card-body">
-                        <table class="table table-hover table-responsive text-center">
-                            <thead>
-                            <tr>
-                                <th>Assessment Title</th>
-                                <th>Participant</th>
-                                <th>Date Submitted</th>
-                                <th>Time Submitted</th>
-                                <th></th>
-                                <th>Actions</th>
-                            </tr>
-                            </thead>
-                            {% for sitting in sittings %}
-                                <tbody>
+                    <div class="card-category">This are list for all submissions.
+                        The refresh button updates the list of submitted assessments.</div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-success text-center">
                                 <tr>
-                                    <td>{{ sitting.assessment_title }}</td>
-                                    <td>{{ sitting.participant_registration_number }}</td>
-                                    <td>{{ sitting.date_submitted }}</td>
-                                    <td>{{ sitting.time_submitted }}</td>
-                                    <td></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a href="#" class="btn btn-outline-secondary btn-sm">Edit</a>
-                                        </div>
-
-                                        <div class="btn-group">
-                                            <a href="#" class="btn btn-outline-dark btn-sm">Details</a>
-                                        </div>
-
-                                        <div class="btn-group">
-                                            <a href="#" class="btn btn-outline-danger btn-sm">Delete</a>
-                                        </div>
-                                    </td>
-
+                                    <th>S/N</th>
+                                    <th>Participant</th>
+                                    <th>Course</th>
+                                    <th>Title</th>
+                                    <th>Date Submitted</th>
+                                    <th>Time Submitted</th>
+                                    <th>Actions</th>
                                 </tr>
-                                </tbody>
-                            {% endfor %}
+                            </thead>
+                            <tbody id="sitting_list_tbody" class="text-center">
 
+                            </tbody>
+{#                            {% if 'tutors' in l_as_list or 'admin' in l_as_list %}#}
+{#                                <div class="btn-group">#}
+{#                                    <a href="{% url 'set_question' assessment.id %}" class="btn btn-outline-secondary btn-sm">Set Questions</a>#}
+{#                                </div>#}
+{#    #}
+{#                                <div class="btn-group">#}
+{#                                    <a href="{% url 'update_assessment' assessment.id %}" class="btn btn-outline-secondary btn-sm">Edit</a>#}
+{#                                </div>#}
+{#    #}
+{#                                <div class="btn-group">#}
+{#                                    <a href="{% url 'assessment_details' assessment.id %}" class="btn btn-outline-dark btn-sm">Details</a>#}
+{#                                </div>#}
+{#    #}
+{#                                <div class="btn-group">#}
+{#                                    <a href="{% url 'delete_assessment' assessment.id %}" class="btn btn-outline-danger btn-sm">Delete</a>#}
+{#                                </div>#}
+{#                            {% else %}#}
+{#                                <div class="btn-group">#}
+{#                                    <a href="{% url 'new_sitting' assessment.id %}" class="btn btn-outline-secondary btn-sm">Solve</a>#}
+{#                                </div>#}
+{#                            {% endif %}#}
                         </table>
-
                     </div>
-
                 </div>
 
             </div>
 
         </div>
-
     </div>
 {% endblock %}

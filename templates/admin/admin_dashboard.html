@@ -16,7 +16,7 @@
                     <div class="card-footer">
                         <div class="stats">
                             <i class="material-icons">account_circle</i>
-                            <a href="#" class="text-danger">View Students...</a>
+                            <a href="{% url 'list_student' %}" class="text-danger">View Students...</a>
                         </div>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                     <div class="card-footer">
                         <div class="stats">
                             <i class="material-icons text-success">check_circle</i>
-                            <a href="#" class="text-dark">View Tutors</a>
+                            <a href="{% url 'list_tutor' %}" class="text-dark">View Tutors</a>
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                     <div class="card-footer">
                         <div class="stats">
                             <i class="material-icons text-primary">stream</i>
-                            <a href="{% url 'tutor_assessments' %}" class="text-dark">View Assessment</a>
+                            <a href="{% url 'list_assessment' %}" class="text-dark">View Assessment</a>
                         </div>
                     </div>
                 </div>
@@ -87,8 +87,8 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-6 col-md-12">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-12">
 
                 <div class="card">
                     <div class="card-header card-header-tabs card-header-success">
@@ -103,12 +103,12 @@
                                             <div class="ripple-container"></div></a>
                                     </li>
 
-                                    <li class="nav-item">
-                                        <a class="nav-link show" href="#unenrolled" data-toggle="tab">
-                                            <i class="material-icons">assignment</i> Un-Enrolled
-                                            <div class="ripple-container"></div>
-                                            <div class="ripple-container"></div></a>
-                                    </li>
+{#                                    <li class="nav-item">#}
+{#                                        <a class="nav-link show" href="#enrolled" data-toggle="tab">#}
+{#                                            <i class="material-icons">assignment</i> Enrolled#}
+{#                                            <div class="ripple-container"></div>#}
+{#                                            <div class="ripple-container"></div></a>#}
+{#                                    </li>#}
 
                                     <li class="nav-item">
                                         <a class="nav-link" href="#in_active" data-toggle="tab">
@@ -133,31 +133,30 @@
                                         <th>Tutor Reg</th>
                                         <th>Course Title</th>
                                         <th>Date Appointed</th>
-                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
-                                    <tbody class="font-weight-bolder" id="">
+                                    <tbody class="font-weight-bolder" id="appointment_identifier">
                                     </tbody>
                                 </table>
                             </div>
 
-                            <div class="tab-pane" id="unenrolled">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>Student</th>
-                                        <th>Title</th>
-                                        <th>Turned-In</th>
-                                        <th>Time</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-
-                                    <tbody class="font-weight-bolder" id="">
-                                    </tbody>
-                                </table>
-                            </div>
+{#                            <div class="tab-pane" id="enrolled">#}
+{#                                <table class="table">#}
+{#                                    <thead>#}
+{#                                    <tr>#}
+{#                                        <th>Student</th>#}
+{#                                        <th>Title</th>#}
+{#                                        <th>Turned-In</th>#}
+{#                                        <th>Time</th>#}
+{#                                        <th>Action</th>#}
+{#                                    </tr>#}
+{#                                    </thead>#}
+{##}
+{#                                    <tbody class="font-weight-bolder" id="enrollment_body">#}
+{#                                    </tbody>#}
+{#                                </table>#}
+{#                            </div>#}
 
                             <div class="tab-pane" id="in_active">
 
@@ -166,7 +165,6 @@
                                     <thead>
 
                                     <tr>
-                                        <th>Student</th>
                                         <th>Title</th>
                                         <th>Due</th>
                                         <th>Time</th>
@@ -175,7 +173,7 @@
 
                                     </thead>
 
-                                    <tbody id="">
+                                    <tbody id="inactive_assessment_for_admin">
 
                                     </tbody>
 
@@ -189,41 +187,7 @@
                 </div>
 
             </div>
-            <div class="col-lg-6 col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="card-img-top justify-content-around">
-                                    {% load static %} <img src="{% static 'img/faces/face-0.jpg' %}" alt="lms_app user"
-                                                           style="border-radius: 100px; width: 200px; height: 200px;">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <h6 class="card-title font-weight-bolder text-secondary">FULL NAME</h6>
-                                <h5 class="card-title font-weight-bolder text-success">{{ admin.first_name }} {{ admin.last_name }}</h5> <br>
 
-                                <h6 class="card-title font-weight-bolder text-secondary">STUDENTS</h6>
-                                <h5 class="card-title font-weight-bolder text-success">{{ admin.reg_no }}</h5><br>
-
-                                <h6 class="card-title font-weight-bolder text-secondary">TUTORS</h6>
-                                <h5 class="card-title font-weight-bolder text-success">{{ admin.reg_no }}</h5><br>
-
-                                <h6 class="card-title font-weight-bolder text-secondary">APPOINTMENTS</h6>
-                                <h5 class="card-title font-weight-bolder text-success">{{ appointment_len }} Courses</h5><br>
-
-                            </div>
-                        </div>
-
-                        <div class="card-footer border-top">
-                            <div class="stats">
-                                <i class="material-icons"></i>
-                                <a href="#" class="text-dark">Last Login: {{ last_login }} </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
     </div>

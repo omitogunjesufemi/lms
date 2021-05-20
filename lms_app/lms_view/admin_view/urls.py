@@ -6,5 +6,5 @@ urlpatterns = [
     path('list', views.list_admins, name='list_admins'),
     path('profile', views.admin_details, name='admin_details'),
     path('dashboard', views.admin_dashboard, name='admin_dashboard'),
-    path('edit/<int:admin_id>', views.edit_admin, name='edit_admin'),
+    path('edit', views.edit_admin, name='edit_admin'),
 ]

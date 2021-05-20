@@ -1,57 +1,37 @@
-{% extends 'base.html' %}
+{% extends 'dashbase.html' %}
 {% block content %}
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-form-label-sm mt-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="text-uppercase text-center">List of Tutors</h3>
+    <div class="container-fluid">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-success">
+                    <div class="card-title font-weight-bolder">
+                        List of all Students
+                        <i onclick="tutor_listing()" class="material-icons float-right refresh_button" >refresh</i>
                     </div>
-
-                    <div class="card-body">
-                        <table class="table table-hover table-responsive">
-                            <thead class="text-center">
-                            <tr>
-                                <th>Full Name</th>
-                                <th>Phone</th>
-                                <th>Email</th>
-                                <th>Reg No</th>
-                                <th>Actions</th>
-                            </tr>
-                            </thead>
-                            {% for tutor in tutors %}
-                                <tbody>
+                    <div class="card-category">This are list for all tutors.
+                        The refresh button updates all tutors who newly join.</div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-success text-center">
                                 <tr>
-                                    <td>{{ tutor.first_name }} {{ tutor.last_name }}</td>
-                                    <td>{{ tutor.phone }}</td>
-                                    <td>{{ tutor.email }}</td>
-                                    <td>{{ tutor.registration_number }}</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a href="#" class="btn btn-outline-warning btn-sm">Appoint</a>
-                                        </div>
-
-                                        <div class="btn-group">
-                                            <a href="#" class="btn btn-outline-dark btn-sm">Details</a>
-                                        </div>
-
-                                        <div class="btn-group">
-                                            <a href="#" class="btn btn-outline-danger btn-sm">Delete</a>
-                                        </div>
-                                    </td>
+                                    <th>S/N</th>
+                                    <th>Full-name</th>
+                                    <th>Email</th>
+                                    <th>Reg No</th>
+                                    <th>Actions</th>
                                 </tr>
-                                </tbody>
-                            {% endfor %}
+                            </thead>
+                            <tbody id="tutor_list_body" class="text-center">
 
+                            </tbody>
                         </table>
-
                     </div>
-
                 </div>
 
             </div>
 
         </div>
-
     </div>
 {% endblock %}

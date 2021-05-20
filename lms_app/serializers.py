@@ -21,16 +21,21 @@ class TutorQuestionsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class Tutors(serializers.ModelSerializer):
-    class Meta:
-        model = Tutor(models.Model)
-        fields = ['phone', 'registration_number']
+class Tutors(serializers.Serializer):
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    email = serializers.CharField()
+    registration_number = serializers.CharField()
+    id = serializers.IntegerField()
 
 
-class Students(serializers.ModelSerializer):
-    class Meta:
-        model = Student(models.Model)
-        fields = [ 'registration_number']
+class Students(serializers.Serializer):
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    username = serializers.CharField()
+    email = serializers.CharField()
+    registration_number = serializers.CharField()
+    id = serializers.IntegerField()
 
 
 class Courses(serializers.ModelSerializer):

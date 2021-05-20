@@ -15,11 +15,11 @@ def login_page_post(request):
         login(request, user)
 
         if user.groups.filter(name__exact='students').exists():
-            return redirect(resolve_url)
+            return redirect('student_details')
         elif user.groups.filter(name__exact='tutors').exists():
-            return redirect(resolve_url)
+            return redirect('tutor_dashboard')
         elif user.groups.filter(name__exact='admin').exists():
-            return redirect(resolve_url)
+            return redirect('admin_dashboard')
     else:
         context['message'] = 'Incorrect Username or Password!'
         return render(request, 'login.html', context)

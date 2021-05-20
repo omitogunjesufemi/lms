@@ -81,6 +81,13 @@
                             {% if 'tutors' in l_as_list or 'admin' in l_as_list %}
                                 <div class="card-footer">
 
+                                    <div class="btn-group">
+                                        <a href="{% url 'set_question' assessment.id %}" class="btn btn-outline-secondary btn-sm">Set Questions</a>
+                                        <a href="{% url 'list_assessment_question' assessment.id %}" class="btn btn-outline-secondary btn-sm">List Questions</a>
+                                    </div>
+
+
+
                                     <div class="btn-group float-right">
                                         <a href="{% url 'delete_assessment' assessment.id %}" class="btn btn-outline-danger delete_demo">Delete</a>
                                     </div>

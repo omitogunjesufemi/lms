@@ -76,6 +76,7 @@ def update_question(request, question_id):
 def list_questions(request):
     if request.user.has_perm('lms_app.view_question'):
         l_as_list = []
+        list_all = ['all']
         for g in request.user.groups.all():
             l_as_list.append(g.name)
 
@@ -86,6 +87,7 @@ def list_questions(request):
             'questions': questions,
             'username': username,
             'l_as_list': l_as_list,
+            'list_all': list_all,
         }
         return render(request, 'question/list_questions.html', context)
     else:
@@ -107,13 +109,20 @@ def question_end_point(request, assessment_id):
 @api_view(['GET'])
 def tutor_questions(request):
     if request.method == 'GET':
-        user_id = request.user.id
-        tutor = service_controller.tutor_management_service().details(user_id)
-        tutor_id = tutor.id
-        questions = service_controller.question_management_service().list_question_for_tutor(tutor_id)
-        serializer = TutorQuestionsSerializer(questions, many=True)
-        json_data = serializer.data
-        return Response(json_data)
+        if request.user.tutor_set.exists():
+            user_id = request.user.id
+            tutor = service_controller.tutor_management_service().details(user_id)
+            tutor_id = tutor.id
+            questions = service_controller.question_management_service().list_question_for_tutor(tutor_id)
+            serializer = TutorQuestionsSerializer(questions, many=True)
+            json_data = serializer.data
+            return Response(json_data)
+
+        elif request.user.adminuser_set.exists():
+            questions = service_controller.question_management_service().list()
+            serializer = QuestionSerializer(questions, many=True)
+            json_data = serializer.data
+            return Response(json_data)
 
 
 @login_required(login_url='login')
@@ -144,6 +153,7 @@ def list_questions_for_tutor(request):
 def list_questions_for_assessment(request, assessment_id):
     if request.user.has_perm('lms_app.view_question'):
         l_as_list = []
+        list_all = ['some']
         for g in request.user.groups.all():
             l_as_list.append(g.name)
 
@@ -155,6 +165,7 @@ def list_questions_for_assessment(request, assessment_id):
             'questions': questions,
             'username': username,
             'l_as_list': l_as_list,
+            'list_all': list_all,
         }
         return render(request, 'question/list_questions.html', context)
     else:
