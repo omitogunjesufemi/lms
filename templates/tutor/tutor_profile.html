@@ -83,7 +83,7 @@
                                             <label for="" style="font-size: 14pt"
                                                    class="form-check-label font-weight-bolder text-uppercase text-dark">{{ appointment.course_title }}</label><br>
 {#                                            <p><span class="text-secondary" style="font-size: 12pt">{{ appointment.course_description }}</span></p>#}
-                                            <span class="font-italic text-dark card-link" style="font-size: 12pt"><a href="{% url 'list_enrollment' appointment.course_id %}" style="font-size: 12pt">View Students</a> </span>
+                                            <span class="font-italic text-dark card-link" style="font-size: 12pt"><a href="{% url 'list_enrollment' appointment.course_id %}" style="font-size: 12pt">View Students</a> </span> | <span class="font-italic text-dark card-link" style="font-size: 12pt"><a href="{% url 'delete_appointment' appointment.id %}" style="font-size: 12pt">Terminate</a> </span>
                                         </div>
                                     {% endfor %}
                                 {% else %}

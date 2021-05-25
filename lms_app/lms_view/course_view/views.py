@@ -95,6 +95,7 @@ def course_details(request, course_id):
     course = service_controller.course_management_service().details(course_id=course_id)
     tutor_list = []
     student_list = []
+    apply_list = []
     students_for_course = service_controller.student_management_service().list_student_for_course(course_id)
     tutor_for_course = service_controller.appointment_management_service().list_tutor_for_course_appointed(course_id)
 
@@ -121,10 +122,15 @@ def course_details(request, course_id):
     elif 'tutors' in l_as_list:
         user_id = request.user.id
         tutor_id = service_controller.tutor_management_service().details(user_id).id
+        applications = service_controller.apply_management_service().list()
 
         for tutor in tutor_for_course:
             if tutor_id == tutor.tutors_id:
                 tutor_list.append(tutor_id)
+
+        for application in applications:
+            if tutor_id == application.tutor_id and course_id == application.course_id:
+                apply_list.append(tutor_id)
 
         student_id = 0
         enrollment = 0
@@ -144,6 +150,7 @@ def course_details(request, course_id):
         'l_as_list': l_as_list,
         'course': course,
         'student_list': student_list,
+        'apply_list': apply_list,
         'student_id': student_id,
         'tutor_list': tutor_list,
         'tutor_id': tutor_id,

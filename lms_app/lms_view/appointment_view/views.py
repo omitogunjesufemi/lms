@@ -23,7 +23,7 @@ def initiate_appointment(request, course_id, tutor_id, apply_id):
         apply.status = True
         apply.save()
         if appoint2 == 1:
-            return redirect('admin_details')
+            return redirect('admin_dashboard')
         else:
             return render(request, 'enrollment/error_message.html', context)
     else:
@@ -166,6 +166,7 @@ def delete_appointment(request, appointment_id):
     if request.user.has_perm('lms_app.delete_appointment'):
         try:
             service_controller.appointment_management_service().delete(appointment_id)
+            return redirect('list_tutor')
         except Appointment.DoesNotExist as e:
             print('This appointment does not exist!')
             return Http404

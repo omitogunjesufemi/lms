@@ -21,6 +21,14 @@ class TutorQuestionsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class Application(serializers.Serializer):
+    id = serializers.IntegerField()
+    tutor_registration_number = serializers.CharField()
+    tutor_id = serializers.IntegerField()
+    status = serializers.BooleanField()
+    qualifications = serializers.CharField()
+
+
 class Tutors(serializers.Serializer):
     first_name = serializers.CharField()
     last_name = serializers.CharField()
@@ -46,7 +54,15 @@ class Courses(serializers.ModelSerializer):
 
 class Assessments(serializers.ModelSerializer):
     course_title = serializers.CharField()
-    sitting = serializers.IntegerField()
+    #sitting = serializers.IntegerField()
+    class Meta:
+        model = Assessment(models.Model)
+        fields = '__all__'
+
+
+class PendingAssessments(serializers.ModelSerializer):
+    course_title = serializers.CharField()
+    #sitting = serializers.IntegerField()
     class Meta:
         model = Assessment(models.Model)
         fields = '__all__'

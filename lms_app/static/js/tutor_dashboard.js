@@ -1,5 +1,6 @@
 let submissions = document.getElementById('submission_length');
 let assessment = document.getElementById('assessment_count');
+
 let appointment_count = document.getElementById('appointment_count');
 let courses = document.getElementById('courses_count');
 let students = document.getElementById('student_count');

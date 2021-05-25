@@ -31,11 +31,18 @@
                     {% endif %}
                 {% elif 'tutors' in l_as_list  %}
                     {% if tutor_id in tutor_list %}
-                        <a href="#" class="btn btn-outline-success float-right" data-target="#" data-toggle="#">
-                            Resign as Tutor For {{ course.course_title }}</a>
+                        <a href="{% url "create_assessment" %}" class="btn btn-outline-success float-right" data-target="#" data-toggle="#">
+                            Create Assessment For {{ course.course_title }}</a>
                     {% else %}
-                        <a href="#" class="btn btn-outline-success float-right" data-target="#apply{{ course.id }}" data-toggle="modal">
+                        {% if tutor_id in apply_list %}
+                            <a href="#" class="btn btn-outline-success disabled float-right" >
+                            Applied as Tutor For {{ course.course_title }}</a>
+                        {% else %}
+                            <a href="#" class="btn btn-outline-success float-right" data-target="#apply{{ course.id }}" data-toggle="modal">
                             Apply as Tutor For {{ course.course_title }}</a>
+
+                        {% endif %}
+
 
                     {% endif %}
                 {% elif 'admin' in l_as_list  %}
@@ -56,7 +63,7 @@
                     <div class="col">
                         <div class="card-block px-5 pt-4">
                             <h4 class="card-title mt-2">{{ course.course_title }}</h4>
-                            <p class="card-text">{{ course.course_slug }}</p>
+                            <p class="card-text">{{ course.course_description }}</p>
                         </div>
 
                         <div class="card-footer bg-white no-gutters mt-5 px-5 pt-2">
@@ -97,7 +104,7 @@
 
                                     <div class="form-group">
                                         <label for="file_upload" class="col-form-label">Upload CV</label>
-                                        <input type="file" class="form-control" name="file" id="file">
+                                        <input type="file" class="form-control" name="file_upload" id="file">
                                     </div>
 
 
@@ -273,24 +280,6 @@
             <div class="col-9">Breakdown of Results</div>
             <div class="col-3 text-center">HH</div>
         </div>
-
-        <div class="row justify-content-center column_section">
-            <div class="col-12">STUDENT SERVICE</div>
-        </div>
-
-        <div class="row justify-content-center column_fields">
-            <div class="col-9">Well drafted assessments question</div>
-            <div class="col-3 text-center">HH</div>
-        </div>
-        <div class="row justify-content-center column_fields">
-            <div class="col-9">Time-framed Assessments</div>
-            <div class="col-3 text-center">HH</div>
-        </div>
-        <div class="row justify-content-center column_fields">
-            <div class="col-9">Breakdown of Results</div>
-            <div class="col-3 text-center">HH</div>
-        </div>
-
     </div>
 
     <br><br><br>

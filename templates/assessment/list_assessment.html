@@ -1,5 +1,9 @@
 {% extends 'dashbase.html' %}
 {% block content %}
+    <div class="container-fluid mb-3">
+        <a href="{% url "create_assessment" %}" class="btn btn-outline-success float-right" data-target="#" data-toggle="#">
+                            Create Assessment</a>
+    </div>
     <div class="container-fluid">
         <div class="col-md-12">
             <div class="card">
@@ -56,4 +60,5 @@
 
         </div>
     </div>
+
 {% endblock %}

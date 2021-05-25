@@ -30,7 +30,7 @@ def register_tutor(request):
         if user is not None:
             login(request, user)
             if user.groups.filter(name__exact='tutors').exists():
-                return redirect('tutor_details')
+                return redirect('tutor_dashboard')
             return redirect('')
     return render(request, 'tutor/register_tutor.html', context)
 
@@ -62,7 +62,7 @@ def edit_tutor(request):
         edited_tutor = __edit_if_post_method(request, tutor_id, context)
         if edited_tutor is not None:
             context['tutor'] = edited_tutor
-            return redirect('tutor_details')
+            return redirect('edit_tutor')
         return render(request, 'tutor/edit_tutor.html', context)
     else:
         context={

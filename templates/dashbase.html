@@ -99,6 +99,20 @@
                         {% endif %}
                     </li>
 
+                    <li class="nav-item">
+
+                        {% if 'students' in l_as_list %}
+
+                        {% elif 'tutors' in l_as_list %}
+
+                        {% elif 'admin' in l_as_list %}
+                            <a href="{% url 'appoint' %}" class="nav-link">
+                                <i class="material-icons">article</i>
+                                <p>Applications</p>
+                            </a>
+                        {% endif %}
+                    </li>
+
 
                     <li class="nav-item">
                         {% if 'students' in l_as_list %}

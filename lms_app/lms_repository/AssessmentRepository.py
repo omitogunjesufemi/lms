@@ -94,7 +94,6 @@ class DjangoORMAssessmentRepository(AssessmentRepository):
     def list_assessment_for_student(self, student_id) -> List[ListAssessmentDto]:
         assessments = list(Assessment.objects.values('id',
                                                      'assessment_title',
-                                                     'sitting',
                                                      'course__enrollment__student_id',
                                                      'course__course_title',
                                                      'total_score',
@@ -108,7 +107,6 @@ class DjangoORMAssessmentRepository(AssessmentRepository):
             if student_id == assessment['course__enrollment__student_id']:
                 task = ListAssessmentDto()
                 task.id = assessment['id']
-                task.sitting = assessment['sitting']
                 task.assessment_title = assessment['assessment_title']
                 task.course_title = assessment['course__course_title']
                 task.total_score = assessment['total_score']

@@ -1,8 +1,30 @@
     var submit = document.getElementById('submit_quiz')
     var session_data = document.getElementById('qns').value;
     var session_datas = document.getElementById('questions').value;
-    console.log(session_data)
-    console.log(session_datas)
+    var time_line = document.querySelector('.time_line')
+    var timeText = document.querySelector(".timer .time_left")
+    var timeCount = document.getElementById('timer_min')
+
+    function startTimer(time){
+        var counter = setInterval(timer, 1000);
+        function timer(){
+            timeCount.innerHTML = time;
+            time--;
+            if (time < 10){
+                let addZero = timeCount.innerHTML;
+                timeCount.textContent = "0" + addZero;
+            }
+
+            if (time === 0){
+                clearInterval(counter);
+                timeText.innerHTML = 'Time Off'
+            }
+        }
+    }
+
+    function startTimerLine(time){
+        var counterLine = setInterval(timer, 300)
+    }
 
     function setCookie(c_name, c_value){
         document.cookie = `${c_name}=${c_value}`;
@@ -55,6 +77,8 @@
 
 
     submit_quiz();
+    startTimer(300);
+    startTimerLine(300);
     submit.addEventListener('click', submit_quiz)
 
 

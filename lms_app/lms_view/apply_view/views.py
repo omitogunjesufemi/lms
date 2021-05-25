@@ -1,11 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from lms_app.lms_dto.ApplyDto import ApplyDto
 from lms_app.models import Apply
+from lms_app.serializers import Application
 from lms_app.service_controllers import service_controller, Appointment
-
 
 @login_required(redirect_field_name='next')
 def apply_for_a_course(request, course_id):
@@ -28,12 +30,12 @@ def apply_for_a_course(request, course_id):
         if appoint == 1:
             __create_if_post_method(request, course_id, tutor_id, context)
             if request.method == 'POST':
-                return redirect('tutor_details')
+                return redirect('tutor_dashboard')
         else:
             return render(request, 'enrollment/error_message.html', context)
 
     else:
-        context={
+        context = {
             'message': 'You are not authorised'
         }
         return render(request, 'error_message.html', context)
@@ -43,17 +45,26 @@ def edit_application(request, apply_id):
     pass
 
 
+@api_view(['GET'])
+def list_applications(request):
+    if request.method == 'GET':
+        applications = service_controller.apply_management_service().list()
+        serializer = Application(applications, many=True)
+        json_data = serializer.data
+        return Response(json_data)
+
+
 @login_required(redirect_field_name='next')
 def cancel_application(request, apply_id):
     if request.user.is_superuser:
         try:
             service_controller.apply_management_service().delete(apply_id)
-            return redirect('tutor_details')
+            return redirect('tutor_dashboard')
         except Apply.DoesNotExist as e:
             print('This application does not exist!')
             raise e
     else:
-        context={
+        context = {
             'message': 'You are not authorised'
         }
         return render(request, 'error_message.html', context)
@@ -64,7 +75,7 @@ def __application_attribute_request(request: HttpRequest, course_id, tutor_id):
     create_application_dto.tutor_id = tutor_id
     create_application_dto.course_id = course_id
     create_application_dto.qualifications = request.POST['qualifications']
-    create_application_dto.file = request.FILES.get('file_upload')
+    create_application_dto.file = request.FILES['file_upload']
     return create_application_dto
 
 
@@ -81,5 +92,5 @@ def __create_if_post_method(request, course_id, tutor_id, context):
                 context['saved'] = 'success'
                 return 1
         except Exception as e:
-            print('This comment was not registered')
+            print('This application was not registered')
             raise e

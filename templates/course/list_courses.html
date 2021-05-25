@@ -33,9 +33,7 @@
                             <div class="card-body">
                                 <h3 class="card-title text-uppercase">{{ course.course_title }}</h3>
                                 <p class="card-text" style="text-align: justify">
-                                    Learning Python is easy.
-                                    Whether you're new to programming or an experienced developer,
-                                    it's easy to learn and use Python.
+                                    {{ course.course_slug }}
                                 </p>
                                 <a href="{% url 'course_details' course.id %}" class="float-right">View Course</a>
                             </div>

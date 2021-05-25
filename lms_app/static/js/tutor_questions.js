@@ -1,4 +1,5 @@
 let quiz_container = document.getElementById('question_body');
+let question_counts = document.getElementById('question_count');
 
 let host = window.location.host
 //Fetching from API
@@ -10,6 +11,11 @@ function tutor_questions(){
     })
         .then(response => response.json())
         .then(function (json){
+
+            var output = []
+            output.push(
+                `${json.length}`
+            )
 
             var html_output = [];
 
@@ -38,7 +44,25 @@ function tutor_questions(){
         .catch(err => console.log('Request Failed', err));
 }
 
+function question_count(){
+   fetch(`http://${host}/question/tutor_qns_api`, {
+        method: "GET",
+        headers: {"Content-type": "application/json; charset=UTF-8"},
+    })
+        .then(response => response.json())
+        .then(function (json){
+
+            var output = []
+            output.push(
+                `${json.length}`
+            )
+            question_counts.innerHTML = output.join('');
+        })
+        .catch(err => console.log('Request Failed', err));
+}
+
 tutor_questions();
+question_count();
 
 function refresh_questions(){
     tutor_questions();

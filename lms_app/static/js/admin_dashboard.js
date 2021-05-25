@@ -286,7 +286,7 @@ function particular_question_listing(){
                             <td class="card-title font-weight-bolder">${current_question.question_title}</td>
                             <td>${current_question.question_content}</td>
                             <td>${current_question.assigned_mark}</td>
-                            <td><a href="#" class="btn btn-success">View</a></td>
+                            <td><a href="/question/details/${current_question.id}" class="btn btn-success">View</a></td>
                         </tr>
                         `
                     )

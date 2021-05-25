@@ -42,7 +42,7 @@ function assessment_count(){
 }
 
 function pending_length (){
-    fetch(`http://${host}/assessment/listing`, {
+    fetch(`http://${host}/assessment/pending`, {
         method: "GET",
         headers: {"Content-type":"application/json; charset=UTF-8"},
     })
@@ -64,7 +64,7 @@ function pending_length (){
 }
 
 function pending_assessments(){
-    fetch(`http://${host}/assessment/listing`, {
+    fetch(`http://${host}/assessment/pending`, {
         method: 'GET',
         headers: {"Content-type": "application/json; charset=UTF-8"},
     })

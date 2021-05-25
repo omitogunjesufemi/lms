@@ -160,9 +160,9 @@ class DjangoORMAppointmentRepository(AppointmentRepository):
             appoint = Appointment.objects.get(id=appointment_id)
             course_id = appoint.course_id
             tutor_id = appoint.tutors_id
-            apply = Apply.objects.get(course_id=course_id, tutor_id=tutor_id)
+            apply = Apply.objects.filter(course_id=course_id, tutor_id=tutor_id)
             apply.status = 0
-            apply.save()
+            apply.delete()
             appoint.delete()
 
         except Appointment.DoesNotExist as e:

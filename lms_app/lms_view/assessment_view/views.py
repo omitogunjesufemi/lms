@@ -229,6 +229,7 @@ def assessments_list(request):
             student = service_controller.student_management_service().details(user_id)
             student_id = student.id
             assessments = service_controller.assessment_management_service().list_assessment_for_student(student_id)
+
             serializer = Assessments(assessments, many=True)
             json_data = serializer.data
             return Response(json_data)
@@ -246,6 +247,31 @@ def assessments_list(request):
             serializer = AdminAssessments(assessments, many=True)
             json_data = serializer.data
             return Response(json_data)
+
+
+@api_view(['GET'])
+def pending_assessments(request):
+    if request.method == 'GET':
+        if request.user.student_set.exists():
+            user_id = request.user.id
+            student = service_controller.student_management_service().details(user_id)
+            student_id = student.id
+            assessments = service_controller.assessment_management_service().list_assessment_for_student(student_id)
+            sittings = service_controller.sitting_management_service().list_of_sitting_for_student_assessment(student_id)
+            enrollments = service_controller.enrollment_management_service().list_enrollment_for_student(student_id)
+            assessment_listing: ListAssessmentDto() = []
+            if sittings == []:
+                serializer = PendingAssessments(assessments, many=True)
+                json_data = serializer.data
+                return Response(json_data)
+            else:
+                for assessment in assessments:
+                    for sitting in sittings:
+                        if assessment.id != sitting.assessment_id and assessment.status == True:
+                            assessment_listing.append(assessment)
+                serializer = PendingAssessments(assessment_listing, many=True)
+                json_data = serializer.data
+                return Response(json_data)
 
 
 

@@ -2,7 +2,7 @@ let pending_to_do_lists = document.getElementById('pending_to_do_list');
 let turned_in_to_do_list = document.getElementById('turned_in_to_do_list');
 
 function pending_to_do_list(){
-    fetch(`http://${host}/assessment/listing`, {
+    fetch(`http://${host}/assessment/pending`, {
         method: "GET",
         headers: {"Content-type": "application/json; charset=UTF-8"},
     })

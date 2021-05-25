@@ -70,7 +70,7 @@ class DjangoORMCourseRepository(CourseRepository):
             subject = CourseDetailDto()
             subject.id = course.id
             subject.course_title = course.course_title
-            subject.course_slug = course.course_description
+            subject.course_slug = course.course_slug
             subject.course_description = course.course_description
             subject.file = course.file_upload
             return subject

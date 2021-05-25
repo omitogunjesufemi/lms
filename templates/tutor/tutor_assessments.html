@@ -32,7 +32,9 @@
                         {% endfor %}
                     {% else %}
                         <div class="form-group col-6 " style="font-size: 16pt">
-                            <span class="font-italic text-secondary">You have not assessment created yet!</span><br>
+                            <span class="font-italic text-secondary">You have not assessment created yet! <a href="{% url "create_assessment" %}" class="float-right text-success" data-target="#" data-toggle="#">
+                            Create Assessment</a></span><br>
+
                         </div>
                     {% endif %}
 

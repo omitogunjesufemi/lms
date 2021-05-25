@@ -8,6 +8,7 @@ urlpatterns = [
     path('uploaded', views.list_assessments_for_tutor, name='tutor_assessments'),
     path('listing', views.assessments_list, name='assessment_lists'),
     path('active', views.active_assessments, name='active_assessments'),
+    path('pending', views.pending_assessments, name='pending_assessments'),
     path('detail/<int:assessment_id>', views.assessment_details, name='assessment_details'),
     path('activate/<int:assessment_id>', views.activate, name='activate'),
     path('deactivate/<int:assessment_id>', views.deactivate, name='deactivate'),

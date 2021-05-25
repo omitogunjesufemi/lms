@@ -60,7 +60,7 @@ class DjangoORMApplyRepository(ApplyRepository):
                                                  'status',
                                                  'file_upload'
                                                ))
-        application_list: List[ApplyDto] = []
+        application_list: List[ApplyDto()] = []
         for application in applications:
             apply = ApplyDto()
             apply.id = application['id']
